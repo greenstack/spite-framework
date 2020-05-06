@@ -31,10 +31,5 @@
         /// If this entity is still alive.
         /// </summary>
         bool IsAlive { get; }
-
-        /// <summary>
-        /// The id of the entity.
-        /// </summary>
-        EntityID ID { get; set; }
     }
 }

@@ -33,7 +33,6 @@ namespace Spite
 		public void AddEntity(IEntity entity)
 		{
 			entities.Add(entity);
-			entity.ID = new EntityID(entitiesAdded++, this);
 		}
 
 		/// <inheritdoc/>

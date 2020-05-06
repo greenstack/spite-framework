@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Spite</name>
+    </assembly>
+    <members>
+        <member name="T:Spite.BasicTeam">
+            <summary>
+            Represents a team.
+            </summary>
+        </member>
+        <member name="P:Spite.BasicTeam.AreAllEntitiesTapped">
+            <inheritdoc/>
+        </member>
+        <member name="P:Spite.BasicTeam.UntappedEntityCount">
+            <inheritdoc/>
+        </member>
+        <member name="P:Spite.BasicTeam.AreAllAlive">
+            <inheritdoc/>
+        </member>
+        <member name="P:Spite.BasicTeam.AliveEntityCount">
+            <inheritdoc/>
+        </member>
+        <member name="P:Spite.BasicTeam.ManagedEntityCount">
+            <inheritdoc/>
+        </member>
+        <member name="M:Spite.BasicTeam.AddEntity(Spite.IEntity)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Spite.BasicTeam.Untap(Spite.IEntity)">
+            <inheritdoc/>
+        </member>
+        <member name="M:Spite.BasicTeam.UntapAll">
+            <inheritdoc/>
+        </member>
+        <member name="T:Spite.IEntity">
+            <summary>
+            Represents an entity that the SpiteFramework can interact with.
+            </summary>
+        </member>
+        <member name="P:Spite.IEntity.IsTapped">
+            <summary>
+            If this entity is untapped.
+            </summary>
+        </member>
+        <member name="P:Spite.IEntity.Team">
+            <summary>
+            The team this entity belongs to.
+            </summary>
+        </member>
+        <member name="M:Spite.IEntity.Tap">
+            <summary>
+            Taps this entity.
+            </summary>
+            <returns>TRUE if the unit was successfully tapped.</returns>
+        </member>
+        <member name="M:Spite.IEntity.Untap">
+            <summary>
+            Untaps this entity.
+            </summary>
+            <returns>TRUE if the unit was successfully untapped.</returns>
+        </member>
+        <member name="P:Spite.IEntity.IsAlive">
+            <summary>
+            If this entity is still alive.
+            </summary>
+        </member>
+        <member name="T:Spite.ITeam">
+            <summary>
+            Represents a team of entities in a battle.
+            </summary>
+        </member>
+        <member name="P:Spite.ITeam.AreAllEntitiesTapped">
+            <summary>
+            If all entities have been tapped.
+            </summary>
+        </member>
+        <member name="P:Spite.ITeam.UntappedEntityCount">
+            <summary>
+            The number of untapped entities on this team.
+            </summary>
+        </member>
+        <member name="M:Spite.ITeam.UntapAll">
+            <summary>
+            Untaps all entities managed by this team.
+            </summary>
+        </member>
+        <member name="M:Spite.ITeam.Untap(Spite.IEntity)">
+            <summary>
+            Untaps the specific entity on this team.
+            </summary>
+            <param name="entity">The entity to untap.</param>
+        </member>
+        <member name="P:Spite.ITeam.AreAllAlive">
+            <summary>
+            Are all entities managed by this Team still alive?
+            </summary>
+        </member>
+        <member name="P:Spite.ITeam.AliveEntityCount">
+            <summary>
+            The number of living entities on this team.
+            </summary>
+        </member>
+        <member name="P:Spite.ITeam.ManagedEntityCount">
+            <summary>
+            The number of entities managed by this Team.
+            </summary>
+        </member>
+        <member name="M:Spite.ITeam.AddEntity(Spite.IEntity)">
+            <summary>
+            Adds the entity onto the team.
+            </summary>
+            <param name="entity">The entity pertaining to the team.</param>
+        </member>
+    </members>
+</doc>

@@ -10,7 +10,7 @@ namespace Spite
 	[Serializable]
 	public class BasicTeam : ITeam
 	{
-		internal IList<IEntity> entities = new List<IEntity>();
+		internal ICollection<IEntity> entities = new List<IEntity>();
 
 		private int entitiesAdded = 0;
 

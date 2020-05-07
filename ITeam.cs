@@ -52,8 +52,8 @@ namespace Spite
         /// <summary>
         /// Sets the number of entities slots on this team.
         /// </summary>
-        /// <param name="isSizeCapped">Whether or not entityCount should be the max number of entities on this team.</param>
         /// <param name="entityCount">The number of entity slots to initialize.</param>
-        void InitializeEntityCount(bool isSizeCapped, uint entityCount);
+        /// <param name="isSizeCapped">Whether or not entityCount should be the max number of entities on this team.</param>
+        void InitializeEntityCount(uint entityCount, bool isSizeCapped);
     }
 }

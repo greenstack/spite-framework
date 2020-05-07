@@ -72,7 +72,7 @@ namespace Spite
 		/// </summary>
 		/// <param name="isSizeCapped">Whether or not the amount of entities on the team can increase.</param>
 		/// <param name="entityCount">The number of entities that can be on the team, or the default starting number.</param>
-		public void InitializeEntityCount(bool isSizeCapped, uint entityCount)
+		public void InitializeEntityCount(uint entityCount, bool isSizeCapped)
 		{
 			if (isSizeCapped)
 			{

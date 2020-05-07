@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Spite
 {
@@ -14,8 +12,8 @@ namespace Spite
         /// <summary>
         /// Starts building the team with a fresh instance of the specified team type.
         /// </summary>
-        /// <typeparam name="TTeam"></typeparam>
-        /// <returns></returns>
+        /// <typeparam name="TTeam">The type of team to create.</typeparam>
+        /// <returns>The team builder for chaining.</returns>
         public TeamBuilder Start<TTeam>() where TTeam : ITeam, new()
         {
             builtTeam = new TTeam();
@@ -30,7 +28,7 @@ namespace Spite
         /// <returns></returns>
         public TeamBuilder SetTeamSize(uint teamSize, bool isSizeCapped)
         {
-            builtTeam.InitializeEntityCount(isSizeCapped, teamSize);
+            builtTeam.InitializeEntityCount(teamSize, isSizeCapped);
             return this;
         }
 
@@ -67,10 +65,18 @@ namespace Spite
         /// <summary>
         /// Finsihes building the team and casts it to the specific type.
         /// </summary>
-        /// <typeparam name="TTeam">The team type to cast to.</typeparam>
+        /// <typeparam name="TTeam">The team type to cast to. Should be the same type as used in TTeam.</typeparam>
         /// <returns>The team of the specified type.</returns>
         public TTeam Finish<TTeam>() where TTeam : ITeam
         {
+            if (builtTeam == null)
+            {
+                throw new InvalidOperationException("Start has not been called - no team was being built.");
+            }
+            if (!(builtTeam is TTeam))
+            {
+                throw new InvalidCastException($"Can't cast the built team to {typeof(TTeam)}. Check the typeparam of Start and Finish.");
+            }
             return (TTeam)builtTeam;
         }
     }

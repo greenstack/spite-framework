@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Spite
+﻿namespace Spite
 {
     /// <summary>
     /// Helps an Arena evaluate the order that turns are taken in.
     /// </summary>
-    [Flags]
-    public enum TurnScheme : uint
+    public enum TurnScheme
     {
         /// <summary>
         /// Turns are assigned to teams.

@@ -28,6 +28,8 @@ namespace Spite
 		/// <inheritdoc/>
 		public int ManagedEntityCount => entities.Count(e => e != null);
 
+		public TeamStanding CurrentStanding => throw new NotImplementedException();
+
 		/// <inheritdoc/>
 		public void AddEntity(IEntity entity)
 		{
@@ -82,6 +84,11 @@ namespace Spite
 			{
 				entities = new List<IEntity>((int)entityCount);
 			}
+		}
+
+		public TeamStanding GetCurrentStanding(Arena context)
+		{
+			throw new NotImplementedException();
 		}
 	}
 }

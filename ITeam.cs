@@ -55,5 +55,18 @@ namespace Spite
         /// <param name="entityCount">The number of entity slots to initialize.</param>
         /// <param name="isSizeCapped">Whether or not entityCount should be the max number of entities on this team.</param>
         void InitializeEntityCount(uint entityCount, bool isSizeCapped);
+
+        /// <summary>
+        /// The current standing of the team.
+        /// </summary>
+        TeamStanding CurrentStanding { get; }
+        
+        /// <summary>
+        /// Checks if this team has won.
+        /// </summary>
+        /// <param name="context">The arena this team is fighting in.</param>
+        /// <returns>True if this team has achieved victory.</returns>
+        TeamStanding GetCurrentStanding(Arena context);
+
     }
 }

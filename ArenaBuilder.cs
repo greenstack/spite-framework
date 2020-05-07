@@ -4,8 +4,7 @@ using System;
 namespace Spite
 {
     /// <summary>
-    /// Represents a battle arena, with a number of sides and defining the flow
-    /// of battle.
+    /// Provides methods useful for building and populating an arena.
     /// </summary>
     public class ArenaBuilder
     {
@@ -25,13 +24,31 @@ namespace Spite
         }
 
         /// <summary>
-        /// Sets the number of sides 
+        /// Sets the number of sides fighting in the arena. Must be the first
+        /// method called.
         /// </summary>
         /// <param name="sideCount">The number of sides fighting in this arena.</param>
-        /// <returns>The ArenaBuilder, for chaining.</returns>
-        public ArenaBuilder SetNumberOfSides(uint sideCount)
+        /// <returns>The ArenaBuilder for chaining.</returns>
+        /// <see cref="Arena(uint)"/>
+        /// <seealso cref="InitArena(string, uint)"/>
+        public ArenaBuilder InitArena(uint sideCount)
         {
             builtArena = new Arena(sideCount);
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the name of and number of sides fighting in the arena. Must be
+        /// the first method called.
+        /// </summary>
+        /// <param name="arenaName">The name of the arena.</param>
+        /// <param name="sideCount">The number of sides fighting in this arena.</param>
+        /// <returns>The ArenaBuilder for chaining.</returns>
+        /// <see cref="Arena(string, uint)"/>
+        /// <seealso cref="InitArena(uint)"/>
+        public ArenaBuilder InitArena(string arenaName, uint sideCount)
+        {
+            builtArena = new Arena(arenaName, sideCount);
             return this;
         }
 
@@ -92,10 +109,10 @@ namespace Spite
         /// Sets the win condition for the current team.
         /// </summary>
         /// <returns>The ArenaBuilder for chaining.</returns>
-        public ArenaBuilder SetWinConditionForTeam(Func<Arena, bool> winConFunc)
+        public ArenaBuilder SetWinConditionForTeam(Func<Arena, TeamStanding> winConFunc)
         {
             AssertTeamBuilder();
-            currentTeam.SetWinCondition(winConFunc);
+            currentTeam.SetTeamStandingDeterminer(winConFunc);
             return this;
         }
 

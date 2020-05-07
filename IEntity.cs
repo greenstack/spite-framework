@@ -1,4 +1,6 @@
-﻿namespace Spite
+﻿using Spite.Events;
+
+namespace Spite
 {
     /// <summary>
     /// Represents an entity that the SpiteFramework can interact with.
@@ -28,8 +30,20 @@
         bool Untap();
 
         /// <summary>
+        /// An event that is fired when Tap and Untap are called successfully.
+        /// </summary>
+        event TapStateChange OnTapOrUntap;
+
+        /// <summary>
         /// If this entity is still alive.
         /// </summary>
         bool IsAlive { get; }
     }
+
+    /// <summary>
+    /// A delegate to call when an entity is tapped or untapped.
+    /// </summary>
+    /// <param name="sender">The entity whose state was changed.</param>
+    /// <param name="args">Contextual information about the state change.</param>
+    public delegate void TapStateChange(IEntity sender, EntityTapStateChangeEventArgs args);
 }

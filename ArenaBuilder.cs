@@ -49,8 +49,9 @@ namespace Spite
         /// <summary>
         /// Adds a team of the specific type to the arena.
         /// </summary>
-        /// <typeparam name="TTeam"></typeparam>
+        /// <typeparam name="TTeam">The type of team to build.</typeparam>
         /// <returns>The ArenaBuilder for chaining.</returns>
+        /// <see cref="TeamBuilder.Start{TTeam}"/>
         public ArenaBuilder AddTeam<TTeam>() where TTeam : ITeam, new()
         {
             AssertArenaWasMade();
@@ -61,13 +62,27 @@ namespace Spite
         }
 
         /// <summary>
-        /// 
+        /// Sets the size of the team currently being built.
         /// </summary>
-        /// <param name="entity"></param>
+        /// <param name="teamSize">The initial size of the team, or the max size of the team.</param>
+        /// <param name="isSizeCapped">If the team size cannot increase, set this to true.</param>
         /// <returns>The ArenaBuilder for chaining.</returns>
+        /// <see cref="TeamBuilder.SetTeamSize(uint, bool)"/>
+        public ArenaBuilder SetCurrentTeamSize(uint teamSize, bool isSizeCapped)
+        {
+            AssertTeamBuilder();
+            currentTeam.SetTeamSize(teamSize, isSizeCapped);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds the provided entity to the team.
+        /// </summary>
+        /// <param name="entity">The entity to be added to the team.</param>
+        /// <returns>The ArenaBuilder for chaining.</returns>
+        /// <see cref="TeamBuilder.AddEntity(IEntity)"/>
         public ArenaBuilder AddEntityToTeam(IEntity entity)
         {
-            AssertArenaWasMade();
             AssertTeamBuilder();
             currentTeam.AddEntity(entity);
             return this;
@@ -79,7 +94,6 @@ namespace Spite
         /// <returns>The ArenaBuilder for chaining.</returns>
         public ArenaBuilder SetWinConditionForTeam(Func<Arena, bool> winConFunc)
         {
-            AssertArenaWasMade();
             AssertTeamBuilder();
             currentTeam.SetWinCondition(winConFunc);
             return this;
@@ -89,6 +103,7 @@ namespace Spite
         /// Finishes the team.
         /// </summary>
         /// <returns>The ArenaBuilder for chaining.</returns>
+        /// <see cref="TeamBuilder.Finish"/>
         public ArenaBuilder FinishTeam()
         {
             builtArena.Sides[teamsAdded++] = currentTeam.Finish();
@@ -100,6 +115,7 @@ namespace Spite
         /// </summary>
         /// <param name="createdTeam">The team that get finished building.</param>
         /// <returns>The ArenaBuilder for chaining.</returns>
+        /// <see cref="TeamBuilder.Finish"/>
         public ArenaBuilder FinishTeam(out ITeam createdTeam)
         {
             createdTeam = currentTeam.Finish();
@@ -113,6 +129,7 @@ namespace Spite
         /// <typeparam name="T">The team type.</typeparam>
         /// <param name="createdTeam">The team that was created.</param>
         /// <returns>The ArenaBuilder for chaining.</returns>
+        /// <see cref="TeamBuilder.Finish{TTeam}"/>
         public ArenaBuilder FinishTeam<T>(out T createdTeam) where T : ITeam
         {
             createdTeam = currentTeam.Finish<T>();

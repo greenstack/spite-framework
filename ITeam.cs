@@ -66,7 +66,6 @@ namespace Spite
         /// </summary>
         /// <param name="context">The arena this team is fighting in.</param>
         /// <returns>True if this team has achieved victory.</returns>
-        TeamStanding GetCurrentStanding(Arena context);
-
+        TeamStanding DetermineStanding(Arena context);
     }
 }

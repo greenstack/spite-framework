@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using System.Linq;
 
 namespace Spite
@@ -12,13 +13,11 @@ namespace Spite
 	{
 		internal ICollection<IEntity> entities = new List<IEntity>();
 
-		private int entitiesAdded = 0;
-
 		/// <inheritdoc/>
 		public bool AreAllEntitiesTapped => UntappedEntityCount == 0;
 
 		/// <inheritdoc/>
-		public int UntappedEntityCount => ManagedEntityCount - entities.Count(e => e.IsTapped);
+		public int UntappedEntityCount => AliveEntityCount - entities.Count(e => e.IsTapped);
 
 		/// <inheritdoc/>
 		public bool AreAllAlive => AliveEntityCount == ManagedEntityCount;
@@ -27,7 +26,7 @@ namespace Spite
 		public int AliveEntityCount => entities.Count(e => e.IsAlive);
 
 		/// <inheritdoc/>
-		public int ManagedEntityCount => entities.Count;
+		public int ManagedEntityCount => entities.Count(e => e != null);
 
 		/// <inheritdoc/>
 		public void AddEntity(IEntity entity)
@@ -38,6 +37,7 @@ namespace Spite
 		/// <inheritdoc/>
 		public void Untap(IEntity entity)
 		{
+			if (entity == null) throw new ArgumentNullException(paramName: nameof(entity));
 			if (entity.Team != this)
 			{
 				// Why do we want to throw this...?
@@ -55,11 +55,33 @@ namespace Spite
 			}
 		}
 
+		/// <summary>
+		/// Retrieves the entity at the specified index.
+		/// </summary>
+		/// <param name="index">The index of the entity.</param>
+		/// <returns>The entity at the given index.</returns>
 		public IEntity GetEntityByIndex(int index)
 		{
 			if (index < 0 || entities.Count <= index)
-				throw new ArgumentOutOfRangeException("Index out of range");
-			return entities[index];
+				throw new ArgumentOutOfRangeException(nameof(index));
+			return entities.ElementAt(index);
+		}
+
+		/// <summary>
+		/// Sets the number of entities available to this team.
+		/// </summary>
+		/// <param name="isSizeCapped">Whether or not the amount of entities on the team can increase.</param>
+		/// <param name="entityCount">The number of entities that can be on the team, or the default starting number.</param>
+		public void InitializeEntityCount(bool isSizeCapped, uint entityCount)
+		{
+			if (isSizeCapped)
+			{
+				entities = new IEntity[entityCount];
+			}
+			else
+			{
+				entities = new List<IEntity>((int)entityCount);
+			}
 		}
 	}
 }

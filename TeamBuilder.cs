@@ -3,7 +3,7 @@
 namespace Spite
 {
     /// <summary>
-    /// 
+    /// Provides methods useful in building a team.
     /// </summary>
     public class TeamBuilder
     {
@@ -21,10 +21,10 @@ namespace Spite
         }
 
         /// <summary>
-        /// 
+        /// Sets the number of entity slots on this team.
         /// </summary>
-        /// <param name="teamSize"></param>
-        /// <param name="isSizeCapped">Whether or not the team can have </param>
+        /// <param name="teamSize">The initial or max size of the team.</param>
+        /// <param name="isSizeCapped">Whether or not the team can have more entities than the initial amount.</param>
         /// <returns></returns>
         public TeamBuilder SetTeamSize(uint teamSize, bool isSizeCapped)
         {
@@ -48,7 +48,7 @@ namespace Spite
         /// </summary>
         /// <param name="winConFunc">The function that will be used to determine the win conditions.</param>
         /// <returns>The TeamBuilder for chaining.</returns>
-        public TeamBuilder SetWinCondition(Func<Arena, bool> winConFunc)
+        public TeamBuilder SetTeamStandingDeterminer(Func<Arena, TeamStanding> winConFunc)
         {
             return this;
         }

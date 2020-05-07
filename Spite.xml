@@ -4,6 +4,120 @@
         <name>Spite</name>
     </assembly>
     <members>
+        <member name="T:Spite.Arena">
+            <summary>
+            Manages a group of sides in a battle.
+            </summary>
+        </member>
+        <member name="F:Spite.Arena.Sides">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:Spite.Arena.SideCount">
+            <summary>
+            The number of sides managed by this arena.
+            </summary>
+        </member>
+        <member name="M:Spite.Arena.#ctor(System.UInt32)">
+            <summary>
+            
+            </summary>
+            <param name="numberOfSides"></param>
+        </member>
+        <member name="M:Spite.Arena.GetTeam(System.UInt32)">
+            <summary>
+            Gets the team with the given index.
+            </summary>
+            <param name="index">The index of the team.</param>
+            <returns>The team at the specified index</returns>
+        </member>
+        <member name="T:Spite.ArenaBuilder">
+            <summary>
+            Represents a battle arena, with a number of sides and defining the flow
+            of battle.
+            </summary>
+        </member>
+        <member name="M:Spite.ArenaBuilder.#ctor">
+            <summary>
+            Creates an instance of an Arena Builder.
+            </summary>
+        </member>
+        <member name="M:Spite.ArenaBuilder.SetNumberOfSides(System.UInt32)">
+            <summary>
+            Sets the number of sides 
+            </summary>
+            <param name="sideCount">The number of sides fighting in this arena.</param>
+            <returns>The ArenaBuilder, for chaining.</returns>
+        </member>
+        <member name="M:Spite.ArenaBuilder.SetTurnScheme(Spite.TurnScheme)">
+            <summary>
+            Sets the type of turn scheme that this arena will have.
+            </summary>
+            <param name="scheme">The scheme for determining the granularity of turns.</param>
+            <returns>The ArenaBuilder for chaining.</returns>
+        </member>
+        <member name="M:Spite.ArenaBuilder.AddTeam``1">
+            <summary>
+            Adds a team of the specific type to the arena.
+            </summary>
+            <typeparam name="TTeam">The type of team to build.</typeparam>
+            <returns>The ArenaBuilder for chaining.</returns>
+            <see cref="M:Spite.TeamBuilder.Start``1"/>
+        </member>
+        <member name="M:Spite.ArenaBuilder.SetCurrentTeamSize(System.UInt32,System.Boolean)">
+            <summary>
+            Sets the size of the team currently being built.
+            </summary>
+            <param name="teamSize">The initial size of the team, or the max size of the team.</param>
+            <param name="isSizeCapped">If the team size cannot increase, set this to true.</param>
+            <returns>The ArenaBuilder for chaining.</returns>
+            <see cref="M:Spite.TeamBuilder.SetTeamSize(System.UInt32,System.Boolean)"/>
+        </member>
+        <member name="M:Spite.ArenaBuilder.AddEntityToTeam(Spite.IEntity)">
+            <summary>
+            Adds the provided entity to the team.
+            </summary>
+            <param name="entity">The entity to be added to the team.</param>
+            <returns>The ArenaBuilder for chaining.</returns>
+            <see cref="M:Spite.TeamBuilder.AddEntity(Spite.IEntity)"/>
+        </member>
+        <member name="M:Spite.ArenaBuilder.SetWinConditionForTeam(System.Func{Spite.Arena,System.Boolean})">
+            <summary>
+            Sets the win condition for the current team.
+            </summary>
+            <returns>The ArenaBuilder for chaining.</returns>
+        </member>
+        <member name="M:Spite.ArenaBuilder.FinishTeam">
+            <summary>
+            Finishes the team.
+            </summary>
+            <returns>The ArenaBuilder for chaining.</returns>
+            <see cref="M:Spite.TeamBuilder.Finish"/>
+        </member>
+        <member name="M:Spite.ArenaBuilder.FinishTeam(Spite.ITeam@)">
+            <summary>
+            Finishes the team and provides it as a parameter.
+            </summary>
+            <param name="createdTeam">The team that get finished building.</param>
+            <returns>The ArenaBuilder for chaining.</returns>
+            <see cref="M:Spite.TeamBuilder.Finish"/>
+        </member>
+        <member name="M:Spite.ArenaBuilder.FinishTeam``1(``0@)">
+            <summary>
+            Finishes the team and provides it as a parameter, cast to the specific type.
+            </summary>
+            <typeparam name="T">The team type.</typeparam>
+            <param name="createdTeam">The team that was created.</param>
+            <returns>The ArenaBuilder for chaining.</returns>
+            <see cref="M:Spite.TeamBuilder.Finish``1"/>
+        </member>
+        <member name="M:Spite.ArenaBuilder.Finish">
+            <summary>
+            Finishes building the Arena and returns the built arena.
+            </summary>
+            <returns>The built arena.</returns>
+        </member>
         <member name="T:Spite.BasicTeam">
             <summary>
             Represents a team.
@@ -32,6 +146,20 @@
         </member>
         <member name="M:Spite.BasicTeam.UntapAll">
             <inheritdoc/>
+        </member>
+        <member name="M:Spite.BasicTeam.GetEntityByIndex(System.Int32)">
+            <summary>
+            Retrieves the entity at the specified index.
+            </summary>
+            <param name="index">The index of the entity.</param>
+            <returns>The entity at the given index.</returns>
+        </member>
+        <member name="M:Spite.BasicTeam.InitializeEntityCount(System.UInt32,System.Boolean)">
+            <summary>
+            Sets the number of entities available to this team.
+            </summary>
+            <param name="isSizeCapped">Whether or not the amount of entities on the team can increase.</param>
+            <param name="entityCount">The number of entities that can be on the team, or the default starting number.</param>
         </member>
         <member name="T:Spite.IEntity">
             <summary>
@@ -111,6 +239,116 @@
             Adds the entity onto the team.
             </summary>
             <param name="entity">The entity pertaining to the team.</param>
+        </member>
+        <member name="M:Spite.ITeam.InitializeEntityCount(System.UInt32,System.Boolean)">
+            <summary>
+            Sets the number of entities slots on this team.
+            </summary>
+            <param name="entityCount">The number of entity slots to initialize.</param>
+            <param name="isSizeCapped">Whether or not entityCount should be the max number of entities on this team.</param>
+        </member>
+        <member name="T:Spite.Properties.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Spite.Properties.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Spite.Properties.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Spite.Properties.Resources.ArenaNotStarted">
+            <summary>
+              Looks up a localized string similar to The arena hasn&apos;t been made yet - try calling SetNumberOfSides first..
+            </summary>
+        </member>
+        <member name="P:Spite.Properties.Resources.InvalidTurnScheme">
+            <summary>
+              Looks up a localized string similar to The current turn scheme is invalid..
+            </summary>
+        </member>
+        <member name="P:Spite.Properties.Resources.NoTeamAddedArenaBuilder">
+            <summary>
+              Looks up a localized string similar to A team hasn&apos;t been added to this arena yet..
+            </summary>
+        </member>
+        <member name="T:Spite.TeamBuilder">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:Spite.TeamBuilder.Start``1">
+            <summary>
+            Starts building the team with a fresh instance of the specified team type.
+            </summary>
+            <typeparam name="TTeam">The type of team to create.</typeparam>
+            <returns>The team builder for chaining.</returns>
+        </member>
+        <member name="M:Spite.TeamBuilder.SetTeamSize(System.UInt32,System.Boolean)">
+            <summary>
+            
+            </summary>
+            <param name="teamSize"></param>
+            <param name="isSizeCapped">Whether or not the team can have </param>
+            <returns></returns>
+        </member>
+        <member name="M:Spite.TeamBuilder.AddEntity(Spite.IEntity)">
+            <summary>
+            Adds the entity to the team.
+            </summary>
+            <param name="entity">The entity to add to the team.</param>
+            <returns>The TeamBuilder for chaining.</returns>
+        </member>
+        <member name="M:Spite.TeamBuilder.SetWinCondition(System.Func{Spite.Arena,System.Boolean})">
+            <summary>
+            Sets the win condition for this team.
+            </summary>
+            <param name="winConFunc">The function that will be used to determine the win conditions.</param>
+            <returns>The TeamBuilder for chaining.</returns>
+        </member>
+        <member name="M:Spite.TeamBuilder.Finish">
+            <summary>
+            Finishes building the team.
+            </summary>
+            <returns>The built team.</returns>
+        </member>
+        <member name="M:Spite.TeamBuilder.Finish``1">
+            <summary>
+            Finsihes building the team and casts it to the specific type.
+            </summary>
+            <typeparam name="TTeam">The team type to cast to. Should be the same type as used in TTeam.</typeparam>
+            <returns>The team of the specified type.</returns>
+        </member>
+        <member name="T:Spite.TurnScheme">
+            <summary>
+            Helps an Arena evaluate the order that turns are taken in.
+            </summary>
+        </member>
+        <member name="F:Spite.TurnScheme.Team">
+            <summary>
+            Turns are assigned to teams.
+            </summary>
+        </member>
+        <member name="F:Spite.TurnScheme.Entity">
+            <summary>
+            Turns are assigned to entities one-by-one.
+            </summary>
+        </member>
+        <member name="F:Spite.TurnScheme.VonNeumannTeam">
+            <summary>
+            Sides decide what each entity on their team will do at the same time.
+            </summary>
+        </member>
+        <member name="F:Spite.TurnScheme.VonNeumannEntity">
+            <summary>
+            Sides decide what one entity will do at the same time.
+            </summary>
         </member>
     </members>
 </doc>

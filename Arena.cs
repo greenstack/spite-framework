@@ -6,7 +6,7 @@
     public class Arena
     {
         /// <summary>
-        /// 
+        /// All the teams/sides that are fighting in this arena.
         /// </summary>
         readonly internal ITeam[] Sides;
 
@@ -16,11 +16,27 @@
         public int SideCount => Sides.Length;
 
         /// <summary>
-        /// 
+        /// The name of this arena.
         /// </summary>
-        /// <param name="numberOfSides"></param>
+        public string ArenaName { get; }
+
+        /// <summary>
+        /// Creates an arena with the specified number of sides fighting in it.
+        /// </summary>
+        /// <param name="numberOfSides">The number of sides fighting in the arena.</param>
         public Arena(uint numberOfSides)
         {
+            Sides = new ITeam[numberOfSides];
+        }
+
+        /// <summary>
+        /// Creates a named arena with the specified number of sides fighting in it.
+        /// </summary>
+        /// <param name="name">The name of the arena.</param>
+        /// <param name="numberOfSides">The number of sides fighting in the arena.</param>
+        public Arena(string name, uint numberOfSides)
+        {
+            ArenaName = name;
             Sides = new ITeam[numberOfSides];
         }
 

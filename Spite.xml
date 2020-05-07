@@ -11,7 +11,7 @@
         </member>
         <member name="F:Spite.Arena.Sides">
             <summary>
-            
+            All the teams/sides that are fighting in this arena.
             </summary>
         </member>
         <member name="P:Spite.Arena.SideCount">
@@ -19,11 +19,23 @@
             The number of sides managed by this arena.
             </summary>
         </member>
+        <member name="P:Spite.Arena.ArenaName">
+            <summary>
+            The name of this arena.
+            </summary>
+        </member>
         <member name="M:Spite.Arena.#ctor(System.UInt32)">
             <summary>
-            
+            Creates an arena with the specified number of sides fighting in it.
             </summary>
-            <param name="numberOfSides"></param>
+            <param name="numberOfSides">The number of sides fighting in the arena.</param>
+        </member>
+        <member name="M:Spite.Arena.#ctor(System.String,System.UInt32)">
+            <summary>
+            Creates a named arena with the specified number of sides fighting in it.
+            </summary>
+            <param name="name">The name of the arena.</param>
+            <param name="numberOfSides">The number of sides fighting in the arena.</param>
         </member>
         <member name="M:Spite.Arena.GetTeam(System.UInt32)">
             <summary>
@@ -34,8 +46,7 @@
         </member>
         <member name="T:Spite.ArenaBuilder">
             <summary>
-            Represents a battle arena, with a number of sides and defining the flow
-            of battle.
+            Provides methods useful for building and populating an arena.
             </summary>
         </member>
         <member name="M:Spite.ArenaBuilder.#ctor">
@@ -43,12 +54,26 @@
             Creates an instance of an Arena Builder.
             </summary>
         </member>
-        <member name="M:Spite.ArenaBuilder.SetNumberOfSides(System.UInt32)">
+        <member name="M:Spite.ArenaBuilder.InitArena(System.UInt32)">
             <summary>
-            Sets the number of sides 
+            Sets the number of sides fighting in the arena. Must be the first
+            method called.
             </summary>
             <param name="sideCount">The number of sides fighting in this arena.</param>
-            <returns>The ArenaBuilder, for chaining.</returns>
+            <returns>The ArenaBuilder for chaining.</returns>
+            <see cref="M:Spite.Arena.#ctor(System.UInt32)"/>
+            <seealso cref="M:Spite.ArenaBuilder.InitArena(System.String,System.UInt32)"/>
+        </member>
+        <member name="M:Spite.ArenaBuilder.InitArena(System.String,System.UInt32)">
+            <summary>
+            Sets the name of and number of sides fighting in the arena. Must be
+            the first method called.
+            </summary>
+            <param name="arenaName">The name of the arena.</param>
+            <param name="sideCount">The number of sides fighting in this arena.</param>
+            <returns>The ArenaBuilder for chaining.</returns>
+            <see cref="M:Spite.Arena.#ctor(System.String,System.UInt32)"/>
+            <seealso cref="M:Spite.ArenaBuilder.InitArena(System.UInt32)"/>
         </member>
         <member name="M:Spite.ArenaBuilder.SetTurnScheme(Spite.TurnScheme)">
             <summary>
@@ -82,7 +107,7 @@
             <returns>The ArenaBuilder for chaining.</returns>
             <see cref="M:Spite.TeamBuilder.AddEntity(Spite.IEntity)"/>
         </member>
-        <member name="M:Spite.ArenaBuilder.SetWinConditionForTeam(System.Func{Spite.Arena,System.Boolean})">
+        <member name="M:Spite.ArenaBuilder.SetWinConditionForTeam(System.Func{Spite.Arena,Spite.TeamStanding})">
             <summary>
             Sets the win condition for the current team.
             </summary>
@@ -161,6 +186,22 @@
             <param name="isSizeCapped">Whether or not the amount of entities on the team can increase.</param>
             <param name="entityCount">The number of entities that can be on the team, or the default starting number.</param>
         </member>
+        <member name="T:Spite.Events.EntityTapStateChangeEventArgs">
+            <summary>
+            Contains information about the state change of the entity's tapped state.
+            </summary>
+        </member>
+        <member name="P:Spite.Events.EntityTapStateChangeEventArgs.BecameTapped">
+            <summary>
+            If the entity became tapped during this event.
+            </summary>
+        </member>
+        <member name="M:Spite.Events.EntityTapStateChangeEventArgs.#ctor(System.Boolean)">
+            <summary>
+            Creates a default EntityTapStateChangeEventArgs object.
+            </summary>
+            <param name="becameTapped">If the entity</param>
+        </member>
         <member name="T:Spite.IEntity">
             <summary>
             Represents an entity that the SpiteFramework can interact with.
@@ -188,10 +229,22 @@
             </summary>
             <returns>TRUE if the unit was successfully untapped.</returns>
         </member>
+        <member name="E:Spite.IEntity.OnTapOrUntap">
+            <summary>
+            An event that is fired when Tap and Untap are called successfully.
+            </summary>
+        </member>
         <member name="P:Spite.IEntity.IsAlive">
             <summary>
             If this entity is still alive.
             </summary>
+        </member>
+        <member name="T:Spite.TapStateChange">
+            <summary>
+            A delegate to call when an entity is tapped or untapped.
+            </summary>
+            <param name="sender">The entity whose state was changed.</param>
+            <param name="args">Contextual information about the state change.</param>
         </member>
         <member name="T:Spite.ITeam">
             <summary>
@@ -247,6 +300,18 @@
             <param name="entityCount">The number of entity slots to initialize.</param>
             <param name="isSizeCapped">Whether or not entityCount should be the max number of entities on this team.</param>
         </member>
+        <member name="P:Spite.ITeam.CurrentStanding">
+            <summary>
+            The current standing of the team.
+            </summary>
+        </member>
+        <member name="M:Spite.ITeam.GetCurrentStanding(Spite.Arena)">
+            <summary>
+            Checks if this team has won.
+            </summary>
+            <param name="context">The arena this team is fighting in.</param>
+            <returns>True if this team has achieved victory.</returns>
+        </member>
         <member name="T:Spite.Properties.Resources">
             <summary>
               A strongly-typed resource class, for looking up localized strings, etc.
@@ -280,7 +345,7 @@
         </member>
         <member name="T:Spite.TeamBuilder">
             <summary>
-            
+            Provides methods useful in building a team.
             </summary>
         </member>
         <member name="M:Spite.TeamBuilder.Start``1">
@@ -292,10 +357,10 @@
         </member>
         <member name="M:Spite.TeamBuilder.SetTeamSize(System.UInt32,System.Boolean)">
             <summary>
-            
+            Sets the number of entity slots on this team.
             </summary>
-            <param name="teamSize"></param>
-            <param name="isSizeCapped">Whether or not the team can have </param>
+            <param name="teamSize">The initial or max size of the team.</param>
+            <param name="isSizeCapped">Whether or not the team can have more entities than the initial amount.</param>
             <returns></returns>
         </member>
         <member name="M:Spite.TeamBuilder.AddEntity(Spite.IEntity)">
@@ -305,7 +370,7 @@
             <param name="entity">The entity to add to the team.</param>
             <returns>The TeamBuilder for chaining.</returns>
         </member>
-        <member name="M:Spite.TeamBuilder.SetWinCondition(System.Func{Spite.Arena,System.Boolean})">
+        <member name="M:Spite.TeamBuilder.SetTeamStandingDeterminer(System.Func{Spite.Arena,Spite.TeamStanding})">
             <summary>
             Sets the win condition for this team.
             </summary>
@@ -324,6 +389,36 @@
             </summary>
             <typeparam name="TTeam">The team type to cast to. Should be the same type as used in TTeam.</typeparam>
             <returns>The team of the specified type.</returns>
+        </member>
+        <member name="T:Spite.TeamStanding">
+            <summary>
+            Enumerates the possible standings of a team in a battle.
+            </summary>
+        </member>
+        <member name="F:Spite.TeamStanding.Eliminated">
+            <summary>
+            The team has been eliminated from the battle.
+            </summary>
+        </member>
+        <member name="F:Spite.TeamStanding.Defeated">
+            <summary>
+            The team has been defeated and is still in battle.
+            </summary>
+        </member>
+        <member name="F:Spite.TeamStanding.Inactive">
+            <summary>
+            The team is not an active participant in the battle.
+            </summary>
+        </member>
+        <member name="F:Spite.TeamStanding.Competing">
+            <summary>
+            The team hasn't been defeated, eliminated, or gained victory.
+            </summary>
+        </member>
+        <member name="F:Spite.TeamStanding.Victorious">
+            <summary>
+            The team is considered victorious in the battle.
+            </summary>
         </member>
         <member name="T:Spite.TurnScheme">
             <summary>

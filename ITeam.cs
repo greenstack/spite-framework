@@ -1,6 +1,4 @@
-﻿using System.Linq.Expressions;
-
-namespace Spite
+﻿namespace Spite
 {
     /// <summary>
     /// Represents a team of entities in a battle.

@@ -6,7 +6,7 @@ namespace Spite
     /// <summary>
     /// Used to make an object tappable or untappable.
     /// </summary>
-    public interface ITappable
+    public interface ITappableEntity : IEntity
     {
         /// <summary>
         /// Whether or not this object is tapped.
@@ -29,7 +29,7 @@ namespace Spite
         /// </summary>
         /// <param name="tappable">The tappable being tapped.</param>
         /// <returns>True of the tappable is tapped.</returns>
-        public static bool Tap(this ITappable tappable)
+        public static bool Tap(this ITappableEntity tappable)
         {
             if (tappable == null)
             {
@@ -47,7 +47,7 @@ namespace Spite
         /// </summary>
         /// <param name="tappable">The tappable being untapped.</param>
         /// <returns>True if the tappable is untapped. Otherwise, false.</returns>
-        public static bool Untap(this ITappable tappable)
+        public static bool Untap(this ITappableEntity tappable)
         {
             if (tappable == null)
             {
@@ -60,7 +60,7 @@ namespace Spite
             return true;
         }
 
-        private static void Raise(this TapStateChange handler, ITappable sender, EntityTapStateChangeEventArgs args)
+        private static void Raise(this TapStateChange handler, ITappableEntity sender, EntityTapStateChangeEventArgs args)
         {
             handler?.Invoke(sender, args);
         }
@@ -71,5 +71,5 @@ namespace Spite
     /// </summary>
     /// <param name="sender">The entity whose state was changed.</param>
     /// <param name="args">Contextual information about the state change.</param>
-    public delegate void TapStateChange(ITappable sender, EntityTapStateChangeEventArgs args);
+    public delegate void TapStateChange(ITappableEntity sender, EntityTapStateChangeEventArgs args);
 }

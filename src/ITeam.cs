@@ -1,4 +1,6 @@
-﻿namespace Spite
+﻿using System.Collections.Generic;
+
+namespace Spite
 {
     /// <summary>
     /// Represents a team of entities in a battle.
@@ -6,14 +8,9 @@
     public interface ITeam
     {
         /// <summary>
-        /// Are all entities managed by this Team still alive?
+        /// The entities on this team.
         /// </summary>
-        bool AreAllAlive { get; }
-        
-        /// <summary>
-        /// The number of living entities on this team.
-        /// </summary>
-        int AliveEntityCount { get; }
+        ICollection<IEntity> Entities { get; }
         
         /// <summary>
         /// The number of entities managed by this Team.

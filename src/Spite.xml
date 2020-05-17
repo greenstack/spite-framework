@@ -44,6 +44,13 @@
             <param name="index">The index of the team.</param>
             <returns>The team at the specified index</returns>
         </member>
+        <member name="M:Spite.Arena.GetTeamsOpposing(Spite.ITeam)">
+            <summary>
+            Retrieves the teams that oppose the given team.
+            </summary>
+            <param name="team">The team that should retrieve its enemies.</param>
+            <returns>The teams opposing the provided team.</returns>
+        </member>
         <member name="T:Spite.ArenaBuilder">
             <summary>
             Provides methods useful for building and populating an arena.
@@ -100,16 +107,13 @@
             Represents a team.
             </summary>
         </member>
-        <member name="P:Spite.BasicTeam.AreAllAlive">
-            <inheritdoc/>
-        </member>
-        <member name="P:Spite.BasicTeam.AliveEntityCount">
-            <inheritdoc/>
-        </member>
         <member name="P:Spite.BasicTeam.ManagedEntityCount">
             <inheritdoc/>
         </member>
         <member name="P:Spite.BasicTeam.CurrentStanding">
+            <inheritdoc/>
+        </member>
+        <member name="P:Spite.BasicTeam.Entities">
             <inheritdoc/>
         </member>
         <member name="M:Spite.BasicTeam.AddEntity(Spite.IEntity)">
@@ -162,17 +166,17 @@
             If this entity is still alive.
             </summary>
         </member>
-        <member name="T:Spite.ITappable">
+        <member name="T:Spite.ITappableEntity">
             <summary>
             Used to make an object tappable or untappable.
             </summary>
         </member>
-        <member name="P:Spite.ITappable.IsTapped">
+        <member name="P:Spite.ITappableEntity.IsTapped">
             <summary>
             Whether or not this object is tapped.
             </summary>
         </member>
-        <member name="P:Spite.ITappable.OnTapOrUntap">
+        <member name="P:Spite.ITappableEntity.OnTapOrUntap">
             <summary>
             An event that is fired when Tap and Untap are called successfully.
             </summary>
@@ -182,14 +186,14 @@
             Provides various methods to objects that implement ITappable.
             </summary>
         </member>
-        <member name="M:Spite.ITappableMethodProvider.Tap(Spite.ITappable)">
+        <member name="M:Spite.ITappableMethodProvider.Tap(Spite.ITappableEntity)">
             <summary>
             Taps the tappable object.
             </summary>
             <param name="tappable">The tappable being tapped.</param>
             <returns>True of the tappable is tapped.</returns>
         </member>
-        <member name="M:Spite.ITappableMethodProvider.Untap(Spite.ITappable)">
+        <member name="M:Spite.ITappableMethodProvider.Untap(Spite.ITappableEntity)">
             <summary>
             Untaps the tappable.
             </summary>
@@ -208,14 +212,9 @@
             Represents a team of entities in a battle.
             </summary>
         </member>
-        <member name="P:Spite.ITeam.AreAllAlive">
+        <member name="P:Spite.ITeam.Entities">
             <summary>
-            Are all entities managed by this Team still alive?
-            </summary>
-        </member>
-        <member name="P:Spite.ITeam.AliveEntityCount">
-            <summary>
-            The number of living entities on this team.
+            The entities on this team.
             </summary>
         </member>
         <member name="P:Spite.ITeam.ManagedEntityCount">
@@ -277,6 +276,25 @@
             <summary>
               Looks up a localized string similar to A team hasn&apos;t been added to this arena yet..
             </summary>
+        </member>
+        <member name="T:Spite.Queries.TeamQueryExtensions">
+            <summary>
+            Provides various methods to query teams with.
+            </summary>
+        </member>
+        <member name="M:Spite.Queries.TeamQueryExtensions.CountLivingEntities(Spite.ITeam)">
+            <summary>
+            Counts the number of entities still alive on the team.
+            </summary>
+            <param name="team">The team to query.</param>
+            <returns>The number of living entities.</returns>
+        </member>
+        <member name="M:Spite.Queries.TeamQueryExtensions.AreAllEntitiesAlive(Spite.ITeam)">
+            <summary>
+            Determines if all entities are alive on the team.
+            </summary>
+            <param name="team">The team to query.</param>
+            <returns>True if all entities on this team are alive.</returns>
         </member>
         <member name="T:Spite.TeamBuilder">
             <summary>

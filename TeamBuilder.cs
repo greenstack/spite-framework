@@ -25,7 +25,7 @@ namespace Spite
         /// </summary>
         /// <param name="teamSize">The initial or max size of the team.</param>
         /// <param name="isSizeCapped">Whether or not the team can have more entities than the initial amount.</param>
-        /// <returns></returns>
+        /// <returns>The team builder for chaining.</returns>
         public TeamBuilder SetTeamSize(uint teamSize, bool isSizeCapped)
         {
             builtTeam.InitializeEntityCount(teamSize, isSizeCapped);

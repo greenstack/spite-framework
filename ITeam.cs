@@ -30,8 +30,7 @@
         /// Sets the number of entities slots on this team.
         /// </summary>
         /// <param name="entityCount">The number of entity slots to initialize.</param>
-        /// <param name="isSizeCapped">Whether or not entityCount should be the max number of entities on this team.</param>
-        void InitializeEntityCount(uint entityCount, bool isSizeCapped);
+        void InitializeEntityCount(uint entityCount);
 
         /// <summary>
         /// The current standing of the team.

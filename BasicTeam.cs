@@ -45,18 +45,10 @@ namespace Spite
 		/// <summary>
 		/// Sets the number of entities available to this team.
 		/// </summary>
-		/// <param name="isSizeCapped">Whether or not the amount of entities on the team can increase.</param>
 		/// <param name="entityCount">The number of entities that can be on the team, or the default starting number.</param>
-		public void InitializeEntityCount(uint entityCount, bool isSizeCapped)
-		{
-			if (isSizeCapped)
-			{
-				entities = new IEntity[entityCount];
-			}
-			else
-			{
-				entities = new List<IEntity>((int)entityCount);
-			}
+		public void InitializeEntityCount(uint entityCount)
+		{	
+			entities = new IEntity[entityCount];
 		}
 
 		/// <inheritdoc/>

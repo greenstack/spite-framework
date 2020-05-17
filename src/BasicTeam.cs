@@ -13,16 +13,13 @@ namespace Spite
 		internal ICollection<IEntity> entities = new List<IEntity>();
 
 		/// <inheritdoc/>
-		public bool AreAllAlive => AliveEntityCount == ManagedEntityCount;
-
-		/// <inheritdoc/>
-		public int AliveEntityCount => entities.Count(e => e.IsAlive);
-
-		/// <inheritdoc/>
 		public int ManagedEntityCount => entities.Count(e => e != null);
 
 		/// <inheritdoc/>
 		public TeamStanding CurrentStanding { get; private set; }
+
+		/// <inheritdoc/>
+		public ICollection<IEntity> Entities => entities;
 
 		/// <inheritdoc/>
 		public void AddEntity(IEntity entity)

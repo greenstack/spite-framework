@@ -1,4 +1,7 @@
-﻿namespace Spite
+﻿using System.Collections.Generic;
+using System.Linq;
+
+namespace Spite
 {
     /// <summary>
     /// Manages a group of sides in a battle.
@@ -48,6 +51,13 @@
         public ITeam GetTeam(uint index)
         {
             return Sides[index];
+        }
+
+        public IEnumerable<ITeam> GetTeamsOpposing(ITeam team)
+        {
+            return from side in Sides
+                   where side != team
+                   select side;
         }
 
     }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 
 namespace Spite
@@ -35,27 +34,6 @@ namespace Spite
 		public void AddEntity(IEntity entity)
 		{
 			entities.Add(entity);
-		}
-
-		/// <inheritdoc/>
-		public void Untap(IEntity entity)
-		{
-			if (entity == null) throw new ArgumentNullException(paramName: nameof(entity));
-			if (entity.Team != this)
-			{
-				// Why do we want to throw this...?
-				throw new InvalidOperationException("Cannot untap this entity - teams are mismatched.");
-			}
-			entity.Untap();
-		}
-
-		/// <inheritdoc/>
-		public void UntapAll()
-		{
-			foreach (var e in entities)
-			{
-				e.Untap();
-			}
 		}
 
 		/// <summary>

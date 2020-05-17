@@ -6,27 +6,6 @@
     public interface ITeam
     {
         /// <summary>
-        /// If all entities have been tapped.
-        /// </summary>
-        bool AreAllEntitiesTapped { get; }
-        
-        /// <summary>
-        /// The number of untapped entities on this team.
-        /// </summary>
-        int UntappedEntityCount { get; }
-        
-        /// <summary>
-        /// Untaps all entities managed by this team.
-        /// </summary>
-        void UntapAll();
-        
-        /// <summary>
-        /// Untaps the specific entity on this team.
-        /// </summary>
-        /// <param name="entity">The entity to untap.</param>
-        void Untap(IEntity entity);
-        
-        /// <summary>
         /// Are all entities managed by this Team still alive?
         /// </summary>
         bool AreAllAlive { get; }
@@ -60,7 +39,7 @@
         TeamStanding CurrentStanding { get; }
         
         /// <summary>
-        /// Checks if this team has won.
+        /// Determines and sets the current standing othe team in the arena.
         /// </summary>
         /// <param name="context">The arena this team is fighting in.</param>
         /// <returns>True if this team has achieved victory.</returns>

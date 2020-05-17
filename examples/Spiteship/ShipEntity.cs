@@ -20,7 +20,7 @@ namespace SpiteBattleship
             Name = name;
         }
 
-        void TakeHit()
+        public void TakeHit()
         {
             --Health;
         }

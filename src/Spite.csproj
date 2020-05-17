@@ -15,7 +15,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <WarningsAsErrors>NU1605</WarningsAsErrors>
-    <DocumentationFile>C:\Users\Joseph\dev\csharp\spite-framework\Spite.xml</DocumentationFile>
+    <DocumentationFile>C:\Users\Joseph\dev\csharp\spite-framework\src\Spite.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,13 +23,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="LICENSE">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
   </ItemGroup>
 
   <ItemGroup>

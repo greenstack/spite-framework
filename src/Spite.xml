@@ -79,63 +79,15 @@
             <summary>
             Sets the type of turn scheme that this arena will have.
             </summary>
-            <param name="scheme">The scheme for determining the granularity of turns.</param>
+            <param name="scheme">The scheme for determining the granularity and order of turns.</param>
             <returns>The ArenaBuilder for chaining.</returns>
         </member>
-        <member name="M:Spite.ArenaBuilder.AddTeam``1">
+        <member name="M:Spite.ArenaBuilder.AddTeam(Spite.ITeam)">
             <summary>
-            Adds a team of the specific type to the arena.
+            Adds a team to this arena.
             </summary>
-            <typeparam name="TTeam">The type of team to build.</typeparam>
-            <returns>The ArenaBuilder for chaining.</returns>
-            <see cref="M:Spite.TeamBuilder.Start``1"/>
-        </member>
-        <member name="M:Spite.ArenaBuilder.SetCurrentTeamSize(System.UInt32,System.Boolean)">
-            <summary>
-            Sets the size of the team currently being built.
-            </summary>
-            <param name="teamSize">The initial size of the team, or the max size of the team.</param>
-            <param name="isSizeCapped">If the team size cannot increase, set this to true.</param>
-            <returns>The ArenaBuilder for chaining.</returns>
-            <see cref="M:Spite.TeamBuilder.SetTeamSize(System.UInt32,System.Boolean)"/>
-        </member>
-        <member name="M:Spite.ArenaBuilder.AddEntityToTeam(Spite.IEntity)">
-            <summary>
-            Adds the provided entity to the team.
-            </summary>
-            <param name="entity">The entity to be added to the team.</param>
-            <returns>The ArenaBuilder for chaining.</returns>
-            <see cref="M:Spite.TeamBuilder.AddEntity(Spite.IEntity)"/>
-        </member>
-        <member name="M:Spite.ArenaBuilder.SetWinConditionForTeam(System.Func{Spite.Arena,Spite.TeamStanding})">
-            <summary>
-            Sets the win condition for the current team.
-            </summary>
-            <returns>The ArenaBuilder for chaining.</returns>
-        </member>
-        <member name="M:Spite.ArenaBuilder.FinishTeam">
-            <summary>
-            Finishes the team.
-            </summary>
-            <returns>The ArenaBuilder for chaining.</returns>
-            <see cref="M:Spite.TeamBuilder.Finish"/>
-        </member>
-        <member name="M:Spite.ArenaBuilder.FinishTeam(Spite.ITeam@)">
-            <summary>
-            Finishes the team and provides it as a parameter.
-            </summary>
-            <param name="createdTeam">The team that get finished building.</param>
-            <returns>The ArenaBuilder for chaining.</returns>
-            <see cref="M:Spite.TeamBuilder.Finish"/>
-        </member>
-        <member name="M:Spite.ArenaBuilder.FinishTeam``1(``0@)">
-            <summary>
-            Finishes the team and provides it as a parameter, cast to the specific type.
-            </summary>
-            <typeparam name="T">The team type.</typeparam>
-            <param name="createdTeam">The team that was created.</param>
-            <returns>The ArenaBuilder for chaining.</returns>
-            <see cref="M:Spite.TeamBuilder.Finish``1"/>
+            <param name="team">The team to add to the arena.</param>
+            <returns>The team to add to the arena.</returns>
         </member>
         <member name="M:Spite.ArenaBuilder.Finish">
             <summary>
@@ -148,12 +100,6 @@
             Represents a team.
             </summary>
         </member>
-        <member name="P:Spite.BasicTeam.AreAllEntitiesTapped">
-            <inheritdoc/>
-        </member>
-        <member name="P:Spite.BasicTeam.UntappedEntityCount">
-            <inheritdoc/>
-        </member>
         <member name="P:Spite.BasicTeam.AreAllAlive">
             <inheritdoc/>
         </member>
@@ -163,13 +109,10 @@
         <member name="P:Spite.BasicTeam.ManagedEntityCount">
             <inheritdoc/>
         </member>
+        <member name="P:Spite.BasicTeam.CurrentStanding">
+            <inheritdoc/>
+        </member>
         <member name="M:Spite.BasicTeam.AddEntity(Spite.IEntity)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Spite.BasicTeam.Untap(Spite.IEntity)">
-            <inheritdoc/>
-        </member>
-        <member name="M:Spite.BasicTeam.UntapAll">
             <inheritdoc/>
         </member>
         <member name="M:Spite.BasicTeam.GetEntityByIndex(System.Int32)">
@@ -179,12 +122,14 @@
             <param name="index">The index of the entity.</param>
             <returns>The entity at the given index.</returns>
         </member>
-        <member name="M:Spite.BasicTeam.InitializeEntityCount(System.UInt32,System.Boolean)">
+        <member name="M:Spite.BasicTeam.InitializeEntityCount(System.UInt32)">
             <summary>
             Sets the number of entities available to this team.
             </summary>
-            <param name="isSizeCapped">Whether or not the amount of entities on the team can increase.</param>
             <param name="entityCount">The number of entities that can be on the team, or the default starting number.</param>
+        </member>
+        <member name="M:Spite.BasicTeam.DetermineStanding(Spite.Arena)">
+            <inheritdoc/>
         </member>
         <member name="T:Spite.Events.EntityTapStateChangeEventArgs">
             <summary>
@@ -207,37 +152,49 @@
             Represents an entity that the SpiteFramework can interact with.
             </summary>
         </member>
-        <member name="P:Spite.IEntity.IsTapped">
-            <summary>
-            If this entity is untapped.
-            </summary>
-        </member>
         <member name="P:Spite.IEntity.Team">
             <summary>
             The team this entity belongs to.
-            </summary>
-        </member>
-        <member name="M:Spite.IEntity.Tap">
-            <summary>
-            Taps this entity.
-            </summary>
-            <returns>TRUE if the unit was successfully tapped.</returns>
-        </member>
-        <member name="M:Spite.IEntity.Untap">
-            <summary>
-            Untaps this entity.
-            </summary>
-            <returns>TRUE if the unit was successfully untapped.</returns>
-        </member>
-        <member name="E:Spite.IEntity.OnTapOrUntap">
-            <summary>
-            An event that is fired when Tap and Untap are called successfully.
             </summary>
         </member>
         <member name="P:Spite.IEntity.IsAlive">
             <summary>
             If this entity is still alive.
             </summary>
+        </member>
+        <member name="T:Spite.ITappable">
+            <summary>
+            Used to make an object tappable or untappable.
+            </summary>
+        </member>
+        <member name="P:Spite.ITappable.IsTapped">
+            <summary>
+            Whether or not this object is tapped.
+            </summary>
+        </member>
+        <member name="P:Spite.ITappable.OnTapOrUntap">
+            <summary>
+            An event that is fired when Tap and Untap are called successfully.
+            </summary>
+        </member>
+        <member name="T:Spite.ITappableMethodProvider">
+            <summary>
+            Provides various methods to objects that implement ITappable.
+            </summary>
+        </member>
+        <member name="M:Spite.ITappableMethodProvider.Tap(Spite.ITappable)">
+            <summary>
+            Taps the tappable object.
+            </summary>
+            <param name="tappable">The tappable being tapped.</param>
+            <returns>True of the tappable is tapped.</returns>
+        </member>
+        <member name="M:Spite.ITappableMethodProvider.Untap(Spite.ITappable)">
+            <summary>
+            Untaps the tappable.
+            </summary>
+            <param name="tappable">The tappable being untapped.</param>
+            <returns>True if the tappable is untapped. Otherwise, false.</returns>
         </member>
         <member name="T:Spite.TapStateChange">
             <summary>
@@ -250,27 +207,6 @@
             <summary>
             Represents a team of entities in a battle.
             </summary>
-        </member>
-        <member name="P:Spite.ITeam.AreAllEntitiesTapped">
-            <summary>
-            If all entities have been tapped.
-            </summary>
-        </member>
-        <member name="P:Spite.ITeam.UntappedEntityCount">
-            <summary>
-            The number of untapped entities on this team.
-            </summary>
-        </member>
-        <member name="M:Spite.ITeam.UntapAll">
-            <summary>
-            Untaps all entities managed by this team.
-            </summary>
-        </member>
-        <member name="M:Spite.ITeam.Untap(Spite.IEntity)">
-            <summary>
-            Untaps the specific entity on this team.
-            </summary>
-            <param name="entity">The entity to untap.</param>
         </member>
         <member name="P:Spite.ITeam.AreAllAlive">
             <summary>
@@ -293,21 +229,20 @@
             </summary>
             <param name="entity">The entity pertaining to the team.</param>
         </member>
-        <member name="M:Spite.ITeam.InitializeEntityCount(System.UInt32,System.Boolean)">
+        <member name="M:Spite.ITeam.InitializeEntityCount(System.UInt32)">
             <summary>
             Sets the number of entities slots on this team.
             </summary>
             <param name="entityCount">The number of entity slots to initialize.</param>
-            <param name="isSizeCapped">Whether or not entityCount should be the max number of entities on this team.</param>
         </member>
         <member name="P:Spite.ITeam.CurrentStanding">
             <summary>
             The current standing of the team.
             </summary>
         </member>
-        <member name="M:Spite.ITeam.GetCurrentStanding(Spite.Arena)">
+        <member name="M:Spite.ITeam.DetermineStanding(Spite.Arena)">
             <summary>
-            Checks if this team has won.
+            Determines and sets the current standing othe team in the arena.
             </summary>
             <param name="context">The arena this team is fighting in.</param>
             <returns>True if this team has achieved victory.</returns>
@@ -355,13 +290,12 @@
             <typeparam name="TTeam">The type of team to create.</typeparam>
             <returns>The team builder for chaining.</returns>
         </member>
-        <member name="M:Spite.TeamBuilder.SetTeamSize(System.UInt32,System.Boolean)">
+        <member name="M:Spite.TeamBuilder.SetTeamSize(System.UInt32)">
             <summary>
             Sets the number of entity slots on this team.
             </summary>
             <param name="teamSize">The initial or max size of the team.</param>
-            <param name="isSizeCapped">Whether or not the team can have more entities than the initial amount.</param>
-            <returns></returns>
+            <returns>The team builder for chaining.</returns>
         </member>
         <member name="M:Spite.TeamBuilder.AddEntity(Spite.IEntity)">
             <summary>

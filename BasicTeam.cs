@@ -13,12 +13,6 @@ namespace Spite
 		internal ICollection<IEntity> entities = new List<IEntity>();
 
 		/// <inheritdoc/>
-		public bool AreAllEntitiesTapped => UntappedEntityCount == 0;
-
-		/// <inheritdoc/>
-		public int UntappedEntityCount => AliveEntityCount - entities.Count(e => e.IsTapped);
-
-		/// <inheritdoc/>
 		public bool AreAllAlive => AliveEntityCount == ManagedEntityCount;
 
 		/// <inheritdoc/>

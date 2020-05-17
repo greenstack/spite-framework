@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spite", "Spite.csproj", "{F8F2B4BB-5CE4-476A-9ED0-8C660E2495B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spite", "src\Spite.csproj", "{2BAF6FFD-F7C9-4090-A003-AA52B458B353}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpiteBattleship", "examples\Spiteship\SpiteBattleship.csproj", "{F9160EEF-D786-49A0-935F-FF500465967A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +13,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F8F2B4BB-5CE4-476A-9ED0-8C660E2495B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F8F2B4BB-5CE4-476A-9ED0-8C660E2495B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F8F2B4BB-5CE4-476A-9ED0-8C660E2495B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F8F2B4BB-5CE4-476A-9ED0-8C660E2495B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BAF6FFD-F7C9-4090-A003-AA52B458B353}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BAF6FFD-F7C9-4090-A003-AA52B458B353}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BAF6FFD-F7C9-4090-A003-AA52B458B353}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BAF6FFD-F7C9-4090-A003-AA52B458B353}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9160EEF-D786-49A0-935F-FF500465967A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9160EEF-D786-49A0-935F-FF500465967A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9160EEF-D786-49A0-935F-FF500465967A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9160EEF-D786-49A0-935F-FF500465967A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

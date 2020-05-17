@@ -53,6 +53,11 @@ namespace Spite
             return Sides[index];
         }
 
+        /// <summary>
+        /// Retrieves the teams that oppose the given team.
+        /// </summary>
+        /// <param name="team">The team that should retrieve its enemies.</param>
+        /// <returns>The teams opposing the provided team.</returns>
         public IEnumerable<ITeam> GetTeamsOpposing(ITeam team)
         {
             return from side in Sides

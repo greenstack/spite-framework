@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Spite.Teams.Queries
+namespace Spite.Queries
 {
     /// <summary>
     /// Provides various methods to query teams with.

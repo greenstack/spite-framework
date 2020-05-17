@@ -22,7 +22,7 @@ namespace Spite
 		public int ManagedEntityCount => entities.Count(e => e != null);
 
 		/// <inheritdoc/>
-		public TeamStanding CurrentStanding => throw new NotImplementedException();
+		public TeamStanding CurrentStanding { get; private set; }
 
 		/// <inheritdoc/>
 		public void AddEntity(IEntity entity)

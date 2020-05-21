@@ -49,7 +49,7 @@ namespace Spite
 		}
 
 		/// <inheritdoc/>
-		public TeamStanding DetermineStanding(IArena context)
+		virtual public TeamStanding DetermineStanding(IArena context)
 		{
 			throw new NotImplementedException();
 		}

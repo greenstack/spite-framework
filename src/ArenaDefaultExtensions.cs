@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Spite
 {
@@ -22,6 +23,18 @@ namespace Spite
 #pragma warning restore CA1062 // Validate arguments of public methods
                    where side != team
                    select side;
+        }
+
+        /// <summary>
+        /// Updates all the team standings in the arena.
+        /// </summary>
+        /// <param name="arena">The arena being updated.</param>
+        public static void UpdateTeamStandings(this IArena arena)
+        {
+            foreach (var s in arena.Sides)
+            {
+                s.DetermineStanding(arena);
+            }
         }
     }
 }

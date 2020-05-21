@@ -1,5 +1,7 @@
 ﻿using Spite;
+using Spite.Queries;
 using System;
+using System.Security.Cryptography.X509Certificates;
 
 namespace SpiteBattleship
 {
@@ -16,7 +18,7 @@ namespace SpiteBattleship
 
         static private Arena arena;
 
-        static private ITeam player;
+        static private BattleshipTeam player;
 
         static private ITeam AI;
 
@@ -32,8 +34,15 @@ namespace SpiteBattleship
                 .AddTeam(AI)
                 .Finish();
 
-            Console.Write(player.ToString());
-            Console.ReadLine();
+            // While no team has won, play the game.
+            int x = 0, y = 0;
+            bool quit = false;
+            do
+            {
+                HandlePlayerInput(ref x, ref y, ref quit);
+                if (quit) break;
+                arena.UpdateTeamStandings();
+            } while (!arena.AnyTeamHasStanding(TeamStanding.Eliminated));
         }
 
         /// <summary>
@@ -51,6 +60,44 @@ namespace SpiteBattleship
                 .AddEntity(new ShipEntity("Submarine", 3))
                 .AddEntity(new ShipEntity("Patrol Boat", 2))
                 .Finish<BattleshipTeam>();
+        }
+        
+        static void HandlePlayerInput(ref int x, ref int y, ref bool quit)
+        {
+            bool invalid = true;
+            do
+            {
+                Console.Clear();
+                Console.Write(player.ToString());
+                Console.WriteLine("Enter an x, y coordinate to attack (Q to quit):");
+
+                var input = Console.ReadLine();
+                if (input.ToLower() == "q")
+                {
+                    quit = true;
+                    return;
+                }
+                var coords = input.Split(' ');
+                if (coords.Length != 2)
+                {
+                    continue;
+                }
+                if (int.TryParse(coords[0], out x))
+                {
+                    continue;
+                }
+                if (int.TryParse(coords[1], out y))
+                {
+                    continue;
+                }
+                if (x < 0 || y < 0 || player.GuessedAt(x, y))
+                {
+                    continue;
+                }
+
+                invalid = false;
+            } while (invalid);
+            return;
         }
     }
 }

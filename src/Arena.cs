@@ -1,22 +1,24 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace Spite
 {
     /// <summary>
     /// Manages a group of sides in a battle.
     /// </summary>
-    public class Arena
+    public class Arena : IArena
     {
         /// <summary>
         /// All the teams/sides that are fighting in this arena.
         /// </summary>
-        readonly internal ITeam[] Sides;
+        readonly internal ITeam[] sides;
+
+        /// <inheritdoc/>
+        public ICollection<ITeam> Sides => sides;
 
         /// <summary>
         /// The number of sides managed by this arena.
         /// </summary>
-        public int SideCount => Sides.Length;
+        public int SideCount => sides.Length;
 
         /// <summary>
         /// The name of this arena.
@@ -29,7 +31,7 @@ namespace Spite
         /// <param name="numberOfSides">The number of sides fighting in the arena.</param>
         public Arena(uint numberOfSides)
         {
-            Sides = new ITeam[numberOfSides];
+            sides = new ITeam[numberOfSides];
         }
 
         /// <summary>
@@ -40,7 +42,7 @@ namespace Spite
         public Arena(string name, uint numberOfSides)
         {
             ArenaName = name;
-            Sides = new ITeam[numberOfSides];
+            sides = new ITeam[numberOfSides];
         }
 
         /// <summary>
@@ -50,20 +52,7 @@ namespace Spite
         /// <returns>The team at the specified index</returns>
         public ITeam GetTeam(uint index)
         {
-            return Sides[index];
+            return sides[index];
         }
-
-        /// <summary>
-        /// Retrieves the teams that oppose the given team.
-        /// </summary>
-        /// <param name="team">The team that should retrieve its enemies.</param>
-        /// <returns>The teams opposing the provided team.</returns>
-        public IEnumerable<ITeam> GetTeamsOpposing(ITeam team)
-        {
-            return from side in Sides
-                   where side != team
-                   select side;
-        }
-
     }
 }

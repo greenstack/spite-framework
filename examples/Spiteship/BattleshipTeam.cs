@@ -1,4 +1,5 @@
 ﻿using Spite;
+using Spite.Queries;
 using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
@@ -35,14 +36,6 @@ namespace SpiteBattleship
         /// The locations of the ships.
         /// </summary>
         private ShipSegment[,] shipsSegments = new ShipSegment[BOARD_DIMENSIONS, BOARD_DIMENSIONS];
-
-        public bool AreAllEntitiesTapped => throw new System.NotImplementedException();
-
-        public int UntappedEntityCount => throw new System.NotImplementedException();
-
-        public bool AreAllAlive => throw new System.NotImplementedException();
-
-        public int AliveEntityCount => throw new System.NotImplementedException();
 
         public int ManagedEntityCount => throw new System.NotImplementedException();
 
@@ -91,12 +84,6 @@ namespace SpiteBattleship
             }
         }
 
-        public TeamStanding DetermineStanding(Arena context)
-        {
-            CurrentStanding = AreAllAlive ? TeamStanding.Competing : TeamStanding.Eliminated;
-            return CurrentStanding;
-        }
-
         /// <summary>
         /// Sets the number of ships available to the side.
         /// </summary>
@@ -135,6 +122,30 @@ namespace SpiteBattleship
                 builder.Append("\n");
             }
             return builder.ToString();
+        }
+
+        public TeamStanding DetermineStanding(IArena context)
+        {
+            if (!this.AreAllEntitiesAlive())
+            {
+                CurrentStanding = TeamStanding.Eliminated;
+                return CurrentStanding;
+            }
+            foreach (var team in context.GetTeamsOpposing(this))
+            {
+                if (!team.AreAllEntitiesAlive())
+                {
+                    // There's only two teams in battleship, so we can easily determine this.
+                    CurrentStanding = TeamStanding.Victorious;
+                    break;
+                }
+            }
+            return CurrentStanding;
+        }
+
+        public bool GuessedAt(int x, int y)
+        {
+            return Guesses[x, y] != null;
         }
     }
 }

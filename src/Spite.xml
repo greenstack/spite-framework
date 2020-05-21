@@ -4,15 +4,92 @@
         <name>Spite</name>
     </assembly>
     <members>
+        <member name="T:Spite.Actions.ActionBuilder">
+            <summary>
+            Builds up an action that can be executed.
+            </summary>
+        </member>
+        <member name="M:Spite.Actions.ActionBuilder.#ctor">
+            <summary>
+            Creates a new instance of the ActionBuilder.
+            </summary>
+        </member>
+        <member name="M:Spite.Actions.ActionBuilder.AddAction``1(Spite.Actions.ITeamAction{``0})">
+            <summary>
+            Adds an action that applies to an entire team.
+            </summary>
+            <typeparam name="TTeam">The type of team this applies to.</typeparam>
+            <param name="action">The action that will be executed.</param>
+            <returns>The action builder for chaining.</returns>
+        </member>
+        <member name="M:Spite.Actions.ActionBuilder.AddAction``1(Spite.Actions.IEntityAction{``0})">
+            <summary>
+            Adds an action that applies to an entity.
+            </summary>
+            <typeparam name="TEntity">The entity type this action applies to.</typeparam>
+            <param name="action">The action to be executed.</param>
+            <returns>The action builder for chaining.</returns>
+        </member>
+        <member name="M:Spite.Actions.ActionBuilder.GetActions">
+            <summary>
+            Retrieves all the commands that have been added.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Spite.Actions.IActionResult">
+            <summary>
+            The results of an action.
+            </summary>
+        </member>
+        <member name="P:Spite.Actions.IActionResult.Success">
+            <summary>
+            If the IActionResult was successful.
+            </summary>
+        </member>
+        <member name="P:Spite.Actions.IAction.Context">
+            <summary>
+            The arena in which this action is being made.
+            </summary>
+        </member>
+        <member name="M:Spite.Actions.IAction.Execute">
+            <summary>
+            Executes this action on the target.
+            </summary>
+            <param name="target">The targeted entity.</param>
+            <returns>The results of the command.</returns>
+        </member>
+        <member name="T:Spite.Actions.IEntityAction`1">
+            <summary>
+            Represents an action that can be applied to an entity.
+            </summary>
+        </member>
+        <member name="P:Spite.Actions.IEntityAction`1.Target">
+            <summary>
+            The entity targeted by this action.
+            </summary>
+        </member>
+        <member name="T:Spite.Actions.ITeamAction`1">
+            <summary>
+            An interface for actions that can be taken against teams.
+            </summary>
+        </member>
+        <member name="P:Spite.Actions.ITeamAction`1.Target">
+            <summary>
+            The Team targeted by this action.
+            </summary>
+        </member>
         <member name="T:Spite.Arena">
             <summary>
             Manages a group of sides in a battle.
             </summary>
         </member>
-        <member name="F:Spite.Arena.Sides">
+        <member name="F:Spite.Arena.sides">
             <summary>
             All the teams/sides that are fighting in this arena.
             </summary>
+        </member>
+        <member name="P:Spite.Arena.Sides">
+            <inheritdoc/>
         </member>
         <member name="P:Spite.Arena.SideCount">
             <summary>
@@ -43,13 +120,6 @@
             </summary>
             <param name="index">The index of the team.</param>
             <returns>The team at the specified index</returns>
-        </member>
-        <member name="M:Spite.Arena.GetTeamsOpposing(Spite.ITeam)">
-            <summary>
-            Retrieves the teams that oppose the given team.
-            </summary>
-            <param name="team">The team that should retrieve its enemies.</param>
-            <returns>The teams opposing the provided team.</returns>
         </member>
         <member name="T:Spite.ArenaBuilder">
             <summary>
@@ -102,6 +172,25 @@
             </summary>
             <returns>The built arena.</returns>
         </member>
+        <member name="T:Spite.ArenaDefaultExtensions">
+            <summary>
+            Provides default implementations for Arenas. (I can't wait for C#8.0)
+            </summary>
+        </member>
+        <member name="M:Spite.ArenaDefaultExtensions.GetTeamsOpposing(Spite.IArena,Spite.ITeam)">
+            <summary>
+            Retrieves the teams that oppose the given team.
+            </summary>
+            <param name="arena">The arena being checked.</param>
+            <param name="team">The team that should retrieve its enemies.</param>
+            <returns>The teams opposing the provided team.</returns>
+        </member>
+        <member name="M:Spite.ArenaDefaultExtensions.UpdateTeamStandings(Spite.IArena)">
+            <summary>
+            Updates all the team standings in the arena.
+            </summary>
+            <param name="arena">The arena being updated.</param>
+        </member>
         <member name="T:Spite.BasicTeam">
             <summary>
             Represents a team.
@@ -132,7 +221,7 @@
             </summary>
             <param name="entityCount">The number of entities that can be on the team, or the default starting number.</param>
         </member>
-        <member name="M:Spite.BasicTeam.DetermineStanding(Spite.Arena)">
+        <member name="M:Spite.BasicTeam.DetermineStanding(Spite.IArena)">
             <inheritdoc/>
         </member>
         <member name="T:Spite.Events.EntityTapStateChangeEventArgs">
@@ -150,6 +239,26 @@
             Creates a default EntityTapStateChangeEventArgs object.
             </summary>
             <param name="becameTapped">If the entity</param>
+        </member>
+        <member name="T:Spite.IArena">
+            <summary>
+            Manages a group of sides in a battle.
+            </summary>
+        </member>
+        <member name="P:Spite.IArena.Sides">
+            <summary>
+            All the teams/sides that are fighting in this arena.
+            </summary>
+        </member>
+        <member name="P:Spite.IArena.SideCount">
+            <summary>
+            The number of sides managed by this arena.
+            </summary>
+        </member>
+        <member name="P:Spite.IArena.ArenaName">
+            <summary>
+            The name of this arena.
+            </summary>
         </member>
         <member name="T:Spite.IEntity">
             <summary>
@@ -239,12 +348,29 @@
             The current standing of the team.
             </summary>
         </member>
-        <member name="M:Spite.ITeam.DetermineStanding(Spite.Arena)">
+        <member name="M:Spite.ITeam.DetermineStanding(Spite.IArena)">
             <summary>
             Determines and sets the current standing othe team in the arena.
             </summary>
             <param name="context">The arena this team is fighting in.</param>
             <returns>True if this team has achieved victory.</returns>
+        </member>
+        <member name="T:Spite.ITurnTaker">
+            <summary>
+            Represents an item that can have turns assigned to it.
+            </summary>
+        </member>
+        <member name="M:Spite.ITurnTaker.BeginTurn(Spite.IArena)">
+            <summary>
+            Informs this item that its turn is beginning.
+            </summary>
+            <param name="context">The arena this item is participating in.</param>
+        </member>
+        <member name="M:Spite.ITurnTaker.EndTurn(Spite.IArena)">
+            <summary>
+            Informs this object that its turn is ending.
+            </summary>
+            <param name="context">The arena this item is participating in.</param>
         </member>
         <member name="T:Spite.Properties.Resources">
             <summary>
@@ -276,6 +402,35 @@
             <summary>
               Looks up a localized string similar to A team hasn&apos;t been added to this arena yet..
             </summary>
+        </member>
+        <member name="T:Spite.Queries.ArenaQueries">
+            <summary>
+            Provides some queries that can be used with Arenas.
+            </summary>
+        </member>
+        <member name="M:Spite.Queries.ArenaQueries.AnyTeamHasStanding(Spite.IArena,Spite.TeamStanding)">
+            <summary>
+            Determines if any team in the arena has the current standing.
+            </summary>
+            <param name="arena">The arena to check.</param>
+            <param name="standing">The standing to check for.</param>
+            <returns>True if any team has the given standing.</returns>
+        </member>
+        <member name="M:Spite.Queries.ArenaQueries.CountTeamsWithStanding(Spite.IArena,Spite.TeamStanding)">
+            <summary>
+            Gets the number of teams with the given standing.
+            </summary>
+            <param name="arena">The arena to check against.</param>
+            <param name="standing">The standing to search for.</param>
+            <returns>The number of teams with the given standing.</returns>
+        </member>
+        <member name="M:Spite.Queries.ArenaQueries.GetTeamsWithStanding(Spite.IArena,Spite.TeamStanding)">
+            <summary>
+            Gets all the teams with the given standing.
+            </summary>
+            <param name="arena">The arena to check against.</param>
+            <param name="standing">The standing to search for.</param>
+            <returns>A sequence of teams that match the check.</returns>
         </member>
         <member name="T:Spite.Queries.TeamQueryExtensions">
             <summary>
@@ -354,7 +509,7 @@
         </member>
         <member name="F:Spite.TeamStanding.Defeated">
             <summary>
-            The team has been defeated and is still in battle.
+            The team has been defeated but is still in battle.
             </summary>
         </member>
         <member name="F:Spite.TeamStanding.Inactive">
@@ -380,21 +535,30 @@
         <member name="F:Spite.TurnScheme.Team">
             <summary>
             Turns are assigned to teams.
+            
+            Examples: Fire Emblem, Battleship
             </summary>
         </member>
         <member name="F:Spite.TurnScheme.Entity">
             <summary>
             Turns are assigned to entities one-by-one.
+            
+            Examples: Octopath Traveler, any game where entities act, sorted by
+            something like an entity's speed.
             </summary>
         </member>
         <member name="F:Spite.TurnScheme.VonNeumannTeam">
             <summary>
             Sides decide what each entity on their team will do at the same time.
+            
+            Examples: Pokemon, Rock Paper Scissors/Roshambo
             </summary>
         </member>
         <member name="F:Spite.TurnScheme.VonNeumannEntity">
             <summary>
             Sides decide what one entity will do at the same time.
+            
+            Examples: I dunno
             </summary>
         </member>
     </members>

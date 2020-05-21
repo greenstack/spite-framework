@@ -16,7 +16,7 @@ namespace Spite
         /// The number of entities managed by this Team.
         /// </summary>
         int ManagedEntityCount { get; }
-        
+
         /// <summary>
         /// Adds the entity onto the team.
         /// </summary>

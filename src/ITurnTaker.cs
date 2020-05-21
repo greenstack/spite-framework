@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents an item that can have turns assigned to it.
     /// </summary>
-    public interface ITakeTurns
+    public interface ITurnTaker
     {
         /// <summary>
         /// Informs this item that its turn is beginning.

@@ -8,16 +8,14 @@ namespace Spite.Actions
     /// </summary>
     public class ActionBuilder
     {
-        IArena context;
-
-        List<IAction> actions;
+        readonly List<IAction> actions;
 
         /// <summary>
         /// Creates a new instance of the ActionBuilder.
         /// </summary>
-        public ActionBuilder(IArena context)
+        public ActionBuilder()
         {
-
+            actions = new List<IAction>();
         }
 
         /// <summary>
@@ -28,6 +26,7 @@ namespace Spite.Actions
         /// <returns>The action builder for chaining.</returns>
         public ActionBuilder AddAction<TTeam>(ITeamAction<TTeam> action) where TTeam : ITeam
         {
+            actions.Add(action);
             return this;
         }
 
@@ -36,10 +35,20 @@ namespace Spite.Actions
         /// </summary>
         /// <typeparam name="TEntity">The entity type this action applies to.</typeparam>
         /// <param name="action">The action to be executed.</param>
-        /// <returns></returns>
+        /// <returns>The action builder for chaining.</returns>
         public ActionBuilder AddAction<TEntity>(IEntityAction<TEntity> action) where TEntity : IEntity
         {
+            actions.Add(action);
             return this;
+        }
+
+        /// <summary>
+        /// Retrieves all the commands that have been added.
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<IAction> GetActions()
+        {
+            return actions;
         }
     }
 }

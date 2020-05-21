@@ -10,7 +10,7 @@ namespace Spite
         /// <summary>
         /// All the teams/sides that are fighting in this arena.
         /// </summary>
-        ICollection<ITeam> Sides { get; }
+        IList<ITeam> Sides { get; }
 
         /// <summary>
         /// The number of sides managed by this arena.

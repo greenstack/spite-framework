@@ -13,7 +13,7 @@ namespace Spite
         readonly internal ITeam[] sides;
 
         /// <inheritdoc/>
-        public ICollection<ITeam> Sides => sides;
+        public IList<ITeam> Sides => sides;
 
         /// <summary>
         /// The number of sides managed by this arena.

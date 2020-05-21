@@ -10,7 +10,7 @@
         /// </summary>
         Eliminated,
         /// <summary>
-        /// The team has been defeated and is still in battle.
+        /// The team has been defeated but is still in battle.
         /// </summary>
         Defeated,
         /// <summary>

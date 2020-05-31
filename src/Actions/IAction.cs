@@ -10,6 +10,8 @@
         /// </summary>
         IArena Context { get; }
 
+        IActionResult Result { get; }
+
         /// <summary>
         /// Executes this action on the target.
         /// </summary>

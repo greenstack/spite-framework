@@ -9,5 +9,11 @@
         /// The entity targeted by this action.
         /// </summary>
         TEntity Target { get; }
+
+        /// <summary>
+        /// Accepts a ITeamActionVisitor object.
+        /// </summary>
+        /// <param name="visitor">The object visiting this action.</param>
+        void Accept(IEntityActionVisitor visitor);
     }
 }

@@ -22,7 +22,7 @@ namespace Spite.Queries
         public static bool AreAnyEntitiesAlive(this ITeam team)
         {
             if (team == null) throw new ArgumentNullException(nameof(team));
-            return team.CountLivingEntities() > 0;
+            return team.Entities.Any(e => e.IsAlive);
         }
 
         /// <summary>

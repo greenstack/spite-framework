@@ -20,7 +20,7 @@ namespace SpiteBattleship
 
         static private BattleshipTeam player;
 
-        static private ITeam AI;
+        static private BattleshipTeam AI;
 
         static void Main(string[] args)
         {
@@ -40,6 +40,12 @@ namespace SpiteBattleship
             do
             {
                 HandlePlayerInput(ref x, ref y, ref quit);
+                var ga = new GuessAction(AI, arena, x, y);
+                var result = ga.Execute();
+                if (result.Success)
+                {
+
+                }
                 if (quit) break;
                 arena.UpdateTeamStandings();
             } while (!arena.AnyTeamHasStanding(TeamStanding.Eliminated));
@@ -82,15 +88,15 @@ namespace SpiteBattleship
                 {
                     continue;
                 }
-                if (int.TryParse(coords[0], out x))
+                if (!int.TryParse(coords[0], out x))
                 {
                     continue;
                 }
-                if (int.TryParse(coords[1], out y))
+                if (!int.TryParse(coords[1], out y))
                 {
                     continue;
                 }
-                if (x < 0 || y < 0 || player.GuessedAt(x, y))
+                if (x < 0 || x > 9 || y < 0 || y > 9 || player.GuessedAt(x, y))
                 {
                     continue;
                 }

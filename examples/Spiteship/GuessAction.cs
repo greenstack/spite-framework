@@ -21,7 +21,7 @@ namespace SpiteBattleship
 
         public IActionResult Execute()
         {
-            return new GuessActionResult(Target.ReceiveGuess(x, y));
+            return new GuessActionResult(Target.ReceiveGuess(x, y), x, y);
         }
     }
 }

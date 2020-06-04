@@ -54,6 +54,12 @@ namespace SpiteBattleship
             return false;
         }
 
+        public void InformGuessStatus(GuessActionResult result)
+        {
+            Guesses[result.TargetedX, result.TargetedY] =
+                result.Success;
+        }
+
         public void AddEntity(IEntity entity)
         {
             if (entity is ShipEntity ship)

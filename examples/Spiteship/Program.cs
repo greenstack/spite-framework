@@ -1,7 +1,6 @@
 ﻿using Spite;
 using Spite.Queries;
 using System;
-using System.Security.Cryptography.X509Certificates;
 
 namespace SpiteBattleship
 {

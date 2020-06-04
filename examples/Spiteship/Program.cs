@@ -2,6 +2,7 @@
 using Spite.Queries;
 using System;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading;
 
 namespace SpiteBattleship
 {
@@ -37,15 +38,22 @@ namespace SpiteBattleship
             // While no team has won, play the game.
             int x = 0, y = 0;
             bool quit = false;
+            // We're using this action visitor to showcase why it may be useful
+            // to have the action visitor. In a full game, you may want to use
+            // this supplied visitor pattern to handle animations and such, as
+            // well as logging messages to the screen for the player to see.
+            // BattleshipActionAnimator, BattleshipActionLogger are possible
+            // examples here that could work.
+            BattleshipActionPrinter printer = new BattleshipActionPrinter();
             do
             {
                 HandlePlayerInput(ref x, ref y, ref quit);
                 var ga = new GuessAction(AI, arena, x, y);
+                printer.Visit(ga);
+                // Let the user see the output of the visitor.
+                Thread.Sleep(1000);
                 var result = ga.Execute();
-                if (result.Success)
-                {
-
-                }
+                player.InformGuessStatus(result as GuessActionResult);
                 if (quit) break;
                 arena.UpdateTeamStandings();
             } while (!arena.AnyTeamHasStanding(TeamStanding.Eliminated));

@@ -9,7 +9,14 @@ namespace SpiteBattleship
 
         public IArena Context { get; }
 
-        int x, y;
+        /// <summary>
+        /// If I recall correctly, C# 8 will allow more specific return types
+        /// from interface implementations. When C# 8 is more widely available,
+        /// it would be good to implement this.
+        /// </summary>
+        public IActionResult Result { get; private set; }
+
+        public readonly int x, y;
 
         public GuessAction(BattleshipTeam target, IArena context, int x, int y)
         {
@@ -21,7 +28,13 @@ namespace SpiteBattleship
 
         public IActionResult Execute()
         {
-            return new GuessActionResult(Target.ReceiveGuess(x, y), x, y);
+            Result = new GuessActionResult(Target.ReceiveGuess(x, y), x, y);
+            return Result;
+        }
+
+        public void Accept(ITeamActionVisitor visitor)
+        {
+            visitor.Visit(this);
         }
     }
 }

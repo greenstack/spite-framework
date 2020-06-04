@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Spite.Actions
+﻿namespace Spite.Actions
 {
+    /// <summary>
+    /// Provides an interface for actions that can be used during battle.
+    /// </summary>
     public interface IAction
     {
         /// <summary>
@@ -11,10 +10,11 @@ namespace Spite.Actions
         /// </summary>
         IArena Context { get; }
 
+        IActionResult Result { get; }
+
         /// <summary>
         /// Executes this action on the target.
         /// </summary>
-        /// <param name="target">The targeted entity.</param>
         /// <returns>The results of the command.</returns>
         IActionResult Execute();
     }

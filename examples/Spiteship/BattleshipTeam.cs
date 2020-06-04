@@ -37,11 +37,28 @@ namespace SpiteBattleship
         /// </summary>
         private ShipSegment[,] shipsSegments = new ShipSegment[BOARD_DIMENSIONS, BOARD_DIMENSIONS];
 
-        public int ManagedEntityCount => throw new System.NotImplementedException();
+        public int ManagedEntityCount => ships.Length;
 
-        public TeamStanding CurrentStanding { get; private set; }
+        public TeamStanding CurrentStanding { get; private set; } = TeamStanding.Competing;
 
         public ICollection<IEntity> Entities => ships;
+
+        public bool ReceiveGuess(int x, int y)
+        {
+            var ship = shipsSegments[x, y].Ship;
+            if (ship != null && ship.IsAlive)
+            {
+                ship.TakeHit();
+                return true;
+            }
+            return false;
+        }
+
+        public void InformGuessStatus(GuessActionResult result)
+        {
+            Guesses[result.TargetedX, result.TargetedY] =
+                result.Success;
+        }
 
         public void AddEntity(IEntity entity)
         {
@@ -126,14 +143,14 @@ namespace SpiteBattleship
 
         public TeamStanding DetermineStanding(IArena context)
         {
-            if (!this.AreAllEntitiesAlive())
+            if (!this.AreAnyEntitiesAlive())
             {
                 CurrentStanding = TeamStanding.Eliminated;
                 return CurrentStanding;
             }
             foreach (var team in context.GetTeamsOpposing(this))
             {
-                if (!team.AreAllEntitiesAlive())
+                if (!team.AreAnyEntitiesAlive())
                 {
                     // There's only two teams in battleship, so we can easily determine this.
                     CurrentStanding = TeamStanding.Victorious;

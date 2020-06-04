@@ -9,5 +9,11 @@
         /// The Team targeted by this action.
         /// </summary>
         TTeam Target { get; }
+
+        /// <summary>
+        /// Accepts a ITeamActionVisitor object.
+        /// </summary>
+        /// <param name="visitor">The object visiting this action.</param>
+        void Accept(ITeamActionVisitor visitor);
     }
 }

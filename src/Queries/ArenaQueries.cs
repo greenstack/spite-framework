@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Spite.Queries
@@ -16,6 +17,10 @@ namespace Spite.Queries
         /// <returns>True if any team has the given standing.</returns>
         public static bool AnyTeamHasStanding(this IArena arena, TeamStanding standing)
         {
+            if (arena is null)
+            {
+                throw new ArgumentNullException(nameof(arena));
+            }
             return arena.Sides.Any((team) => team.CurrentStanding == standing);
         }
 
@@ -38,6 +43,10 @@ namespace Spite.Queries
         /// <returns>A sequence of teams that match the check.</returns>
         public static IEnumerable<ITeam> GetTeamsWithStanding(this IArena arena, TeamStanding standing)
         {
+            if (arena is null)
+            {
+                throw new ArgumentNullException(nameof(arena));
+            }
             return from team in arena.Sides
                    where team.CurrentStanding == standing
                    select team;

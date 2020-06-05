@@ -49,9 +49,8 @@ namespace Spite
         /// <returns>The TeamBuilder for chaining.</returns>
         public TeamBuilder SetTeamStandingDeterminer(Func<Arena, TeamStanding> winConFunc)
         {
-            return this;
+            throw new NotImplementedException();
         }
-
         /// <summary>
         /// Finishes building the team.
         /// </summary>
@@ -70,7 +69,7 @@ namespace Spite
         {
             if (builtTeam == null)
             {
-                throw new InvalidOperationException("Start has not been called - no team was being built.");
+                throw new InvalidOperationException(Properties.Resources.START_NOT_CALLED_ERROR_MESSAGE);
             }
             if (!(builtTeam is TTeam))
             {

@@ -86,5 +86,14 @@ namespace Spite.Properties {
                 return ResourceManager.GetString("NoTeamAddedArenaBuilder", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start has not been called - no team was being built..
+        /// </summary>
+        internal static string START_NOT_CALLED_ERROR_MESSAGE {
+            get {
+                return ResourceManager.GetString("START_NOT_CALLED_ERROR_MESSAGE", resourceCulture);
+            }
+        }
     }
 }

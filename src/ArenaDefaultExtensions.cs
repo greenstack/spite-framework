@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
@@ -31,6 +32,10 @@ namespace Spite
         /// <param name="arena">The arena being updated.</param>
         public static void UpdateTeamStandings(this IArena arena)
         {
+            if (arena is null)
+            {
+                throw new ArgumentNullException(nameof(arena));
+            }
             foreach (var s in arena.Sides)
             {
                 s.DetermineStanding(arena);

@@ -85,19 +85,15 @@ namespace Spite
 
         private void AssertArenaWasMade()
         {
-#if DEBUG
             if (builtArena == null)
                 throw new InvalidOperationException(Resources.ArenaNotStarted);
-#endif
         }
 
         private void AssertValidTurnScheme(TurnScheme expected, bool checkForNull)
         {
-#if DEBUG
             if (turnScheme != null && checkForNull && 
                 (turnScheme & TurnScheme.Entity) == expected)
                 throw new InvalidOperationException(Resources.InvalidTurnScheme);
-#endif
         }
     }
 }

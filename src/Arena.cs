@@ -16,6 +16,11 @@ namespace Spite
         public IList<ITeam> Sides => sides;
 
         /// <summary>
+        /// The team that has the current turn.
+        /// </summary>
+        public ITakeTurns CurrentTeam { get; protected set; }
+
+        /// <summary>
         /// The number of sides managed by this arena.
         /// </summary>
         public int SideCount => sides.Length;

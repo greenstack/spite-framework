@@ -28,6 +28,9 @@ namespace SpiteBattleship
             player = BuildTeam();
             AI = BuildTeam();
 
+            PlayerBattleshipController playerContoller 
+                = new PlayerBattleshipController(player);
+
             arena = new ArenaBuilder()
                 .InitArena("battleship", 2)
                 .SetTurnScheme(TurnScheme.Team)
@@ -47,14 +50,14 @@ namespace SpiteBattleship
             BattleshipActionPrinter printer = new BattleshipActionPrinter();
             do
             {
-                HandlePlayerInput(ref x, ref y, ref quit);
+                quit = playerContoller.askPlayerForInput(ref x, ref y);
                 var ga = new GuessAction(AI, arena, x, y);
+                if (quit) break;
                 printer.Visit(ga);
                 // Let the user see the output of the visitor.
                 Thread.Sleep(1000);
                 var result = ga.Execute();
                 player.InformGuessStatus(result as GuessActionResult);
-                if (quit) break;
                 arena.UpdateTeamStandings();
             } while (!arena.AnyTeamHasStanding(TeamStanding.Eliminated));
         }
@@ -74,44 +77,6 @@ namespace SpiteBattleship
                 .AddEntity(new ShipEntity("Submarine", 3))
                 .AddEntity(new ShipEntity("Patrol Boat", 2))
                 .Finish<BattleshipTeam>();
-        }
-        
-        static void HandlePlayerInput(ref int x, ref int y, ref bool quit)
-        {
-            bool invalid = true;
-            do
-            {
-                Console.Clear();
-                Console.Write(player.ToString());
-                Console.WriteLine("Enter an x, y coordinate to attack (Q to quit):");
-
-                var input = Console.ReadLine();
-                if (input.ToLower() == "q")
-                {
-                    quit = true;
-                    return;
-                }
-                var coords = input.Split(' ');
-                if (coords.Length != 2)
-                {
-                    continue;
-                }
-                if (!int.TryParse(coords[0], out x))
-                {
-                    continue;
-                }
-                if (!int.TryParse(coords[1], out y))
-                {
-                    continue;
-                }
-                if (x < 0 || x > 9 || y < 0 || y > 9 || player.GuessedAt(x, y))
-                {
-                    continue;
-                }
-
-                invalid = false;
-            } while (invalid);
-            return;
         }
     }
 }

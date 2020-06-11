@@ -18,7 +18,7 @@ namespace Spite
         /// <summary>
         /// The team that has the current turn.
         /// </summary>
-        public ITakeTurns CurrentTeam { get; protected set; }
+        public ITurnController CurrentController { get; protected set; }
 
         /// <summary>
         /// The number of sides managed by this arena.

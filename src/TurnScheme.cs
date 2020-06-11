@@ -11,9 +11,7 @@
         /// Examples: Fire Emblem, Battleship.
         /// 
         /// For example, in Fire Emblem, a turn is given to a team until all units
-        /// on that team have been tapped. In that case, the arena would have teams
-        /// that implement <see cref="ITakeTurns"/> and Entities that implement
-        /// <see cref="ITappable"/>.
+        /// on that team have been tapped.
         /// </summary>
         Team = 0x0,
         /// <summary>
@@ -21,18 +19,12 @@
         /// 
         /// Examples: Octopath Traveler, any game where entities act, sorted by
         /// something like an entity's speed.
-        /// 
-        /// Entities added to the arena in this scenario should implement
-        /// <see cref="ITakeTurns"/>.
         /// </summary>
         Entity = 0x1,
         /// <summary>
         /// Sides decide what each entity on their team will do at the same time.
         /// 
         /// Examples: Pokemon, Rock Paper Scissors/Roshambo.
-        /// 
-        /// For these scenarios, arenas should have teams that implement
-        /// <see cref="ITakeTurns"/>.
         /// </summary>
         VonNeumannTeam = 0x2,
         /// <summary>

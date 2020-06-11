@@ -13,6 +13,16 @@ namespace Spite
         ITurnController CurrentController { get; }
 
         /// <summary>
+        /// The current phase in the turn.
+        /// </summary>
+        ITurnPhase CurrentPhase { get; }
+
+        /// <summary>
+        /// Triggered when the Turn Manager's internal state (phase) changes.
+        /// </summary>
+        event ChangePhase OnPhaseChanged;
+
+        /// <summary>
         /// Determines if the turn controller can perform the given action.
         /// </summary>
         /// <param name="actor">The actor wanting to perform the action.</param>

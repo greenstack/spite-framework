@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Spite.Actions;
+using System;
+using System.Collections.Generic;
 
 namespace Spite
 {
@@ -16,9 +18,14 @@ namespace Spite
         public IList<ITeam> Sides => sides;
 
         /// <summary>
-        /// The team that has the current turn.
+        /// Gets the turn manager.
         /// </summary>
-        public ITurnController CurrentController { get; protected set; }
+        public ITurnManager TurnManager { get; }
+
+        /// <summary>
+        /// The controller that is currently acting.
+        /// </summary>
+        public ITurnController CurrentController { get => TurnManager.CurrentController; }
 
         /// <summary>
         /// The number of sides managed by this arena.
@@ -34,9 +41,11 @@ namespace Spite
         /// Creates an arena with the specified number of sides fighting in it.
         /// </summary>
         /// <param name="numberOfSides">The number of sides fighting in the arena.</param>
-        public Arena(uint numberOfSides)
+        /// <param name="turnManager">The object that manages the turns in this arena.</param>
+        public Arena(uint numberOfSides, ITurnManager turnManager)
         {
             sides = new ITeam[numberOfSides];
+            TurnManager = turnManager;
         }
 
         /// <summary>
@@ -44,10 +53,12 @@ namespace Spite
         /// </summary>
         /// <param name="name">The name of the arena.</param>
         /// <param name="numberOfSides">The number of sides fighting in the arena.</param>
-        public Arena(string name, uint numberOfSides)
+        /// <param name="turnManager">The object that manages the turns in this arena.</param>
+        public Arena(string name, uint numberOfSides, ITurnManager turnManager)
         {
             ArenaName = name;
             sides = new ITeam[numberOfSides];
+            TurnManager = turnManager;
         }
 
         /// <summary>
@@ -58,6 +69,25 @@ namespace Spite
         public ITeam GetTeam(uint index)
         {
             return sides[index];
+        }
+
+        /// <summary>
+        /// Tries to perform an action within the arena.
+        /// </summary>
+        /// <param name="actor">The actor performing the action.</param>
+        /// <param name="action">The action that wants to be performed.</param>
+        /// <returns>The result of the action or an <see cref="ActionFailedResult"/> if the actor could not act.</returns>
+        public IActionResult PerformAction(ITurnController actor, IAction action)
+        {
+            if (action == null)
+            {
+                throw new ArgumentNullException(nameof(action));
+            }
+            if (TurnManager.CanControllerAct(actor, action))
+            {
+                return action.Execute();
+            }
+            return new ActionFailedResult();
         }
     }
 }

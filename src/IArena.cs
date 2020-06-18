@@ -21,5 +21,10 @@ namespace Spite
         /// The name of this arena.
         /// </summary>
         string ArenaName { get; }
+
+        /// <summary>
+        /// This Arena's TurnManager.
+        /// </summary>
+        ITurnManager TurnManager { get; }
     }
 }

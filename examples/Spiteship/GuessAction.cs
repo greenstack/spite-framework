@@ -3,32 +3,26 @@ using Spite.Actions;
 
 namespace SpiteBattleship
 {
-    class GuessAction : ITeamAction<BattleshipTeam>
+    class GuessAction : BattleshipAction, ITeamAction<BattleshipTeam>
     {
         public BattleshipTeam Target { get; }
-
-        public IArena Context { get; }
-
-        /// <summary>
-        /// If I recall correctly, C# 8 will allow more specific return types
-        /// from interface implementations. When C# 8 is more widely available,
-        /// it would be good to implement this.
-        /// </summary>
-        public IActionResult Result { get; private set; }
+        public BattleshipTeam Actor { get; }
 
         public readonly int x, y;
 
-        public GuessAction(BattleshipTeam target, IArena context, int x, int y)
+        public GuessAction(BattleshipTeam actor, BattleshipTeam target, IArena context, int x, int y) : base(context)
         {
+            Actor = actor;
             Target = target;
-            Context = context;
             this.x = x;
             this.y = y;
         }
 
-        public IActionResult Execute()
+        public override IActionResult Execute()
         {
-            Result = new GuessActionResult(Target.ReceiveGuess(x, y), x, y);
+            var result = new GuessActionResult(Target.ReceiveGuess(x, y), x, y);
+            Actor.InformGuessStatus(result);
+            Result = result;
             return Result;
         }
 

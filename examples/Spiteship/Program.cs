@@ -31,27 +31,29 @@ namespace SpiteBattleship
             PlayerBattleshipController playerContoller 
                 = new PlayerBattleshipController(player);
 
+            var battleshipManager = new BattleshipTurnManager(playerContoller);
+
+            PlayerPhase.player = playerContoller;
+
             arena = new ArenaBuilder()
-                .InitArena("battleship", 2)
-                .SetTurnScheme(TurnScheme.Team)
+                .SetArenaName("battleship")
+                .SetTurnManager(battleshipManager)
+                .SetSideCount(2)
                 .AddTeam(player)
                 .AddTeam(AI)
                 .Finish();
 
-            // While no team has won, play the game.
-            int x = 0, y = 0;
-            bool quit = false;
             // We're using this action visitor to showcase why it may be useful
             // to have the action visitor. In a full game, you may want to use
             // this supplied visitor pattern to handle animations and such, as
             // well as logging messages to the screen for the player to see.
             // BattleshipActionAnimator, BattleshipActionLogger are possible
             // examples here that could work.
-            BattleshipActionPrinter printer = new BattleshipActionPrinter();
-            do
+            
+            arena.DoBattle();
+            /*do
             {
-                quit = playerContoller.askPlayerForInput(ref x, ref y);
-                var ga = new GuessAction(AI, arena, x, y);
+                /*
                 if (quit) break;
                 printer.Visit(ga);
                 // Let the user see the output of the visitor.
@@ -59,14 +61,15 @@ namespace SpiteBattleship
                 var result = ga.Execute();
                 player.InformGuessStatus(result as GuessActionResult);
                 arena.UpdateTeamStandings();
-            } while (!arena.AnyTeamHasStanding(TeamStanding.Eliminated));
-        }
+                // While no team has won, play the game.
+            } while (!arena.AnyTeamHasStanding(TeamStanding.Eliminated));*/
+            }
 
         /// <summary>
         /// Builds a simple side for battleship.
         /// </summary>
-        /// <returns></returns>
-        static BattleshipTeam BuildTeam()
+        /// <returns>A battleship team.</returns>
+            static BattleshipTeam BuildTeam()
         {
             TeamBuilder builder = new TeamBuilder();
             return builder.Start<BattleshipTeam>()

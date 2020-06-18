@@ -33,6 +33,8 @@ namespace Spite
         /// <summary>
         /// Has the current controller accept a turn.
         /// </summary>
+        /// <param name="arena">The arena the turn takes place in.</param>
+        /// <returns>Whether or not the battle should end.</returns>
         bool DoTurn(IArena arena);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Spite.Actions;
 using System;
+using System.Threading;
 
 namespace SpiteBattleship
 {
@@ -25,6 +26,7 @@ namespace SpiteBattleship
         public void Visit(GuessAction action)
         {
             Console.WriteLine($"Attacking {action.x}, {action.y}");
+            Thread.Sleep(500);
         }
     }
 }

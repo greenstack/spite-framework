@@ -89,5 +89,15 @@ namespace Spite
             }
             return new ActionFailedResult();
         }
+
+        // TODO: Do we need a BeginBattle function?
+
+        public void DoBattle()
+        {
+            do
+            {
+                TurnManager.DoTurn(this);
+            } while (true);
+        }
     }
 }

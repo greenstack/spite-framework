@@ -33,6 +33,6 @@ namespace Spite
         /// <summary>
         /// Has the current controller accept a turn.
         /// </summary>
-        void DoTurn(IArena arena);
+        bool DoTurn(IArena arena);
     }
 }

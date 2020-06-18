@@ -164,5 +164,10 @@ namespace SpiteBattleship
         {
             return Guesses[x, y] != null;
         }
+
+        public void ForceStanding(TeamStanding standing)
+        {
+            CurrentStanding = standing;
+        }
     }
 }

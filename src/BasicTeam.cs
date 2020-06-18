@@ -53,5 +53,11 @@ namespace Spite
 		{
 			throw new NotImplementedException();
 		}
-	}
+
+		/// <inheritdoc/>
+        public void ForceStanding(TeamStanding standing)
+        {
+			CurrentStanding = standing;
+        }
+    }
 }

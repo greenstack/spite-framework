@@ -40,5 +40,11 @@ namespace Spite
         /// <param name="context">The arena this team is fighting in.</param>
         /// <returns>True if this team has achieved victory.</returns>
         TeamStanding DetermineStanding(IArena context);
+
+        /// <summary>
+        /// Forces the standing on the team.
+        /// </summary>
+        /// <param name="standing">The standing to give to the team.</param>
+        void ForceStanding(TeamStanding standing);
     }
 }

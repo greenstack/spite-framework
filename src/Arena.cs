@@ -90,14 +90,28 @@ namespace Spite
             return new ActionFailedResult();
         }
 
-        // TODO: Do we need a BeginBattle function?
-
+        /// <summary>
+        /// Begins the battle.
+        /// </summary>
         public void DoBattle()
         {
+            OnBattleBegin?.Invoke(this);
+            bool battleOver;
+            // Enter the battle/game loop
             do
             {
-                TurnManager.DoTurn(this);
-            } while (true);
+                battleOver = TurnManager.DoTurn(this);
+            } while (!battleOver);
         }
+
+        /// <summary>
+        /// Represents a method that is called when an Arena begins battle.
+        /// </summary>
+        /// <param name="arena">The arena starting the battle.</param>
+        public delegate void BeginBattle(Arena arena);
+        /// <summary>
+        /// An event that fires when a battle begins.
+        /// </summary>
+        public event BeginBattle OnBattleBegin;
     }
 }

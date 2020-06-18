@@ -72,25 +72,6 @@ namespace Spite
         }
 
         /// <summary>
-        /// Tries to perform an action within the arena.
-        /// </summary>
-        /// <param name="actor">The actor performing the action.</param>
-        /// <param name="action">The action that wants to be performed.</param>
-        /// <returns>The result of the action or an <see cref="ActionFailedResult"/> if the actor could not act.</returns>
-        public IActionResult PerformAction(ITurnController actor, IAction action)
-        {
-            if (action == null)
-            {
-                throw new ArgumentNullException(nameof(action));
-            }
-            if (TurnManager.CanControllerAct(actor, action))
-            {
-                return action.Execute();
-            }
-            return new ActionFailedResult();
-        }
-
-        /// <summary>
         /// Begins the battle.
         /// </summary>
         public void DoBattle()

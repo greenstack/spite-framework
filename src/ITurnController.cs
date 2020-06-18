@@ -1,10 +1,17 @@
-﻿namespace Spite
+﻿using System;
+
+namespace Spite
 {
     /// <summary>
     /// Provides an interface for objects that control turns.
     /// </summary>
-    public interface ITurnController
+    public interface ITurnController : IComparable<ITurnController>
     {
+        /// <summary>
+        /// The team this controller manages.
+        /// </summary>
+        ITeam Team { get; }
+
         /// <summary>
         /// Use this to give the turn to this object.
         /// </summary>

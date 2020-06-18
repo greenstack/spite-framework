@@ -29,5 +29,10 @@ namespace Spite
         /// <param name="action">The action to be performed.</param>
         /// <returns>True if the actor can perform the action.</returns>
         bool CanControllerAct(ITurnController actor, IAction action);
+
+        /// <summary>
+        /// Has the current controller accept a turn.
+        /// </summary>
+        void DoTurn(IArena arena);
     }
 }

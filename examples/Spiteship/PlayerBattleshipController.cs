@@ -8,7 +8,9 @@ namespace SpiteBattleship
         public event ReceiveTurn OnTurnReceived;
         public event PassTurn OnTurnPassed;
 
-        private BattleshipTeam playerTeam;
+        private readonly BattleshipTeam playerTeam;
+
+        public ITeam Team { get => playerTeam; }
 
         public PlayerBattleshipController(BattleshipTeam playerTeam)
         {
@@ -53,6 +55,11 @@ namespace SpiteBattleship
                 invalidInput = false;
             } while (invalidInput);
             return false;
+        }
+
+        public int CompareTo(ITurnController other)
+        {
+            throw new NotImplementedException();
         }
     }
 }

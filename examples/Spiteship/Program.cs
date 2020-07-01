@@ -50,20 +50,8 @@ namespace SpiteBattleship
             // BattleshipActionAnimator, BattleshipActionLogger are possible
             // examples here that could work.
             
-            arena.DoBattle();
-            /*do
-            {
-                /*
-                if (quit) break;
-                printer.Visit(ga);
-                // Let the user see the output of the visitor.
-                Thread.Sleep(1000);
-                var result = ga.Execute();
-                player.InformGuessStatus(result as GuessActionResult);
-                arena.UpdateTeamStandings();
-                // While no team has won, play the game.
-            } while (!arena.AnyTeamHasStanding(TeamStanding.Eliminated));*/
-            }
+            arena.DoBattle();    
+        }
 
         /// <summary>
         /// Builds a simple side for battleship.

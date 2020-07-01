@@ -46,3 +46,17 @@ foreach (var team in battleDefinition.Sides) {
 }
 ```
 This flexibility allows developers to create some interface for designers to create unique and varied battles. Designers can create a battle scenario with a tool, saving it to some format; developers read in this format and pass it to the `ArenaBuilder`. This can greatly assist in iterating quickly, without having to recode various components.
+
+### Teams
+Teams are one of the most important elements of a game. To reflect this, the Spite Framework has a `TeamBuilder` object provided to help produce teams in a dynamic way. The TeamBuilder has template methods to allow you to build and retrieve a specific type of team, built to your game's specifications.
+
+The following example uses hypothetical `GameTeam` and `GameEntity` types to build up a team:
+```csharp
+TeamBuilder builder = new TeamBuilder();
+builder.Start<GameTeam>()
+  .SetTeamSize(2) // For teams with only two entities on it
+  .AddEntity(new GameEntity(...))
+  .AddEntity(new GameEntity(...))
+  .Finish<GameTeam>();
+```
+TeamBuilders are useful for creating dynamic or user-defined teams. For example, an RPG that gives the player several characters to use, but they can only bring a few of them into any given battle, building the team either on the fly when a battle begins or reconstructing the team when the player changes their party members.

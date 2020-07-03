@@ -29,7 +29,7 @@ using Spite;
 Arena arena = new ArenaBuilder()
     .SetArenaName("Example") // Optional - Arenas don't necessarily need names
     .SetTurnManager(...)     // This sets the TurnManager that the Arena will use to manage the battle
-    .SetSideCount(2)         // This sets the number of sides/teams playing in the game
+    .SetTeamCount(2)         // This sets the number of sides/teams playing in the game
     // Here, you would call "addTeam" and pass in the teams you want to add
     .Finish();               // This finalizes the arena you'll get
 ```
@@ -38,10 +38,10 @@ ask for a custom `BattleDefinition` object with a `List<Team> Sides` property:
 ```csharp
 ArenaBuilder builder = new ArenaBuilder();
 
-int sides = battleDefinition.Sides.Count();
+int teamCount = battleDefinition.Teams.Count();
 
-builder.SetSideCount(sides);
-foreach (var team in battleDefinition.Sides) {
+builder.SetTeamCount(teamCount);
+foreach (var team in battleDefinition.Teams) {
     builder.AddTeam(team);
 }
 ```

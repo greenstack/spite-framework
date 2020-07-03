@@ -5,17 +5,17 @@ using System.Collections.Generic;
 namespace Spite
 {
     /// <summary>
-    /// Manages a group of sides in a battle.
+    /// Manages a group of teams in a battle.
     /// </summary>
     public class Arena : IArena
     {
         /// <summary>
-        /// All the teams/sides that are fighting in this arena.
+        /// All the teams that are fighting in this arena.
         /// </summary>
-        readonly internal ITeam[] sides;
+        readonly internal ITeam[] teams;
 
         /// <inheritdoc/>
-        public IList<ITeam> Sides => sides;
+        public IList<ITeam> Teams => teams;
 
         /// <summary>
         /// Gets the turn manager.
@@ -28,9 +28,9 @@ namespace Spite
         public ITurnController CurrentController { get => TurnManager.CurrentController; }
 
         /// <summary>
-        /// The number of sides managed by this arena.
+        /// The number of teams managed by this arena.
         /// </summary>
-        public int SideCount => sides.Length;
+        public int TeamCount => teams.Length;
 
         /// <summary>
         /// The name of this arena.
@@ -38,26 +38,26 @@ namespace Spite
         public string ArenaName { get; }
 
         /// <summary>
-        /// Creates an arena with the specified number of sides fighting in it.
+        /// Creates an arena with the specified number of teams fighting in it.
         /// </summary>
-        /// <param name="numberOfSides">The number of sides fighting in the arena.</param>
+        /// <param name="numberOfTeams">The number of teams fighting in the arena.</param>
         /// <param name="turnManager">The object that manages the turns in this arena.</param>
-        public Arena(uint numberOfSides, ITurnManager turnManager)
+        public Arena(uint numberOfTeams, ITurnManager turnManager)
         {
-            sides = new ITeam[numberOfSides];
+            teams = new ITeam[numberOfTeams];
             TurnManager = turnManager;
         }
 
         /// <summary>
-        /// Creates a named arena with the specified number of sides fighting in it.
+        /// Creates a named arena with the specified number of teams fighting in it.
         /// </summary>
         /// <param name="name">The name of the arena.</param>
-        /// <param name="numberOfSides">The number of sides fighting in the arena.</param>
+        /// <param name="numberOfTeams">The number of teams fighting in the arena.</param>
         /// <param name="turnManager">The object that manages the turns in this arena.</param>
-        public Arena(string name, uint numberOfSides, ITurnManager turnManager)
+        public Arena(string name, uint numberOfTeams, ITurnManager turnManager)
         {
             ArenaName = name;
-            sides = new ITeam[numberOfSides];
+            teams = new ITeam[numberOfTeams];
             TurnManager = turnManager;
         }
 
@@ -68,7 +68,7 @@ namespace Spite
         /// <returns>The team at the specified index</returns>
         public ITeam GetTeam(uint index)
         {
-            return sides[index];
+            return teams[index];
         }
 
         /// <summary>

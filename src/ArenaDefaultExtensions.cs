@@ -20,7 +20,7 @@ namespace Spite
         {
             // Justification: it'll fail if the arena is null anyways.
 #pragma warning disable CA1062 // Validate arguments of public methods
-            return from side in arena.Sides
+            return from side in arena.Teams
 #pragma warning restore CA1062 // Validate arguments of public methods
                    where side != team
                    select side;
@@ -36,7 +36,7 @@ namespace Spite
             {
                 throw new ArgumentNullException(nameof(arena));
             }
-            foreach (var s in arena.Sides)
+            foreach (var s in arena.Teams)
             {
                 s.DetermineStanding(arena);
             }

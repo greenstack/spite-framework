@@ -8,7 +8,7 @@ namespace Spite
     /// </summary>
     public class ArenaBuilder
     {
-        private uint sideCount = 0;
+        private uint teamCount = 0;
 
         private string arenaName;
 
@@ -26,13 +26,13 @@ namespace Spite
         }
 
         /// <summary>
-        /// Sets the number of sides fighting in the arena.
+        /// Sets the number of teams fighting in the arena.
         /// </summary>
-        /// <param name="sideCount">The number of sides that will be fighting in the arena.</param>
+        /// <param name="teamCount">The number of teams that will be fighting in the arena.</param>
         /// <returns>this</returns>
-        public ArenaBuilder SetSideCount(uint sideCount)
+        public ArenaBuilder SetTeamCount(uint teamCount)
         {
-            this.sideCount = sideCount;
+            this.teamCount = teamCount;
             return this;
         }
 
@@ -65,7 +65,7 @@ namespace Spite
         /// <returns>The team to add to the arena.</returns>
         public ArenaBuilder AddTeam(ITeam team)
         {
-            if (teamsAdded >= sideCount)
+            if (teamsAdded >= teamCount)
             {
                 throw new InvalidOperationException();
             }
@@ -85,12 +85,12 @@ namespace Spite
                 throw new InvalidOperationException("A turn manager has not been set.");
             }
             var arena = arenaName == null ?
-                new Arena(sideCount, turnManager) :
-                new Arena(arenaName, sideCount, turnManager);
+                new Arena(teamCount, turnManager) :
+                new Arena(arenaName, teamCount, turnManager);
 
             for (int i = 0; i < teamsAdded; ++i)
             {
-                arena.sides[i] = teams[i];
+                arena.teams[i] = teams[i];
             }
 
             return arena;

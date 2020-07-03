@@ -8,14 +8,14 @@ namespace Spite
     public interface IArena
     {
         /// <summary>
-        /// All the teams/sides that are fighting in this arena.
+        /// All the teams that are fighting in this arena.
         /// </summary>
-        IList<ITeam> Sides { get; }
+        IList<ITeam> Teams { get; }
 
         /// <summary>
-        /// The number of sides managed by this arena.
+        /// The number of teams managed by this arena.
         /// </summary>
-        int SideCount { get; }
+        int TeamCount { get; }
 
         /// <summary>
         /// The name of this arena.

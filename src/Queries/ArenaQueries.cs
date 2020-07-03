@@ -21,7 +21,7 @@ namespace Spite.Queries
             {
                 throw new ArgumentNullException(nameof(arena));
             }
-            return arena.Sides.Any((team) => team.CurrentStanding == standing);
+            return arena.Teams.Any((team) => team.CurrentStanding == standing);
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace Spite.Queries
             {
                 throw new ArgumentNullException(nameof(arena));
             }
-            return from team in arena.Sides
+            return from team in arena.Teams
                    where team.CurrentStanding == standing
                    select team;
         }

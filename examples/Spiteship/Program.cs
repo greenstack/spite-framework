@@ -38,7 +38,7 @@ namespace SpiteBattleship
             arena = new ArenaBuilder()
                 .SetArenaName("battleship")
                 .SetTurnManager(battleshipManager)
-                .SetSideCount(2)
+                .SetTeamCount(2)
                 .AddTeam(player)
                 .AddTeam(AI)
                 .Finish();

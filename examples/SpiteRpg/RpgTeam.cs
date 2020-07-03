@@ -9,7 +9,8 @@ namespace SpiteRpg
 {
     class RpgTeam : ITeam
     {
-        public ICollection<IEntity> Entities => throw new NotImplementedException();
+        private readonly ICollection<RpgEntity> entities = new List<RpgEntity>();
+        public ICollection<IEntity> Entities => (ICollection<IEntity>)entities;
 
         public int ManagedEntityCount => throw new NotImplementedException();
 

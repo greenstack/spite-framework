@@ -69,17 +69,17 @@ namespace SpiteBattleship
         /// Builds a simple side for battleship.
         /// </summary>
         /// <returns>A battleship team.</returns>
-            static BattleshipTeam BuildTeam()
+        static BattleshipTeam BuildTeam()
         {
-            TeamBuilder builder = new TeamBuilder();
-            return builder.Start<BattleshipTeam>()
+            TeamBuilder<BattleshipTeam> builder = new TeamBuilder<BattleshipTeam>();
+            return builder.Start()
                 .SetTeamSize(SHIPS_PER_SIDE)
                 .AddEntity(new ShipEntity("Carrier", 5))
                 .AddEntity(new ShipEntity("Battleship", 4))
                 .AddEntity(new ShipEntity("Destroyer", 3))
                 .AddEntity(new ShipEntity("Submarine", 3))
                 .AddEntity(new ShipEntity("Patrol Boat", 2))
-                .Finish<BattleshipTeam>();
+                .Finish();
         }
     }
 }

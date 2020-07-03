@@ -33,7 +33,7 @@ namespace SpiteRpg
         {
             ArenaBuilder ab = new ArenaBuilder();
             ab.SetTurnManager(rpgTurnManager);
-            ab.SetSideCount(TEAM_COUNT);
+            ab.SetTeamCount(TEAM_COUNT);
             ab.AddTeam(playerTeam);
             ab.AddTeam(aiTeam);
             return ab.Finish();

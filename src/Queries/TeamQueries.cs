@@ -19,6 +19,12 @@ namespace Spite.Queries
             return team.Entities.Count(e => e.IsAlive);
         }
 
+        /// <summary>
+        /// Checks if any of the enties on the team are still alive.
+        /// </summary>
+        /// <typeparam name="T">The type of entity held by the team.</typeparam>
+        /// <param name="team">The team being queried.</param>
+        /// <returns>TRUE if any entity is alive.</returns>
         public static bool AreAnyEntitiesAlive<T>(this ITeam<T> team) where T : IEntity
         {
             if (team == null) throw new ArgumentNullException(nameof(team));

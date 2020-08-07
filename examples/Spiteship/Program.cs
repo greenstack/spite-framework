@@ -71,7 +71,7 @@ namespace SpiteBattleship
         /// <returns>A battleship team.</returns>
         static BattleshipTeam BuildTeam()
         {
-            TeamBuilder<BattleshipTeam> builder = new TeamBuilder<BattleshipTeam>();
+            TeamBuilder<BattleshipTeam, ShipEntity> builder = new TeamBuilder<BattleshipTeam, ShipEntity>();
             return builder.Start()
                 .SetTeamSize(SHIPS_PER_SIDE)
                 .AddEntity(new ShipEntity("Carrier", 5))

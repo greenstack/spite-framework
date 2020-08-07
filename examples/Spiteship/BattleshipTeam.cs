@@ -6,7 +6,7 @@ using System.Text;
 
 namespace SpiteBattleship
 {
-    class BattleshipTeam : ITeam
+    class BattleshipTeam : ITeam<ShipEntity>
     {
         ShipEntity[] ships;
 
@@ -41,7 +41,7 @@ namespace SpiteBattleship
 
         public TeamStanding CurrentStanding { get; private set; } = TeamStanding.Competing;
 
-        public ICollection<IEntity> Entities => ships;
+        public ICollection<ShipEntity> Entities => ships;
 
         public bool ReceiveGuess(int x, int y)
         {
@@ -60,44 +60,41 @@ namespace SpiteBattleship
                 result.Success;
         }
 
-        public void AddEntity(IEntity entity)
+        public void AddEntity(ShipEntity ship)
         {
-            if (entity is ShipEntity ship)
+            int index = ShipIndex[ship.Name];
+            ships[index] = ship;
+            switch (index)
             {
-                int index = ShipIndex[ship.Name];
-                ships[index] = ship;
-                switch (index)
-                {
-                    case PATROL_BOAT_INDEX:
-                        shipsSegments[0, 0] = new ShipSegment(ship);
-                        shipsSegments[0, 1] = new ShipSegment(ship);
-                        break;
-                    case SUBMARINE_INDEX:
-                        shipsSegments[3, 2] = new ShipSegment(ship);
-                        shipsSegments[4, 2] = new ShipSegment(ship);
-                        shipsSegments[5, 2] = new ShipSegment(ship);
-                        break;
-                    case DESTROYER_INDEX:
-                        shipsSegments[7, 4] = new ShipSegment(ship);
-                        shipsSegments[7, 5] = new ShipSegment(ship);
-                        shipsSegments[7, 6] = new ShipSegment(ship);
-                        break;
-                    case BATTLESHIP_INDEX:
-                        shipsSegments[1, 4] = new ShipSegment(ship);
-                        shipsSegments[1, 5] = new ShipSegment(ship);
-                        shipsSegments[1, 6] = new ShipSegment(ship);
-                        shipsSegments[1, 7] = new ShipSegment(ship);
-                        break;
-                    case CARRIER_INDEX:
-                        shipsSegments[4, 8] = new ShipSegment(ship);
-                        shipsSegments[5, 8] = new ShipSegment(ship);
-                        shipsSegments[6, 8] = new ShipSegment(ship);
-                        shipsSegments[7, 8] = new ShipSegment(ship);
-                        shipsSegments[8, 8] = new ShipSegment(ship);
-                        break;
-                    default:
-                        throw new System.Exception($"Invalid index: {index}");
-                }
+                case PATROL_BOAT_INDEX:
+                    shipsSegments[0, 0] = new ShipSegment(ship);
+                    shipsSegments[0, 1] = new ShipSegment(ship);
+                    break;
+                case SUBMARINE_INDEX:
+                    shipsSegments[3, 2] = new ShipSegment(ship);
+                    shipsSegments[4, 2] = new ShipSegment(ship);
+                    shipsSegments[5, 2] = new ShipSegment(ship);
+                    break;
+                case DESTROYER_INDEX:
+                    shipsSegments[7, 4] = new ShipSegment(ship);
+                    shipsSegments[7, 5] = new ShipSegment(ship);
+                    shipsSegments[7, 6] = new ShipSegment(ship);
+                    break;
+                case BATTLESHIP_INDEX:
+                    shipsSegments[1, 4] = new ShipSegment(ship);
+                    shipsSegments[1, 5] = new ShipSegment(ship);
+                    shipsSegments[1, 6] = new ShipSegment(ship);
+                    shipsSegments[1, 7] = new ShipSegment(ship);
+                    break;
+                case CARRIER_INDEX:
+                    shipsSegments[4, 8] = new ShipSegment(ship);
+                    shipsSegments[5, 8] = new ShipSegment(ship);
+                    shipsSegments[6, 8] = new ShipSegment(ship);
+                    shipsSegments[7, 8] = new ShipSegment(ship);
+                    shipsSegments[8, 8] = new ShipSegment(ship);
+                    break;
+                default:
+                    throw new System.Exception($"Invalid index: {index}");
             }
         }
 
@@ -150,7 +147,8 @@ namespace SpiteBattleship
             }
             foreach (var team in context.GetTeamsOpposing(this))
             {
-                if (!team.AreAnyEntitiesAlive())
+                // This isn't great.
+                if (!(team as BattleshipTeam).AreAnyEntitiesAlive())
                 {
                     // There's only two teams in battleship, so we can easily determine this.
                     CurrentStanding = TeamStanding.Victorious;

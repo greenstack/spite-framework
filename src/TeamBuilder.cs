@@ -5,7 +5,7 @@ namespace Spite
     /// <summary>
     /// Provides methods useful in building a team.
     /// </summary>
-    public class TeamBuilder<TTeam> where TTeam : ITeam, new()
+    public class TeamBuilder<TTeam, TEntity> where TTeam : ITeam<TEntity>, new() where TEntity : IEntity
     {
         private TTeam builtTeam;
 
@@ -14,7 +14,7 @@ namespace Spite
         /// </summary>
         /// <typeparam name="TTeam">The type of team to create.</typeparam>
         /// <returns>The team builder for chaining.</returns>
-        public TeamBuilder<TTeam> Start()
+        public TeamBuilder<TTeam, TEntity> Start()
         {
             builtTeam = new TTeam();
             return this;
@@ -25,7 +25,7 @@ namespace Spite
         /// </summary>
         /// <param name="teamSize">The initial or max size of the team.</param>
         /// <returns>The team builder for chaining.</returns>
-        public TeamBuilder<TTeam> SetTeamSize(uint teamSize)
+        public TeamBuilder<TTeam, TEntity> SetTeamSize(uint teamSize)
         {
             builtTeam.InitializeEntityCount(teamSize);
             return this;
@@ -36,7 +36,7 @@ namespace Spite
         /// </summary>
         /// <param name="entity">The entity to add to the team.</param>
         /// <returns>The TeamBuilder for chaining.</returns>
-        public TeamBuilder<TTeam> AddEntity(IEntity entity)
+        public TeamBuilder<TTeam, TEntity> AddEntity(TEntity entity)
         {
             builtTeam.AddEntity(entity);
             return this;
@@ -47,7 +47,7 @@ namespace Spite
         /// </summary>
         /// <param name="winConFunc">The function that will be used to determine the win conditions.</param>
         /// <returns>The TeamBuilder for chaining.</returns>
-        public TeamBuilder<TTeam> SetTeamStandingDeterminer(Func<Arena, TeamStanding> winConFunc)
+        public TeamBuilder<TTeam, TEntity> SetTeamStandingDeterminer(Func<Arena, TeamStanding> winConFunc)
         {
             throw new NotImplementedException();
         }

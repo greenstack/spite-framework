@@ -13,13 +13,13 @@ namespace Spite.Queries
         /// </summary>
         /// <param name="team">The team to query.</param>
         /// <returns>The number of living entities.</returns>
-        public static int CountLivingEntities(this ITeam team)
+        public static int CountLivingEntities<T>(this ITeam<T> team) where T : IEntity
         {
             if (team == null) throw new ArgumentNullException(nameof(team));
             return team.Entities.Count(e => e.IsAlive);
         }
 
-        public static bool AreAnyEntitiesAlive(this ITeam team)
+        public static bool AreAnyEntitiesAlive<T>(this ITeam<T> team) where T : IEntity
         {
             if (team == null) throw new ArgumentNullException(nameof(team));
             return team.Entities.Any(e => e.IsAlive);
@@ -30,7 +30,7 @@ namespace Spite.Queries
         /// </summary>
         /// <param name="team">The team to query.</param>
         /// <returns>True if all entities on this team are alive.</returns>
-        public static bool AreAllEntitiesAlive(this ITeam team)
+        public static bool AreAllEntitiesAlive<T>(this ITeam<T> team) where T : IEntity
         {
             if (team == null) throw new ArgumentNullException(nameof(team));
             return team.CountLivingEntities() == team.ManagedEntityCount;

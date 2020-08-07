@@ -4,24 +4,15 @@ namespace Spite
 {
     /// <summary>
     /// Represents a team of entities in a battle.
+    /// 
+    /// This shouldn't be used - use the generic ITeam instead.
     /// </summary>
     public interface ITeam
-    {
-        /// <summary>
-        /// The entities on this team.
-        /// </summary>
-        ICollection<IEntity> Entities { get; }
-        
+    {   
         /// <summary>
         /// The number of entities managed by this Team.
         /// </summary>
         int ManagedEntityCount { get; }
-
-        /// <summary>
-        /// Adds the entity onto the team.
-        /// </summary>
-        /// <param name="entity">The entity pertaining to the team.</param>
-        void AddEntity(IEntity entity);
 
         /// <summary>
         /// Sets the number of entities slots on this team.
@@ -46,5 +37,12 @@ namespace Spite
         /// </summary>
         /// <param name="standing">The standing to give to the team.</param>
         void ForceStanding(TeamStanding standing);
+    }
+
+    public interface ITeam<T> : ITeam where T : IEntity
+    {
+        ICollection<T> Entities { get; }
+
+        void AddEntity(T entity);
     }
 }

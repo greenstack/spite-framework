@@ -8,18 +8,7 @@ namespace Spite
     /// This shouldn't be used - use the generic ITeam instead.
     /// </summary>
     public interface ITeam
-    {   
-        /// <summary>
-        /// The number of entities managed by this Team.
-        /// </summary>
-        int ManagedEntityCount { get; }
-
-        /// <summary>
-        /// Sets the number of entities slots on this team.
-        /// </summary>
-        /// <param name="entityCount">The number of entity slots to initialize.</param>
-        void InitializeEntityCount(uint entityCount);
-
+    {
         /// <summary>
         /// The current standing of the team.
         /// </summary>
@@ -39,10 +28,32 @@ namespace Spite
         void ForceStanding(TeamStanding standing);
     }
 
+    /// <summary>
+    /// A generic version of the team that allows for direct access to specific entity types.
+    /// </summary>
+    /// <typeparam name="T">The entity type this team revolves around.</typeparam>
     public interface ITeam<T> : ITeam where T : IEntity
     {
+        /// <summary>
+        /// The entities managed by this team.
+        /// </summary>
         ICollection<T> Entities { get; }
 
+        /// <summary>
+        /// Adds an entity to the team.
+        /// </summary>
+        /// <param name="entity">The entity being added.</param>
         void AddEntity(T entity);
+
+        /// <summary>
+        /// The number of entities managed by this Team.
+        /// </summary>
+        int ManagedEntityCount { get; }
+
+        /// <summary>
+        /// Sets the number of entities slots on this team.
+        /// </summary>
+        /// <param name="entityCount">The number of entity slots to initialize.</param>
+        void InitializeEntityCount(uint entityCount);
     }
 }

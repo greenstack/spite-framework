@@ -24,9 +24,9 @@ namespace SpiteRpg
 
         static void Main()
         {
-            TeamBuilder<RpgTeam> playerTB = new TeamBuilder<RpgTeam>();
-            playerTB.Start()
-                .Finish();
+            //TeamBuilder<RpgTeam> playerTB = new TeamBuilder<RpgTeam>();
+            //playerTB.Start()
+            //    .Finish();
         }
 
         static Arena buildArena(ITeam playerTeam, ITeam aiTeam)

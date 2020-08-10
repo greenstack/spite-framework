@@ -32,7 +32,7 @@ namespace Spite.Queries
         /// <returns>The number of teams with the given standing.</returns>
         public static int CountTeamsWithStanding(this IArena arena, TeamStanding standing)
         {
-            return arena.GetTeamsWithStanding(standing).Count();
+            return arena.GetTeamsWithStanding<ITeam>(standing).Count();
         }
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Spite.Queries
         /// <param name="arena">The arena to check against.</param>
         /// <param name="standing">The standing to search for.</param>
         /// <returns>A sequence of teams that match the check.</returns>
-        public static IEnumerable<ITeam> GetTeamsWithStanding(this IArena arena, TeamStanding standing)
+        public static IEnumerable<T> GetTeamsWithStanding<T>(this IArena arena, TeamStanding standing) where T : ITeam
         {
             if (arena is null)
             {
@@ -49,7 +49,7 @@ namespace Spite.Queries
             }
             return from team in arena.Teams
                    where team.CurrentStanding == standing
-                   select team;
+                   select (T)team;
         }
     }
 }

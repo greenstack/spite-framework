@@ -36,5 +36,11 @@ namespace Spite
         /// <param name="arena">The arena the turn takes place in.</param>
         /// <returns>Whether or not the battle should end.</returns>
         bool DoTurn(IArena arena);
+
+        /// <summary>
+        /// Receives a command to be executed.
+        /// </summary>
+        /// <param name="action">The action being executed.</param>
+        void ReceiveCommand(IAction action);
     }
 }

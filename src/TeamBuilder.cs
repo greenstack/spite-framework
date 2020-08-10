@@ -43,15 +43,6 @@ namespace Spite
         }
 
         /// <summary>
-        /// Sets the win condition for this team.
-        /// </summary>
-        /// <param name="winConFunc">The function that will be used to determine the win conditions.</param>
-        /// <returns>The TeamBuilder for chaining.</returns>
-        public TeamBuilder<TTeam, TEntity> SetTeamStandingDeterminer(Func<Arena, TeamStanding> winConFunc)
-        {
-            throw new NotImplementedException();
-        }
-        /// <summary>
         /// Finishes building the team.
         /// </summary>
         /// <returns>The built team.</returns>

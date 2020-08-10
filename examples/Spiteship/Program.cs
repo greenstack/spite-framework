@@ -35,7 +35,7 @@ namespace SpiteBattleship
 
             PlayerPhase.player = playerContoller;
 
-            arena = new ArenaBuilder()
+            arena = new ArenaBuilder<BattleshipTeam>()
                 .SetArenaName("battleship")
                 .SetTurnManager(battleshipManager)
                 .SetTeamCount(2)

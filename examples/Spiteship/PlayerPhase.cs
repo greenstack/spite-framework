@@ -17,7 +17,7 @@ namespace SpiteBattleship
             }
             else
             {
-                var opponent = arena.GetTeamsOpposing(player.Team).First();
+                var opponent = arena.GetTeamsOpposing(player.ConcreteTeam).First();
                 return new GuessAction(
                     player.Team as BattleshipTeam,
                     opponent as BattleshipTeam,

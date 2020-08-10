@@ -8,13 +8,12 @@ namespace SpiteBattleship
         public event ReceiveTurn OnTurnReceived;
         public event PassTurn OnTurnPassed;
 
-        private readonly BattleshipTeam playerTeam;
-
-        public ITeam Team { get => playerTeam; }
+        public ITeam Team { get => ConcreteTeam; }
+        public BattleshipTeam ConcreteTeam { get; }
 
         public PlayerBattleshipController(BattleshipTeam playerTeam)
         {
-            this.playerTeam = playerTeam;
+            this.ConcreteTeam = playerTeam;
         }
 
         public void PassTurn(TurnChangeContext context)
@@ -35,7 +34,7 @@ namespace SpiteBattleship
             do
             {
                 Console.Clear();
-                Console.Write(playerTeam.ToString());
+                Console.Write(ConcreteTeam.ToString());
                 Console.WriteLine("Enter an x, y coordinate to attack. (Q to quit)");
 
                 var input = Console.ReadLine();
@@ -47,7 +46,7 @@ namespace SpiteBattleship
                 if (coords.Length != 2) continue;
                 if (!int.TryParse(coords[0], out x)) continue;
                 if (!int.TryParse(coords[1], out y)) continue;
-                if (x < 0 || x > 9 || y < 0 || y > 9 || playerTeam.GuessedAt(x, y))
+                if (x < 0 || x > 9 || y < 0 || y > 9 || ConcreteTeam.GuessedAt(x, y))
                 {
                     continue;
                 }

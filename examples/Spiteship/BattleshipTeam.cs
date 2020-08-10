@@ -1,7 +1,7 @@
 ﻿using Spite;
 using Spite.Queries;
+using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using System.Text;
 
 namespace SpiteBattleship
@@ -147,13 +147,9 @@ namespace SpiteBattleship
             }
             foreach (var team in context.GetTeamsOpposing(this))
             {
-                // This isn't great.
-                if (!(team as BattleshipTeam).AreAnyEntitiesAlive())
-                {
-                    // There's only two teams in battleship, so we can easily determine this.
-                    CurrentStanding = TeamStanding.Victorious;
-                    break;
-                }
+                // There's only two teams in battleship, so we can easily determine this.
+                CurrentStanding = TeamStanding.Victorious;
+                break;
             }
             return CurrentStanding;
         }

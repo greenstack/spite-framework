@@ -1,5 +1,5 @@
 ﻿using Spite.Actions;
-using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace Spite
@@ -83,6 +83,27 @@ namespace Spite
             {
                 battleOver = TurnManager.DoTurn(this);
             } while (!battleOver);
+        }
+
+        /// <summary>
+        /// Gets the teams opposing the given team, all cast to the specific type.
+        /// </summary>
+        /// <typeparam name="T">The specific type of team.</typeparam>
+        /// <param name="opposing">The team to find opponents for.</param>
+        /// <returns>All teams opposing the provided team.</returns>
+        public IEnumerable<T> GetTeamsOpposing<T>(T opposing) where T : ITeam
+        {
+            return from side in Teams
+                   where side.Equals(opposing)
+                   select (T)side;
+        }
+
+        public void UpdateTeamStandings()
+        {
+            foreach (var team in teams)
+            {
+                team.DetermineStanding(this);
+            }
         }
 
         /// <summary>

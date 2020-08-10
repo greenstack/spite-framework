@@ -112,6 +112,16 @@ namespace Spite
         }
 
         /// <summary>
+        /// Receives an action to execute on the target.
+        /// </summary>
+        /// <param name="action"></param>
+        public void ReceiveAction(IAction action, bool updateStandings)
+        {
+            TurnManager.ReceiveCommand(action);
+            if (updateStandings) UpdateTeamStandings();
+        }
+
+        /// <summary>
         /// Represents a method that is called when an Arena begins battle.
         /// </summary>
         /// <param name="arena">The arena starting the battle.</param>

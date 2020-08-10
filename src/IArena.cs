@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Spite.Actions;
+using System.Collections.Generic;
 
 namespace Spite
 {
@@ -46,5 +47,12 @@ namespace Spite
         /// Updates all teams' standings.
         /// </summary>
         void UpdateTeamStandings();
+
+        /// <summary>
+        /// Receives an action that should apply in some part of the Arena.
+        /// </summary>
+        /// <param name="action">The action to be performed.</param>
+        /// <param name="updateStandings">If the standings should be updated.</param>
+        void ReceiveAction(IAction action, bool updateStandings);
     }
 }

@@ -6,7 +6,7 @@ namespace Spite
     /// <summary>
     /// Provides methods useful for building and populating an arena.
     /// </summary>
-    public class ArenaBuilder
+    public class ArenaBuilder<T> where T : ITeam
     {
         private uint teamCount = 0;
 
@@ -16,7 +16,7 @@ namespace Spite
 
         private ITurnManager turnManager = null;
 
-        private List<ITeam> teams = new List<ITeam>();
+        private readonly List<T> teams = new List<T>();
 
         /// <summary>
         /// Creates an instance of an Arena Builder.
@@ -30,7 +30,7 @@ namespace Spite
         /// </summary>
         /// <param name="teamCount">The number of teams that will be fighting in the arena.</param>
         /// <returns>this</returns>
-        public ArenaBuilder SetTeamCount(uint teamCount)
+        public ArenaBuilder<T> SetTeamCount(uint teamCount)
         {
             this.teamCount = teamCount;
             return this;
@@ -41,7 +41,7 @@ namespace Spite
         /// </summary>
         /// <param name="name">Sets the name of this arena.</param>
         /// <returns>this</returns>
-        public ArenaBuilder SetArenaName(string name)
+        public ArenaBuilder<T> SetArenaName(string name)
         {
             arenaName = name;
             return this;
@@ -52,7 +52,7 @@ namespace Spite
         /// </summary>
         /// <param name="manager">The scheme for determining the granularity and order of turns.</param>
         /// <returns>The ArenaBuilder for chaining.</returns>
-        public ArenaBuilder SetTurnManager(ITurnManager manager)
+        public ArenaBuilder<T> SetTurnManager(ITurnManager manager)
         {
             turnManager = manager;
             return this;
@@ -63,7 +63,7 @@ namespace Spite
         /// </summary>
         /// <param name="team">The team to add to the arena.</param>
         /// <returns>The team to add to the arena.</returns>
-        public ArenaBuilder AddTeam(ITeam team)
+        public ArenaBuilder<T> AddTeam(T team)
         {
             if (teamsAdded >= teamCount)
             {

@@ -43,6 +43,10 @@ namespace SpiteBattleship
             return arena.AnyTeamHasStanding(TeamStanding.Eliminated);
         }
 
+        public void ReceiveCommand(IAction action)
+        {
+            action.Execute();
+        }
     }
 }
  

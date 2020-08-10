@@ -9,7 +9,7 @@ These are the core classes/interfaces that make this possible:
  - **Arena**: This keeps track of all the teams and the team manager to keep battles organized effectively. An `ArenaBuilder` is provided to build an Arena.
  - **ITurnManager**: Helps keep track of turns and the phases in the game through `ITurnPhase` interface implementations.
  - **ITeam**: Keeps track of the entities and its current standing in the battle. A `TeamBuilder` class (implemented generically) can help build teams to place in arenas.
- - **IEntity**: The smallest unit provided by the framework. The interface is very open ended, to allow for a large number of applications.
+ - **IEntity**: The smallest unit provided by the framework. The interface is very open ended to allow for a large number of applications.
  
 ## Getting Started
 To get started with Spite, you'll need to have a good understanding of Arenas, Turn Managers, and Teams. Entities are very barebones, and mostly implementation specific. This section shows how to get started with these elements, to help set you up for a basic turn-based game system.

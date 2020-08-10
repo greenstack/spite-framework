@@ -106,6 +106,11 @@ namespace Spite
             }
         }
 
+        public IEnumerable<ITeam> GetTeamsOpposing(ITeam team)
+        {
+            return GetTeamsOpposing<ITeam>(team);
+        }
+
         /// <summary>
         /// Represents a method that is called when an Arena begins battle.
         /// </summary>

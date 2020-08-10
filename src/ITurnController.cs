@@ -57,7 +57,7 @@ namespace Spite
         /// <summary>
         /// The Arena the team is participating in.
         /// </summary>
-        public Arena Arena { get; }
+        public IArena Arena { get; }
 
         /// <summary>
         /// The object that is passing the turn.
@@ -69,7 +69,7 @@ namespace Spite
         /// </summary>
         /// <param name="arena">The arena this is taking place in.</param>
         /// <param name="previous">The object passing the turn.</param>
-        public TurnChangeContext(Arena arena, ITurnController previous)
+        public TurnChangeContext(IArena arena, ITurnController previous)
         {
             Arena = arena;
             Previous = previous;

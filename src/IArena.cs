@@ -49,10 +49,10 @@ namespace Spite
         void UpdateTeamStandings();
 
         /// <summary>
-        /// Receives an action that should apply in some part of the Arena.
+        /// Receives the command for execution.
         /// </summary>
-        /// <param name="action">The action to be performed.</param>
-        /// <param name="updateStandings">If the standings should be updated.</param>
-        void ReceiveAction(IAction action, bool updateStandings);
+        /// <param name="command">The command to be executed.</param>
+        /// <returns>True if the command is successful when executed. See <see cref="ICommand.Execute"/>.</returns>
+        bool ReceiveAndExecuteCommand(ICommand command);
     }
 }

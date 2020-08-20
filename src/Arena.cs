@@ -1,6 +1,6 @@
-﻿using Spite.Actions;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
+using System;
 
 namespace Spite
 {
@@ -21,11 +21,6 @@ namespace Spite
         /// Gets the turn manager.
         /// </summary>
         public ITurnManager TurnManager { get; }
-
-        /// <summary>
-        /// The controller that is currently acting.
-        /// </summary>
-        public ITurnController CurrentController { get => TurnManager.CurrentController; }
 
         /// <summary>
         /// The number of teams managed by this arena.
@@ -74,6 +69,7 @@ namespace Spite
         /// <summary>
         /// Begins the battle.
         /// </summary>
+        [Obsolete("Arenas shouldn't be given total control over the program. This will be removed.")]
         public void DoBattle()
         {
             OnBattleBegin?.Invoke(this);
@@ -111,14 +107,14 @@ namespace Spite
             return GetTeamsOpposing<ITeam>(team);
         }
 
-        /// <summary>
-        /// Receives an action to execute on the target.
-        /// </summary>
-        /// <param name="action"></param>
-        public void ReceiveAction(IAction action, bool updateStandings)
+        /// <inheritdoc/>
+        public bool ReceiveAndExecuteCommand(ICommand command)
         {
-            TurnManager.ReceiveCommand(action);
-            if (updateStandings) UpdateTeamStandings();
+            if (command == null)
+            {
+                throw new ArgumentNullException(nameof(command));
+            }
+            return TurnManager.CanBeExecuted(command) && command.Execute();
         }
 
         /// <summary>

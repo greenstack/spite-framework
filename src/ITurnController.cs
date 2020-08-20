@@ -5,6 +5,7 @@ namespace Spite
     /// <summary>
     /// Provides an interface for objects that control turns.
     /// </summary>
+    [Obsolete("Working towards the IActor interface instead")]
     public interface ITurnController : IComparable<ITurnController>
     {
         /// <summary>

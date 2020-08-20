@@ -1,8 +1,11 @@
-﻿namespace Spite.Actions
+﻿using System;
+
+namespace Spite.Actions
 {
     /// <summary>
     /// Represents an action that can be applied to an entity.
     /// </summary>
+    [Obsolete]
     public interface IEntityAction<TEntity> : IAction where TEntity : IEntity
     {
         /// <summary>

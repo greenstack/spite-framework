@@ -1,8 +1,11 @@
-﻿namespace Spite.Actions
+﻿using System;
+
+namespace Spite.Actions
 {
     /// <summary>
     /// Provides an interface for IEntityActionVisitors.
     /// </summary>
+    [Obsolete]
     public interface IEntityActionVisitor
     {
         /// <summary>

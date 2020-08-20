@@ -6,6 +6,7 @@ namespace Spite.Actions
     /// <summary>
     /// Builds up an action that can be executed.
     /// </summary>
+    [Obsolete]
     public class ActionBuilder
     {
         readonly List<IAction> actions;

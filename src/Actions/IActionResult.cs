@@ -1,8 +1,11 @@
-﻿namespace Spite.Actions
+﻿using System;
+
+namespace Spite.Actions
 {
     /// <summary>
     /// The results of an action.
     /// </summary>
+    [Obsolete]
     public interface IActionResult
     {
         /// <summary>

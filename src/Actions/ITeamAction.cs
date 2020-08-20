@@ -1,8 +1,11 @@
-﻿namespace Spite.Actions
+﻿using System;
+
+namespace Spite.Actions
 {
     /// <summary>
     /// An interface for actions that can be taken against teams.
     /// </summary>
+    [Obsolete]
     public interface ITeamAction<TTeam> : IAction where TTeam : ITeam
     {
         /// <summary>

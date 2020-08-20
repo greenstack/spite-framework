@@ -1,8 +1,11 @@
-﻿namespace Spite.Actions
+﻿using System;
+
+namespace Spite.Actions
 {
     /// <summary>
     /// Provides an interface for actions that can be used during battle.
     /// </summary>
+    [Obsolete]
     public interface IAction
     {
         /// <summary>

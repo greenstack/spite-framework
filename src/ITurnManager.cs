@@ -1,4 +1,5 @@
 ﻿using Spite.Actions;
+using System;
 
 namespace Spite
 {
@@ -10,6 +11,7 @@ namespace Spite
         /// <summary>
         /// The current team controller.
         /// </summary>
+        [Obsolete("We're moving towards IActor instead. Furthermore, if Managers need to know who can currently act, specific implementations should do that.")]
         ITurnController CurrentController { get; }
 
         /// <summary>
@@ -28,6 +30,7 @@ namespace Spite
         /// <param name="actor">The actor wanting to perform the action.</param>
         /// <param name="action">The action to be performed.</param>
         /// <returns>True if the actor can perform the action.</returns>
+        [Obsolete("Since we're moving to IActors, use ITurnManager.CanBeExecuted instead.")]
         bool CanControllerAct(ITurnController actor, IAction action);
 
         /// <summary>
@@ -38,9 +41,10 @@ namespace Spite
         bool DoTurn(IArena arena);
 
         /// <summary>
-        /// Receives a command to be executed.
+        /// Determines if the given command can be executed. It may check the command's Executor, this TurnManager's internal state, and other items.
         /// </summary>
-        /// <param name="action">The action being executed.</param>
-        void ReceiveCommand(IAction action);
+        /// <param name="command">The command to check.</param>
+        /// <returns>True if the command can be executed by its owner, otherwise, false.</returns>
+        bool CanBeExecuted(ICommand command);
     }
 }

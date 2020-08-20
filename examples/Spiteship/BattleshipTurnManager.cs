@@ -32,7 +32,7 @@ namespace SpiteBattleship
 
         public bool CanControllerAct(ITurnController actor, IAction action)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public bool DoTurn(IArena arena)
@@ -46,6 +46,11 @@ namespace SpiteBattleship
         public void ReceiveCommand(IAction action)
         {
             action.Execute();
+        }
+
+        public bool CanBeExecuted(ICommand command)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -8,7 +8,7 @@
         /// <summary>
         /// The actor performing this command.
         /// </summary>
-        IActor Executor { get; }
+        IActor Owner { get; }
         
         /// <summary>
         /// Executes this command.

@@ -10,4 +10,12 @@
         /// </summary>
         string Name { get; }
     }
+
+    public interface IActor<TTeam> : IActor where TTeam: ITeam
+    {
+        /// <summary>
+        /// The team this Actor covers.
+        /// </summary>
+        TTeam Team { get; }
+    }
 }

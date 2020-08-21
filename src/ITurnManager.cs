@@ -9,12 +9,6 @@ namespace Spite
     public interface ITurnManager
     {
         /// <summary>
-        /// The current team controller.
-        /// </summary>
-        [Obsolete("We're moving towards IActor instead. Furthermore, if Managers need to know who can currently act, specific implementations should do that.")]
-        ITurnController CurrentController { get; }
-
-        /// <summary>
         /// The current phase in the turn.
         /// </summary>
         ITurnPhase CurrentPhase { get; }
@@ -25,20 +19,16 @@ namespace Spite
         event ChangePhase OnPhaseChanged;
 
         /// <summary>
-        /// Determines if the turn controller can perform the given action.
+        /// Should be called once the battle starts.
         /// </summary>
-        /// <param name="actor">The actor wanting to perform the action.</param>
-        /// <param name="action">The action to be performed.</param>
-        /// <returns>True if the actor can perform the action.</returns>
-        [Obsolete("Since we're moving to IActors, use ITurnManager.CanBeExecuted instead.")]
-        bool CanControllerAct(ITurnController actor, IAction action);
+        void Start();
 
         /// <summary>
-        /// Has the current controller accept a turn.
+        /// Determines if the provided actor is allowed to submit a command, has priority, or otherwise.
         /// </summary>
-        /// <param name="arena">The arena the turn takes place in.</param>
-        /// <returns>Whether or not the battle should end.</returns>
-        bool DoTurn(IArena arena);
+        /// <param name="actor">The actor to query for.</param>
+        /// <returns>True if the given actor is allowed to act.</returns>
+        bool CanAct(IActor actor);
 
         /// <summary>
         /// Determines if the given command can be executed. It may check the command's Executor, this TurnManager's internal state, and other items.

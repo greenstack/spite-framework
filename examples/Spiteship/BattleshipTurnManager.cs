@@ -12,10 +12,9 @@ namespace SpiteBattleship
         public BattleshipTurnManager(PlayerBattleshipController player)
         {
             this.player = player;
-            currentPhase = new PlayerPhase();
         }
 
-        public ITurnController CurrentController => player;
+        public IActor CurrentController => player;
 
         private BattleshipTurnPhase currentPhase;
         public ITurnPhase CurrentPhase
@@ -30,27 +29,19 @@ namespace SpiteBattleship
 
         public event ChangePhase OnPhaseChanged;
 
-        public bool CanControllerAct(ITurnController actor, IAction action)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool DoTurn(IArena arena)
-        {
-            var action = currentPhase.GetAction(arena, this);
-            action.Execute();
-            arena.UpdateTeamStandings();
-            return arena.AnyTeamHasStanding(TeamStanding.Eliminated);
-        }
-
-        public void ReceiveCommand(IAction action)
-        {
-            action.Execute();
-        }
-
         public bool CanBeExecuted(ICommand command)
         {
-            throw new NotImplementedException();
+            return command.Owner == player;
+        }
+
+        public void Start()
+        {
+            CurrentPhase = new PlayerPhase(player);
+        }
+
+        public bool CanAct(IActor actor)
+        {
+            return actor == player && CurrentPhase is PlayerPhase;
         }
     }
 }

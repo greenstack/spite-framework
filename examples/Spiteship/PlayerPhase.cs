@@ -7,6 +7,10 @@ namespace SpiteBattleship
     {
         public static PlayerBattleshipController player;
 
+        public PlayerPhase(IActor owner) : base(owner)
+        {
+        }
+
         public override BattleshipAction GetAction(IArena arena, BattleshipTurnManager turnManager)
         {
             int x = 0, y = 0;

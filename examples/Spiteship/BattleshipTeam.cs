@@ -43,14 +43,22 @@ namespace SpiteBattleship
 
         public ICollection<ShipEntity> Entities => ships;
 
+        /// <summary>
+        /// Causes the team to take a shot.
+        /// </summary>
+        /// <param name="x">The x coordinate of the shot.</param>
+        /// <param name="y">The y coordinate of the shot.</param>
+        /// <returns>True if the shot results in a hit.</returns>
         public bool ReceiveGuess(int x, int y)
         {
             var ship = shipsSegments[x, y].Ship;
             if (ship != null && ship.IsAlive)
             {
                 ship.TakeHit();
+                Console.WriteLine($"Hit! @ {x}, {y}");
                 return true;
             }
+            Console.WriteLine($"Miss! @ {x}, {y}");
             return false;
         }
 

@@ -45,11 +45,13 @@
   <ItemGroup>
     <Compile Include="BattleshipAction.cs" />
     <Compile Include="BattleshipActionPrinter.cs" />
+    <Compile Include="BattleshipCommand.cs" />
     <Compile Include="BattleshipTeam.cs" />
     <Compile Include="BattleshipTurnManager.cs" />
     <Compile Include="BattleshipTurnPhase.cs" />
     <Compile Include="GuessAction.cs" />
     <Compile Include="GuessActionResult.cs" />
+    <Compile Include="GuessCommand.cs" />
     <Compile Include="PlayerBattleshipController.cs" />
     <Compile Include="PlayerPhase.cs" />
     <Compile Include="Program.cs" />

@@ -28,7 +28,7 @@ namespace SpiteBattleship
             player = BuildTeam();
             AI = BuildTeam();
 
-            PlayerBattleshipController playerContoller 
+            PlayerBattleshipController playerContoller
                 = new PlayerBattleshipController(player);
 
             var battleshipManager = new BattleshipTurnManager(playerContoller);
@@ -43,27 +43,40 @@ namespace SpiteBattleship
                 .AddTeam(AI)
                 .Finish();
 
-            // We're using this action visitor to showcase why it may be useful
-            // to have the action visitor. In a full game, you may want to use
-            // this supplied visitor pattern to handle animations and such, as
-            // well as logging messages to the screen for the player to see.
-            // BattleshipActionAnimator, BattleshipActionLogger are possible
-            // examples here that could work.
-            
-            arena.DoBattle();
-            /*do
+            arena.StartBattle();
+            bool quit;
+            do
             {
-                /*
-                if (quit) break;
-                printer.Visit(ga);
-                // Let the user see the output of the visitor.
-                Thread.Sleep(1000);
-                var result = ga.Execute();
-                player.InformGuessStatus(result as GuessActionResult);
-                arena.UpdateTeamStandings();
-                // While no team has won, play the game.
-            } while (!arena.AnyTeamHasStanding(TeamStanding.Eliminated));*/
-            }
+                string input = Console.ReadLine();
+                quit = input.ToLower() == "q";
+
+                char[] coords = input.ToCharArray();
+                char column, row;
+                if (char.IsLetter(coords[0]))
+                {
+                    // i.e. J1
+                    row = coords[0];
+                    column = coords[1];
+                }
+                else
+                {
+                    // i.e. 1J
+                    row = coords[1];
+                    column = coords[0];
+                }
+
+                int x = int.Parse(column.ToString());
+                int y = char.ToUpper(row) - 0x41;
+
+                // TODO: Input validation
+
+                // Yikes @ PlayerPhase.player
+                var guess = new GuessCommand(PlayerPhase.player, AI, x, y);
+
+                arena.ReceiveAndExecuteCommand(guess);
+
+            } while (!arena.AnyTeamHasStanding(TeamStanding.Eliminated) && !quit);
+        }
 
         /// <summary>
         /// Builds a simple side for battleship.

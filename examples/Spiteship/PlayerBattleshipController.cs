@@ -3,29 +3,17 @@ using System;
 
 namespace SpiteBattleship
 {
-    class PlayerBattleshipController : ITurnController
+    class PlayerBattleshipController : IActor
     {
-        public event ReceiveTurn OnTurnReceived;
-        public event PassTurn OnTurnPassed;
 
         public ITeam Team { get => ConcreteTeam; }
         public BattleshipTeam ConcreteTeam { get; }
 
+        public string Name => "player";
+
         public PlayerBattleshipController(BattleshipTeam playerTeam)
         {
-            this.ConcreteTeam = playerTeam;
-        }
-
-        public void PassTurn(TurnChangeContext context)
-        {
-            OnTurnPassed?.Invoke(this, null);
-            throw new NotImplementedException();
-        }
-
-        public void ReceiveTurn(TurnChangeContext context)
-        {
-            OnTurnReceived?.Invoke(this, null);
-            throw new NotImplementedException();
+            ConcreteTeam = playerTeam;
         }
 
         public bool askPlayerForInput(ref int x, ref int y)
@@ -54,11 +42,6 @@ namespace SpiteBattleship
                 invalidInput = false;
             } while (invalidInput);
             return false;
-        }
-
-        public int CompareTo(ITurnController other)
-        {
-            throw new NotImplementedException();
         }
     }
 }

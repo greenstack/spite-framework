@@ -1,7 +1,4 @@
-﻿using Spite.Actions;
-using System;
-
-namespace Spite
+﻿namespace Spite
 {
     /// <summary>
     /// Manages the turns in an arena.

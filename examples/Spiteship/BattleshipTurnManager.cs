@@ -1,7 +1,4 @@
 ﻿using Spite;
-using Spite.Actions;
-using Spite.Queries;
-using System;
 
 namespace SpiteBattleship
 {
@@ -14,7 +11,7 @@ namespace SpiteBattleship
             this.player = player;
         }
 
-        public IActor CurrentController => player;
+        public BattleshipActor CurrentController => player;
 
         private BattleshipTurnPhase currentPhase;
         public ITurnPhase CurrentPhase

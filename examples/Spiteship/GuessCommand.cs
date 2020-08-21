@@ -1,5 +1,4 @@
 ﻿using Spite;
-using System;
 
 namespace SpiteBattleship
 {
@@ -9,16 +8,20 @@ namespace SpiteBattleship
         private readonly int yCoord;
         private readonly BattleshipTeam Target;
 
-        public GuessCommand(IActor owner, BattleshipTeam target, int x, int y) : base(owner)
+        public GuessCommand(IActor<BattleshipTeam> owner, BattleshipTeam target, int x, int y) : base(owner)
         {
             xCoord = x;
             yCoord = y;
             Target = target;
         }
 
+        public override bool ShouldUpdateTeamStandings => true;
+
         public override bool Execute()
         {
-            return Target.ReceiveGuess(xCoord, yCoord);
+            bool hit = Target.ReceiveGuess(xCoord, yCoord);
+            (Owner as IActor<BattleshipTeam>).Team.InformOfGuessAt(xCoord, yCoord, hit);
+            return hit;
         }
     }
 }

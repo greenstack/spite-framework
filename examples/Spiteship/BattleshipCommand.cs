@@ -8,8 +8,9 @@ namespace SpiteBattleship
     abstract class BattleshipCommand : ICommand
     {
         public IActor Owner { get; }
+        public abstract bool ShouldUpdateTeamStandings { get; }
 
-        public BattleshipCommand(IActor owner)
+        public BattleshipCommand(IActor<BattleshipTeam> owner)
         {
             Owner = owner;
         }

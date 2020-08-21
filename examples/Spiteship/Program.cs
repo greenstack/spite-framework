@@ -29,10 +29,11 @@ namespace SpiteBattleship
             AI = BuildTeam();
 
             PlayerBattleshipController playerContoller
-                = new PlayerBattleshipController(player);
+                = new PlayerBattleshipController(player, AI);
 
             var battleshipManager = new BattleshipTurnManager(playerContoller);
 
+            // Yikes @ this
             PlayerPhase.player = playerContoller;
 
             arena = new ArenaBuilder<BattleshipTeam>()
@@ -44,38 +45,26 @@ namespace SpiteBattleship
                 .Finish();
 
             arena.StartBattle();
-            bool quit;
+            Console.WriteLine("Welcome to Battleship!");
             do
             {
-                string input = Console.ReadLine();
-                quit = input.ToLower() == "q";
+                Console.Write(player.ToString());
 
-                char[] coords = input.ToCharArray();
-                char column, row;
-                if (char.IsLetter(coords[0]))
-                {
-                    // i.e. J1
-                    row = coords[0];
-                    column = coords[1];
-                }
-                else
-                {
-                    // i.e. 1J
-                    row = coords[1];
-                    column = coords[0];
-                }
+                var action = battleshipManager.CurrentController.GetAction();
 
-                int x = int.Parse(column.ToString());
-                int y = char.ToUpper(row) - 0x41;
+                arena.ReceiveAndExecuteCommand(action);
+            } while (!arena.AnyTeamHasStanding(TeamStanding.Eliminated));
 
-                // TODO: Input validation
-
-                // Yikes @ PlayerPhase.player
-                var guess = new GuessCommand(PlayerPhase.player, AI, x, y);
-
-                arena.ReceiveAndExecuteCommand(guess);
-
-            } while (!arena.AnyTeamHasStanding(TeamStanding.Eliminated) && !quit);
+            if (player.CurrentStanding == TeamStanding.Victorious)
+            {
+                Console.WriteLine("Victory!");
+            }
+            else
+            {
+                Console.WriteLine("Defeat!");
+            }
+            Console.Write("Press any key to continue.");
+            Console.ReadKey(true);
         }
 
         /// <summary>

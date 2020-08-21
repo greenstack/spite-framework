@@ -21,7 +21,5 @@ namespace SpiteBattleship
         {
             OnPhaseChanged?.Invoke(this, null, manager);
         }
-
-        public abstract BattleshipAction GetAction(IArena context, BattleshipTurnManager turnManager);
     }
 }

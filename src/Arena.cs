@@ -99,7 +99,12 @@ namespace Spite
             {
                 throw new ArgumentNullException(nameof(command));
             }
-            return TurnManager.CanBeExecuted(command) && command.Execute();
+            bool success = TurnManager.CanBeExecuted(command) && command.Execute();
+            if (command.ShouldUpdateTeamStandings)
+            {
+                UpdateTeamStandings();
+            }
+            return success;
         }
 
         public void StartBattle()

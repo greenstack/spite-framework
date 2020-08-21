@@ -44,6 +44,11 @@ namespace Spite
         IEnumerable<T> GetTeamsOpposing<T>(T team) where T : ITeam;
 
         /// <summary>
+        /// Starts the battle.
+        /// </summary>
+        void StartBattle();
+
+        /// <summary>
         /// Updates all teams' standings.
         /// </summary>
         void UpdateTeamStandings();

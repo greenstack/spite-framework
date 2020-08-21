@@ -67,21 +67,6 @@ namespace Spite
         }
 
         /// <summary>
-        /// Begins the battle.
-        /// </summary>
-        [Obsolete("Arenas shouldn't be given total control over the program. This will be removed.")]
-        public void DoBattle()
-        {
-            OnBattleBegin?.Invoke(this);
-            bool battleOver;
-            // Enter the battle/game loop
-            do
-            {
-                battleOver = TurnManager.DoTurn(this);
-            } while (!battleOver);
-        }
-
-        /// <summary>
         /// Gets the teams opposing the given team, all cast to the specific type.
         /// </summary>
         /// <typeparam name="T">The specific type of team.</typeparam>
@@ -115,6 +100,12 @@ namespace Spite
                 throw new ArgumentNullException(nameof(command));
             }
             return TurnManager.CanBeExecuted(command) && command.Execute();
+        }
+
+        public void StartBattle()
+        {
+            TurnManager.Start();
+            OnBattleBegin?.Invoke(this);
         }
 
         /// <summary>

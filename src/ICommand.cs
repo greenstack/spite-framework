@@ -3,17 +3,14 @@
     /// <summary>
     /// Provides an interface for delivering commands.
     /// </summary>
-    public interface ICommand
+    public interface ICommand<TContext>
     {
         /// <summary>
         /// The actor performing this command.
         /// </summary>
         IActor Owner { get; }
-        
-        /// <summary>
-        /// The manager where
-        /// </summary>
-        IArena Context { get; }
+
+        TContext Context { get; }
 
         /// <summary>
         /// Should the arena update the team standings if this command is successful?

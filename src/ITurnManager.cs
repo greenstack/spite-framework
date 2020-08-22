@@ -32,6 +32,6 @@
         /// </summary>
         /// <param name="command">The command to check.</param>
         /// <returns>True if the command can be executed by its owner, otherwise, false.</returns>
-        bool CanBeExecuted(ICommand command);
+        bool CanBeExecuted<TContext>(ICommand<TContext> command);
     }
 }

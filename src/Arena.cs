@@ -93,7 +93,7 @@ namespace Spite
         }
 
         /// <inheritdoc/>
-        public bool ReceiveAndExecuteCommand(ICommand command)
+        public bool ReceiveAndExecuteCommand<TContext>(ICommand<TContext> command)
         {
             if (command == null)
             {

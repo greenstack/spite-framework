@@ -43,14 +43,14 @@ namespace SpiteBattleship
             return false;
         }
 
-        public override ICommand GetAction()
+        public override BattleshipCommand GetAction(BattleshipTurnManager turnManager)
         {
             string input = Console.ReadLine();
             // TODO: Input validation
             if (input.ToLower() == "q")
             {
                 Team.ForceStanding(TeamStanding.Defeated);
-                return new ForfeitCommand(this);
+                return new ForfeitCommand(turnManager, this);
             }
 
             char[] coords = input.ToCharArray();
@@ -71,7 +71,7 @@ namespace SpiteBattleship
             int x = int.Parse(column.ToString());
             int y = char.ToUpper(row) - 0x41;
 
-            return new GuessCommand(this, opponent, x, y);
+            return new GuessCommand(turnManager, this, opponent, x, y);
         }
     }
 }

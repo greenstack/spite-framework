@@ -21,5 +21,10 @@ namespace SpiteBattleship
         {
             OnPhaseChanged?.Invoke(this, null, manager);
         }
+        
+        public virtual bool SendPlayerAttack(BattleshipTeam attacker, BattleshipTeam defender, int x, int y)
+        {
+            return false;
+        }
     }
 }

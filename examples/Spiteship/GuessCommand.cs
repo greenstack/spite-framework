@@ -8,7 +8,7 @@ namespace SpiteBattleship
         private readonly int yCoord;
         private readonly BattleshipTeam Target;
 
-        public GuessCommand(IActor<BattleshipTeam> owner, BattleshipTeam target, int x, int y) : base(owner)
+        public GuessCommand(BattleshipTurnManager context, IActor<BattleshipTeam> owner, BattleshipTeam target, int x, int y) : base(context, owner)
         {
             xCoord = x;
             yCoord = y;
@@ -19,9 +19,7 @@ namespace SpiteBattleship
 
         public override bool Execute()
         {
-            bool hit = Target.ReceiveGuess(xCoord, yCoord);
-            (Owner as IActor<BattleshipTeam>).Team.InformOfGuessAt(xCoord, yCoord, hit);
-            return hit;
+            return Context.SendPlayerAttack((Owner as BattleshipActor).Team, Target, xCoord, yCoord);
         }
     }
 }

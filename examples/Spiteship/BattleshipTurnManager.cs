@@ -26,7 +26,7 @@ namespace SpiteBattleship
 
         public event ChangePhase OnPhaseChanged;
 
-        public bool CanBeExecuted(ICommand command)
+        public bool CanBeExecuted<TContext>(ICommand<TContext> command)
         {
             return command.Owner == player;
         }
@@ -39,6 +39,11 @@ namespace SpiteBattleship
         public bool CanAct(IActor actor)
         {
             return actor == player && CurrentPhase is PlayerPhase;
+        }
+
+        public bool SendPlayerAttack(BattleshipTeam attacker, BattleshipTeam defender, int x, int y)
+        {
+            return currentPhase.SendPlayerAttack(attacker, defender, x, y);
         }
     }
 }

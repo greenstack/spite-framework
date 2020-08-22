@@ -7,7 +7,7 @@ namespace SpiteBattleship
     /// </summary>
     class ForfeitCommand : BattleshipCommand
     {
-        public ForfeitCommand(IActor<BattleshipTeam> owner) : base(owner)
+        public ForfeitCommand(BattleshipTurnManager context, IActor<BattleshipTeam> owner) : base(context, owner)
         {
         }
 

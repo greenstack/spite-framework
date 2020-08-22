@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AIPlayerTurn.cs" />
     <Compile Include="BattleshipActor.cs" />
     <Compile Include="BattleshipCommand.cs" />
     <Compile Include="BattleshipTeam.cs" />

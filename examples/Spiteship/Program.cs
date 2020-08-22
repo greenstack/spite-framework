@@ -50,7 +50,7 @@ namespace SpiteBattleship
             {
                 Console.Write(player.ToString());
 
-                var action = battleshipManager.CurrentController.GetAction();
+                var action = battleshipManager.CurrentController.GetAction(battleshipManager);
 
                 arena.ReceiveAndExecuteCommand(action);
             } while (!arena.AnyTeamHasStanding(TeamStanding.Eliminated));
@@ -69,7 +69,7 @@ namespace SpiteBattleship
 
         /// <summary>
         /// Builds a simple side for battleship.
-        /// </summary>
+        /// </summary>ssssssssssssssssssss
         /// <returns>A battleship team.</returns>
         static BattleshipTeam BuildTeam()
         {

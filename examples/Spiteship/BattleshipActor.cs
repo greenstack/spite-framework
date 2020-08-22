@@ -13,6 +13,6 @@ namespace SpiteBattleship
             Team = team;
         }
 
-        public abstract ICommand GetAction();
+        public abstract BattleshipCommand GetAction(BattleshipTurnManager turnManager);
     }
 }

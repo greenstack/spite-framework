@@ -3,6 +3,7 @@
     /// <summary>
     /// Provides an interface for delivering commands.
     /// </summary>
+    /// <typeparam name="TContext">The type of object that the command will operate on.</typeparam>
     public interface ICommand<TContext>
     {
         /// <summary>
@@ -10,6 +11,9 @@
         /// </summary>
         IActor Owner { get; }
 
+        /// <summary>
+        /// The object that this command will be operating on.
+        /// </summary>
         TContext Context { get; }
 
         /// <summary>

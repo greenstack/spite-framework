@@ -43,21 +43,23 @@ namespace SpiteBattleship
 
         public ICollection<ShipEntity> Entities => ships;
 
+        /// <summary>
+        /// Causes the team to take a shot.
+        /// </summary>
+        /// <param name="x">The x coordinate of the shot.</param>
+        /// <param name="y">The y coordinate of the shot.</param>
+        /// <returns>True if the shot results in a hit.</returns>
         public bool ReceiveGuess(int x, int y)
         {
             var ship = shipsSegments[x, y].Ship;
             if (ship != null && ship.IsAlive)
             {
                 ship.TakeHit();
+                Console.WriteLine($"Hit! @ {x}, {y}");
                 return true;
             }
+            Console.WriteLine($"Miss! @ {x}, {y}");
             return false;
-        }
-
-        public void InformGuessStatus(GuessActionResult result)
-        {
-            Guesses[result.TargetedX, result.TargetedY] =
-                result.Success;
         }
 
         public void AddEntity(ShipEntity ship)
@@ -94,7 +96,7 @@ namespace SpiteBattleship
                     shipsSegments[8, 8] = new ShipSegment(ship);
                     break;
                 default:
-                    throw new System.Exception($"Invalid index: {index}");
+                    throw new Exception($"Invalid index: {index}");
             }
         }
 
@@ -148,13 +150,27 @@ namespace SpiteBattleship
             foreach (var team in context.GetTeamsOpposing(this))
             {
                 // There's only two teams in battleship, so we can easily determine this.
+                if (team.AreAnyEntitiesAlive())
+                {
+                    break;
+                }
                 CurrentStanding = TeamStanding.Victorious;
-                break;
             }
             return CurrentStanding;
         }
 
-        public bool GuessedAt(int x, int y)
+        /// <summary>
+        /// Tells the team that a guess was made at a coordinate.
+        /// </summary>
+        /// <param name="x">The x coordinate of the guess.</param>
+        /// <param name="y">The y coordinate of the guess.</param>
+        /// <param name="hit">Whether or not the guess was a successful hit.</param>
+        public void InformOfGuessAt(int x, int y, bool hit)
+        {
+            Guesses[x, y] = hit;
+        }
+
+        public bool DidGuessAt(int x, int y)
         {
             return Guesses[x, y] != null;
         }

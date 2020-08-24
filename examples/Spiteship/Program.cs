@@ -28,11 +28,12 @@ namespace SpiteBattleship
             player = BuildTeam();
             AI = BuildTeam();
 
-            PlayerBattleshipController playerContoller 
-                = new PlayerBattleshipController(player);
+            PlayerBattleshipController playerContoller
+                = new PlayerBattleshipController(player, AI);
 
             var battleshipManager = new BattleshipTurnManager(playerContoller);
 
+            // Yikes @ this
             PlayerPhase.player = playerContoller;
 
             arena = new ArenaBuilder<BattleshipTeam>()
@@ -43,31 +44,32 @@ namespace SpiteBattleship
                 .AddTeam(AI)
                 .Finish();
 
-            // We're using this action visitor to showcase why it may be useful
-            // to have the action visitor. In a full game, you may want to use
-            // this supplied visitor pattern to handle animations and such, as
-            // well as logging messages to the screen for the player to see.
-            // BattleshipActionAnimator, BattleshipActionLogger are possible
-            // examples here that could work.
-            
-            arena.DoBattle();
-            /*do
+            arena.StartBattle();
+            Console.WriteLine("Welcome to Battleship!");
+            do
             {
-                /*
-                if (quit) break;
-                printer.Visit(ga);
-                // Let the user see the output of the visitor.
-                Thread.Sleep(1000);
-                var result = ga.Execute();
-                player.InformGuessStatus(result as GuessActionResult);
-                arena.UpdateTeamStandings();
-                // While no team has won, play the game.
-            } while (!arena.AnyTeamHasStanding(TeamStanding.Eliminated));*/
+                Console.Write(player.ToString());
+
+                var action = battleshipManager.CurrentController.GetAction(battleshipManager);
+
+                arena.ReceiveAndExecuteCommand(action);
+            } while (!arena.AnyTeamHasStanding(TeamStanding.Eliminated));
+
+            if (player.CurrentStanding == TeamStanding.Victorious)
+            {
+                Console.WriteLine("Victory!");
             }
+            else
+            {
+                Console.WriteLine("Defeat!");
+            }
+            Console.Write("Press any key to continue.");
+            Console.ReadKey(true);
+        }
 
         /// <summary>
         /// Builds a simple side for battleship.
-        /// </summary>
+        /// </summary>ssssssssssssssssssss
         /// <returns>A battleship team.</returns>
         static BattleshipTeam BuildTeam()
         {

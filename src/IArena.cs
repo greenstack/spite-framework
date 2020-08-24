@@ -43,8 +43,20 @@ namespace Spite
         IEnumerable<T> GetTeamsOpposing<T>(T team) where T : ITeam;
 
         /// <summary>
+        /// Starts the battle.
+        /// </summary>
+        void StartBattle();
+
+        /// <summary>
         /// Updates all teams' standings.
         /// </summary>
         void UpdateTeamStandings();
+
+        /// <summary>
+        /// Receives the command for execution.
+        /// </summary>
+        /// <param name="command">The command to be executed.</param>
+        /// <returns>True if the command is successful when executed. See <see cref="ICommand.Execute"/>.</returns>
+        bool ReceiveAndExecuteCommand<TContext>(ICommand<TContext> command);
     }
 }

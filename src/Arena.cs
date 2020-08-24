@@ -1,6 +1,6 @@
-﻿using Spite.Actions;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
+using System;
 
 namespace Spite
 {
@@ -21,11 +21,6 @@ namespace Spite
         /// Gets the turn manager.
         /// </summary>
         public ITurnManager TurnManager { get; }
-
-        /// <summary>
-        /// The controller that is currently acting.
-        /// </summary>
-        public ITurnController CurrentController { get => TurnManager.CurrentController; }
 
         /// <summary>
         /// The number of teams managed by this arena.
@@ -72,20 +67,6 @@ namespace Spite
         }
 
         /// <summary>
-        /// Begins the battle.
-        /// </summary>
-        public void DoBattle()
-        {
-            OnBattleBegin?.Invoke(this);
-            bool battleOver;
-            // Enter the battle/game loop
-            do
-            {
-                battleOver = TurnManager.DoTurn(this);
-            } while (!battleOver);
-        }
-
-        /// <summary>
         /// Gets the teams opposing the given team, all cast to the specific type.
         /// </summary>
         /// <typeparam name="T">The specific type of team.</typeparam>
@@ -109,6 +90,27 @@ namespace Spite
         public IEnumerable<ITeam> GetTeamsOpposing(ITeam team)
         {
             return GetTeamsOpposing<ITeam>(team);
+        }
+
+        /// <inheritdoc/>
+        public bool ReceiveAndExecuteCommand<TContext>(ICommand<TContext> command)
+        {
+            if (command == null)
+            {
+                throw new ArgumentNullException(nameof(command));
+            }
+            bool success = TurnManager.CanBeExecuted(command) && command.Execute();
+            if (command.ShouldUpdateTeamStandings)
+            {
+                UpdateTeamStandings();
+            }
+            return success;
+        }
+
+        public void StartBattle()
+        {
+            TurnManager.Start();
+            OnBattleBegin?.Invoke(this);
         }
 
         /// <summary>

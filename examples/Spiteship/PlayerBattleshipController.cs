@@ -3,29 +3,16 @@ using System;
 
 namespace SpiteBattleship
 {
-    class PlayerBattleshipController : ITurnController
+    class PlayerBattleshipController : BattleshipActor
     {
-        public event ReceiveTurn OnTurnReceived;
-        public event PassTurn OnTurnPassed;
 
-        public ITeam Team { get => ConcreteTeam; }
-        public BattleshipTeam ConcreteTeam { get; }
+        public override string Name => "player";
 
-        public PlayerBattleshipController(BattleshipTeam playerTeam)
+        private readonly BattleshipTeam opponent;
+
+        public PlayerBattleshipController(BattleshipTeam playerTeam, BattleshipTeam opponent) : base (playerTeam)
         {
-            this.ConcreteTeam = playerTeam;
-        }
-
-        public void PassTurn(TurnChangeContext context)
-        {
-            OnTurnPassed?.Invoke(this, null);
-            throw new NotImplementedException();
-        }
-
-        public void ReceiveTurn(TurnChangeContext context)
-        {
-            OnTurnReceived?.Invoke(this, null);
-            throw new NotImplementedException();
+            this.opponent = opponent;
         }
 
         public bool askPlayerForInput(ref int x, ref int y)
@@ -34,7 +21,7 @@ namespace SpiteBattleship
             do
             {
                 Console.Clear();
-                Console.Write(ConcreteTeam.ToString());
+                Console.Write(Team.ToString());
                 Console.WriteLine("Enter an x, y coordinate to attack. (Q to quit)");
 
                 var input = Console.ReadLine();
@@ -46,7 +33,7 @@ namespace SpiteBattleship
                 if (coords.Length != 2) continue;
                 if (!int.TryParse(coords[0], out x)) continue;
                 if (!int.TryParse(coords[1], out y)) continue;
-                if (x < 0 || x > 9 || y < 0 || y > 9 || ConcreteTeam.GuessedAt(x, y))
+                if (x < 0 || x > 9 || y < 0 || y > 9 || Team.DidGuessAt(x, y))
                 {
                     continue;
                 }
@@ -56,9 +43,35 @@ namespace SpiteBattleship
             return false;
         }
 
-        public int CompareTo(ITurnController other)
+        public override BattleshipCommand GetAction(BattleshipTurnManager turnManager)
         {
-            throw new NotImplementedException();
+            string input = Console.ReadLine();
+            // TODO: Input validation
+            if (input.ToLower() == "q")
+            {
+                Team.ForceStanding(TeamStanding.Defeated);
+                return new ForfeitCommand(turnManager, this);
+            }
+
+            char[] coords = input.ToCharArray();
+            char column, row;
+            if (char.IsLetter(coords[0]))
+            {
+                // i.e. J1
+                row = coords[0];
+                column = coords[1];
+            }
+            else
+            {
+                // i.e. 1J
+                row = coords[1];
+                column = coords[0];
+            }
+
+            int x = int.Parse(column.ToString());
+            int y = char.ToUpper(row) - 0x41;
+
+            return new GuessCommand(turnManager, this, opponent, x, y);
         }
     }
 }

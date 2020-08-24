@@ -1,5 +1,4 @@
 ﻿using Spite;
-using System.Linq;
 
 namespace SpiteBattleship
 {
@@ -7,25 +6,16 @@ namespace SpiteBattleship
     {
         public static PlayerBattleshipController player;
 
-        public override BattleshipAction GetAction(IArena arena, BattleshipTurnManager turnManager)
+        public PlayerPhase(IActor owner) : base(owner)
         {
-            int x = 0, y = 0;
-            bool quit = player.askPlayerForInput(ref x, ref y);
-            if (quit)
-            {
-                return new QuitCommand(arena, player.Team);
-            }
-            else
-            {
-                var opponent = arena.GetTeamsOpposing(player.ConcreteTeam).First();
-                return new GuessAction(
-                    player.Team as BattleshipTeam,
-                    opponent as BattleshipTeam,
-                    arena,
-                    x,
-                    y
-                );
-            }
+        }
+
+        public override bool SendPlayerAttack(BattleshipTeam attacker, BattleshipTeam defender, int x, int y)
+        {
+            if (attacker != player.Team) return false;
+            var result = defender.ReceiveGuess(x, y);
+            attacker.InformOfGuessAt(x, y, result);
+            return result;
         }
     }
 }

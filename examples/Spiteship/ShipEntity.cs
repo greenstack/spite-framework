@@ -14,9 +14,9 @@ namespace SpiteBattleship
 
         public string Name { get; }
 
-        public ShipEntity(string name, int health)
+        public ShipEntity(string name, int segments)
         {
-            Health = health;
+            Health = segments;
             Name = name;
         }
 

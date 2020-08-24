@@ -1,7 +1,4 @@
 ﻿using Spite;
-using Spite.Actions;
-using Spite.Queries;
-using System;
 
 namespace SpiteBattleship
 {
@@ -12,10 +9,9 @@ namespace SpiteBattleship
         public BattleshipTurnManager(PlayerBattleshipController player)
         {
             this.player = player;
-            currentPhase = new PlayerPhase();
         }
 
-        public ITurnController CurrentController => player;
+        public BattleshipActor CurrentController => player;
 
         private BattleshipTurnPhase currentPhase;
         public ITurnPhase CurrentPhase
@@ -30,19 +26,25 @@ namespace SpiteBattleship
 
         public event ChangePhase OnPhaseChanged;
 
-        public bool CanControllerAct(ITurnController actor, IAction action)
+        public bool CanBeExecuted<TContext>(ICommand<TContext> command)
         {
-            throw new System.NotImplementedException();
+            return command.Owner == player;
         }
 
-        public bool DoTurn(IArena arena)
+        public void Start()
         {
-            var action = currentPhase.GetAction(arena, this);
-            action.Execute();
-            arena.UpdateTeamStandings();
-            return arena.AnyTeamHasStanding(TeamStanding.Eliminated);
+            CurrentPhase = new PlayerPhase(player);
         }
 
+        public bool CanAct(IActor actor)
+        {
+            return actor == player && CurrentPhase is PlayerPhase;
+        }
+
+        public bool SendPlayerAttack(BattleshipTeam attacker, BattleshipTeam defender, int x, int y)
+        {
+            return currentPhase.SendPlayerAttack(attacker, defender, x, y);
+        }
     }
 }
  

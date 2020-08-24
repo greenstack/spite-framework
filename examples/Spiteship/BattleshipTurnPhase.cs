@@ -1,5 +1,4 @@
 ﻿using Spite;
-using Spite.Actions;
 
 namespace SpiteBattleship
 {
@@ -7,11 +6,25 @@ namespace SpiteBattleship
     {
         public event ChangePhase OnPhaseChanged;
 
+        public IActor Owner { get; }
+
+        /// <summary>
+        /// Class constructor.
+        /// </summary>
+        /// <param name="owner">The player this phase belongs to.</param>
+        public BattleshipTurnPhase(IActor owner)
+        {
+            Owner = owner;
+        }
+
         public void ChangePhase(ITurnManager manager)
         {
             OnPhaseChanged?.Invoke(this, null, manager);
         }
-
-        public abstract BattleshipAction GetAction(IArena context, BattleshipTurnManager turnManager);
+        
+        public virtual bool SendPlayerAttack(BattleshipTeam attacker, BattleshipTeam defender, int x, int y)
+        {
+            return false;
+        }
     }
 }

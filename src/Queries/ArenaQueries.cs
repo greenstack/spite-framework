@@ -51,5 +51,27 @@ namespace Spite.Queries
                    where team.CurrentStanding == standing
                    select (T)team;
         }
+
+        /// <summary>
+        /// Gets a single opposing team from the arena.
+        /// </summary>
+        /// <typeparam name="TTeam">The type of team to cast to.</typeparam>
+        /// <param name="arena">The arena to search in.</param>
+        /// <param name="team">The team whose opponent you want to get.</param>
+        /// <returns>The team that rivals the given team.</returns>
+        /// <exception cref="ArgumentNullException">If either arena or team are null.</exception>
+        /// <exception cref="InvalidOperationException">If there are multiple opposing teams.</exception>
+        public static TTeam GetOpposingTeam<TTeam>(this IArena arena, TTeam team) where TTeam : ITeam
+        {
+            if (arena == null)
+            {
+                throw new ArgumentNullException(nameof(arena));
+            }
+            if (team == null)
+            {
+                throw new ArgumentNullException(nameof(team));
+            }
+            return (TTeam)arena.Teams.Single(t => !((TTeam)t).Equals(team));
+        }
     }
 }

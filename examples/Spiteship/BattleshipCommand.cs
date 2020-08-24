@@ -3,21 +3,12 @@
 namespace SpiteBattleship
 {
     /// <summary>
-    /// Provides a basic starter class for Battleship commands
+    /// Provides a basic starter class for Battleship commands that act on a BattleshipTurnManager.
     /// </summary>
-    abstract class BattleshipCommand : ICommand<BattleshipTurnManager>
+    abstract class BattleshipCommand : Command<BattleshipTurnManager>
     {
-        public IActor Owner { get; }
-        public abstract bool ShouldUpdateTeamStandings { get; }
-
-        public BattleshipTurnManager Context { get; }
-
-        public BattleshipCommand(BattleshipTurnManager context, IActor<BattleshipTeam> owner)
+        public BattleshipCommand(BattleshipTurnManager context, IActor<BattleshipTeam> owner) : base(owner, context)
         {
-            Context = context;
-            Owner = owner;
         }
-
-        abstract public bool Execute();
     }
 }

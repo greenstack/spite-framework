@@ -147,15 +147,8 @@ namespace SpiteBattleship
                 CurrentStanding = TeamStanding.Eliminated;
                 return CurrentStanding;
             }
-            foreach (var team in context.GetTeamsOpposing(this))
-            {
-                // There's only two teams in battleship, so we can easily determine this.
-                if (team.AreAnyEntitiesAlive())
-                {
-                    break;
-                }
-                CurrentStanding = TeamStanding.Victorious;
-            }
+            var opponent = context.GetOpposingTeam(this);
+            CurrentStanding = opponent.AreAnyEntitiesAlive() ? TeamStanding.Competing : TeamStanding.Victorious;
             return CurrentStanding;
         }
 

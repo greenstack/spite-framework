@@ -13,7 +13,7 @@ namespace Spite.Queries
         /// </summary>
         /// <param name="team">The team to query.</param>
         /// <returns>The number of living entities.</returns>
-        public static int CountLivingEntities<T>(this ITeam<T> team) where T : IEntity
+        public static int CountLivingEntities<T>(this ITeam<T> team) where T : ITeamMate
         {
             if (team == null) throw new ArgumentNullException(nameof(team));
             return team.Entities.Count(e => e.IsAlive);
@@ -25,7 +25,7 @@ namespace Spite.Queries
         /// <typeparam name="T">The type of entity held by the team.</typeparam>
         /// <param name="team">The team being queried.</param>
         /// <returns>TRUE if any entity is alive.</returns>
-        public static bool AreAnyEntitiesAlive<T>(this ITeam<T> team) where T : IEntity
+        public static bool AreAnyEntitiesAlive<T>(this ITeam<T> team) where T : ITeamMate
         {
             if (team == null) throw new ArgumentNullException(nameof(team));
             return team.Entities.Any(e => e.IsAlive);
@@ -36,7 +36,7 @@ namespace Spite.Queries
         /// </summary>
         /// <param name="team">The team to query.</param>
         /// <returns>True if all entities on this team are alive.</returns>
-        public static bool AreAllEntitiesAlive<T>(this ITeam<T> team) where T : IEntity
+        public static bool AreAllEntitiesAlive<T>(this ITeam<T> team) where T : ITeamMate
         {
             if (team == null) throw new ArgumentNullException(nameof(team));
             return team.CountLivingEntities() == team.ManagedEntityCount;

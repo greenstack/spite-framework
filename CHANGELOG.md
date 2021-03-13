@@ -8,6 +8,18 @@
 - Added a generic version of `ITeam` - `ITeam<T> : ITeam where T : IEntity`. This should provide more flexibility. Any entity-related interface declarations has been migrated to the generic version.
 - Changed `TeamBuilder` class declaration to `TeamBuilder<TTeam, TEntity> where TTeam : ITeam<TEntity> where TEntity : IEntity`. This addresses issue #2 and the addition of the generic `ITeam`.
 
+### Entities -> TeamMates
+- Renamed Entities to Team Mates.
+  - `ITeamMate` is now the interface name.
+- Removed `bool IEntity.IsAlive`. Use `ITeamMate.Status` instead.
+- Introduced the `ITeamMate.Status` enum.
+  - There are {n} values:
+    - `Dead`: Team Mate has been defeated in battle.
+    - `Inactive`: Team Mate isn't actively participating in battle.
+    - `Alive`: Team Mate is alive. 
+    - `Active`: Team Mate isn't actively participating in battle.
+
+
 ### Removals
 - Removed `ITappable` and `ITappableEntity`. They didn't seem too useful.
 

@@ -32,7 +32,7 @@ namespace Spite
     /// A generic version of the team that allows for direct access to specific entity types.
     /// </summary>
     /// <typeparam name="T">The entity type this team revolves around.</typeparam>
-    public interface ITeam<T> : ITeam where T : IEntity
+    public interface ITeam<T> : ITeam where T : ITeamMate
     {
         /// <summary>
         /// The entities managed by this team.

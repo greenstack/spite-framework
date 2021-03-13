@@ -3,7 +3,7 @@ using Spite;
 
 namespace SpiteBattleship
 {
-    class ShipEntity : IEntity
+    class ShipEntity : ITeamMate
     {
 
         public ITeam Team => throw new NotImplementedException();

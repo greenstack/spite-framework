@@ -1,11 +1,9 @@
-﻿using Spite.Events;
-
-namespace Spite
+﻿namespace Spite
 {
     /// <summary>
     /// Represents an entity that the SpiteFramework can interact with.
     /// </summary>
-    public interface IEntity
+    public interface ITeamMate
     {
         /// <summary>
         /// The team this entity belongs to.

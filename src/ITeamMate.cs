@@ -13,6 +13,13 @@
         /// <summary>
         /// If this entity is still alive.
         /// </summary>
+        [System.Obsolete]
         bool IsAlive { get; }
+
+        /// <summary>
+        /// The current status of the teammate.
+        /// </summary>
+        /// <value></value>
+        TeammateStatus Status { get; }
     }    
 }

@@ -3,7 +3,7 @@
     /// <summary>
     /// Represents an entity that the SpiteFramework can interact with.
     /// </summary>
-    public interface ITeamMate
+    public interface ITeammate
     {
         /// <summary>
         /// The team this entity belongs to.

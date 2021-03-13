@@ -5,7 +5,7 @@ namespace Spite
     /// <summary>
     /// Provides methods useful in building a team.
     /// </summary>
-    public class TeamBuilder<TTeam, TEntity> where TTeam : ITeam<TEntity>, new() where TEntity : ITeamMate
+    public class TeamBuilder<TTeam, TEntity> where TTeam : ITeam<TEntity>, new() where TEntity : ITeammate
     {
         private TTeam builtTeam;
 

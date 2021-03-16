@@ -16,7 +16,7 @@ namespace Spite.Queries
         public static int CountLivingEntities<T>(this ITeam<T> team) where T : ITeammate
         {
             if (team == null) throw new ArgumentNullException(nameof(team));
-            return team.Entities.Count(e => e.IsAlive);
+            return team.Members.Count(e => e.IsAlive);
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Spite.Queries
         public static bool AreAnyEntitiesAlive<T>(this ITeam<T> team) where T : ITeammate
         {
             if (team == null) throw new ArgumentNullException(nameof(team));
-            return team.Entities.Any(e => e.IsAlive);
+            return team.Members.Any(e => e.IsAlive);
         }
 
         /// <summary>

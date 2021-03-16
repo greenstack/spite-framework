@@ -41,7 +41,7 @@ namespace SpiteBattleship
 
         public TeamStanding CurrentStanding { get; private set; } = TeamStanding.Competing;
 
-        public ICollection<ShipEntity> Entities => ships;
+        public ICollection<ShipEntity> Members => ships;
 
         /// <summary>
         /// Causes the team to take a shot.

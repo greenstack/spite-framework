@@ -36,7 +36,8 @@ namespace Spite
 
         #region Relationship adding/changing
         /// <summary>
-        /// Adds a relationship from the "from" team to the "to" team.
+        /// Adds a relationship from the "from" team to the "to" team. This relationship is unidirectional.
+		/// To add a bidirectional relationship, use <see cref="AddBidirectionalRelation(ITeam, ITeam, Relationship)"/>.
         /// </summary>
         /// <param name="from">The direction this relationship originates from.</param>
         /// <param name="to">The direction this relationship is directed to.</param>
@@ -112,6 +113,22 @@ namespace Spite
         #endregion Relationship adding/changing
 
         #region Relationship queries
+		/// <summary>
+		/// Gets the one opposing team to the given team. It may be a good idea to cache the result.
+		/// </summary>
+		/// <param name="team">The team to get the opponent for.</param>
+		/// <returns>The team opposing the given team.</returns>
+		public ITeam GetOpposingTeam(ITeam team)
+        {
+			var opposingTeams = GetTeamsWithRelationship(team, Relationship.Opposing);
+			// The idea is that we get THE opposing team.
+			if (opposingTeams.Count != 1)
+            {
+				throw new InvalidOperationException($"Team {team} has {(opposingTeams.Count == 0 ? "no" : "multiple")} opposing teams.");
+            }
+			return opposingTeams[0];
+        }
+
         /// <summary>
         /// Gets the relationship between two teams.
         /// </summary>

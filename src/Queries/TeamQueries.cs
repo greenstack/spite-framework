@@ -13,6 +13,7 @@ namespace Spite.Queries
         /// </summary>
         /// <param name="team">The team to query.</param>
         /// <returns>The number of living entities.</returns>
+        [System.Obsolete]
         public static int CountLivingEntities<T>(this ITeam<T> team) where T : ITeammate
         {
             if (team == null) throw new ArgumentNullException(nameof(team));
@@ -25,6 +26,7 @@ namespace Spite.Queries
         /// <typeparam name="T">The type of entity held by the team.</typeparam>
         /// <param name="team">The team being queried.</param>
         /// <returns>TRUE if any entity is alive.</returns>
+        [System.Obsolete]
         public static bool AreAnyEntitiesAlive<T>(this ITeam<T> team) where T : ITeammate
         {
             if (team == null) throw new ArgumentNullException(nameof(team));
@@ -36,6 +38,7 @@ namespace Spite.Queries
         /// </summary>
         /// <param name="team">The team to query.</param>
         /// <returns>True if all entities on this team are alive.</returns>
+        [System.Obsolete]
         public static bool AreAllEntitiesAlive<T>(this ITeam<T> team) where T : ITeammate
         {
             if (team == null) throw new ArgumentNullException(nameof(team));

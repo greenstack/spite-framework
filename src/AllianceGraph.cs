@@ -60,7 +60,14 @@ namespace Spite
 		/// <param name="relationship">The new relationship.</param>
 		public void ChangeRelationship(ITeam a, ITeam b, Relationship relationship)
 		{
-			graph[(a, b)] = relationship;
+			var key = (a, b);
+			if (!graph.ContainsKey(key))
+            {
+				// TODO: Create a custom exception for this case?
+				throw new KeyNotFoundException($"Could not find a relationship between {a} and {b}");
+            }
+
+			graph[key] = relationship;
 		}
 
 		/// <summary>

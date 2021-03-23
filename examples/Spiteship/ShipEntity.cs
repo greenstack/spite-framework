@@ -14,6 +14,8 @@ namespace SpiteBattleship
 
         public string Name { get; }
 
+        public TeammateStatus Status => throw new NotImplementedException();
+
         public ShipEntity(string name, int segments)
         {
             Health = segments;

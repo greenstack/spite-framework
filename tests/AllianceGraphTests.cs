@@ -29,6 +29,9 @@ namespace Spite.UnitTests
             Assert.AreEqual(AllianceGraph.Relationship.Neutral, graph.GetRelationship(teamA, teamB));
         }
 
+        /// <summary>
+        /// Test methods with adding a bidirectional relationship.
+        /// </summary>
         [Test]
         public void TestAddBidirectionalRelation()
         {
@@ -44,6 +47,49 @@ namespace Spite.UnitTests
             // Make sure we can't add the relationships
             Assert.Throws<InvalidOperationException>(() => graph.AddRelation(teamA, teamB, AllianceGraph.Relationship.Allied));
             Assert.Throws<InvalidOperationException>(() => graph.AddRelation(teamB, teamA, AllianceGraph.Relationship.Allied));
+        }
+
+        /// <summary>
+        /// Tests the get opposing team method. For now, this suffices for testing GetTeamsWithRelationship.
+        /// </summary>
+        [Test]
+        public void TestGetOpposingTeam()
+        {
+            MockTeam teamA = new();
+            MockTeam teamB = new();
+            AllianceGraph graph = new();
+            graph.AddBidirectionalRelation(teamA, teamB, AllianceGraph.Relationship.Opposing);
+            var opposingTeam = graph.GetOpposingTeam(teamA);
+            Assert.AreEqual(teamB, opposingTeam);
+            graph.ChangeRelationship(teamA, teamB, AllianceGraph.Relationship.Neutral);
+            Assert.Throws<InvalidOperationException>(()=>graph.GetOpposingTeam(teamA));
+            graph.ChangeRelationship(teamA, teamB, AllianceGraph.Relationship.Opposing);
+            graph.AddRelation(teamA, new MockTeam(), AllianceGraph.Relationship.Opposing);
+            Assert.Throws<InvalidOperationException>(() => graph.GetOpposingTeam(teamA));
+        }
+
+        /// <summary>
+        /// Tests the get relationships method.
+        /// </summary>
+        [Test]
+        public void TestGetRelationships()
+        {
+            MockTeam teamA = new();
+            MockTeam teamB = new();
+            MockTeam teamC = new();
+
+            var graph = new AllianceGraph();
+            graph.AddRelation(teamA, teamB, AllianceGraph.Relationship.Allied);
+            graph.AddRelation(teamA, teamC, AllianceGraph.Relationship.Neutral);
+
+            var relationships = graph.GetRelationships(teamA);
+            foreach (var relationship in relationships)
+            {
+                if (relationship.Key == teamB)
+                    Assert.AreEqual(AllianceGraph.Relationship.Allied, relationship.Value);
+                if (relationship.Key == teamC)
+                    Assert.AreEqual(AllianceGraph.Relationship.Neutral, relationship.Value);
+            }
         }
     }
 }

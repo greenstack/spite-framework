@@ -14,7 +14,7 @@ namespace SpiteBattleship
 
         public string Name { get; }
 
-        public TeammateStatus Status => throw new NotImplementedException();
+        public TeammateStatus Status => IsAlive ? TeammateStatus.Active : TeammateStatus.Defeated;
 
         public ShipEntity(string name, int segments)
         {

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -33,7 +34,15 @@ namespace Spite
 
 		private Dictionary<(ITeam, ITeam), Relationship> graph = new Dictionary<(ITeam, ITeam), Relationship>();
 
-		public void AddRelation(ITeam from, ITeam to, Relationship relationship)
+        #region Relationship adding/changing
+        /// <summary>
+        /// Adds a relationship from the "from" team to the "to" team.
+        /// </summary>
+        /// <param name="from">The direction this relationship originates from.</param>
+        /// <param name="to">The direction this relationship is directed to.</param>
+        /// <param name="relationship">The relationship type.</param>
+        /// <exception cref="InvalidOperationException">Thrown if a relationship between "from" and "to" is already defined.</exception>
+        public void AddRelation(ITeam from, ITeam to, Relationship relationship)
 		{
 			var key = (from, to);
 			if (!graph.ContainsKey(key))
@@ -42,12 +51,26 @@ namespace Spite
 			}
 			else
 			{
-				throw new System.ArgumentException($"The relationship between {from} and {to} is already defined. Use {nameof(ChangeRelationship)} to change the relationship.");
+				throw new InvalidOperationException($"The relationship between {from} and {to} is already defined. Use {nameof(ChangeRelationship)} to change the relationship.");
 			}
 		}
 
+		/// <summary>
+		/// Adds a relationship for both teams.
+		/// </summary>
+		/// <param name="a">One of the teams.</param>
+		/// <param name="b">The other team.</param>
+		/// <param name="relationship">The relationship the teams have.</param>
+		/// <exception cref="InvalidOperationException">Thrown if a relationship between a and b or b and a has already been defined.</exception>
 		public void AddBidirectionalRelation(ITeam a, ITeam b, Relationship relationship)
 		{
+			if (graph.ContainsKey((a, b)))
+			{
+				throw new InvalidOperationException($"A relationship between {a} and {b} has already been defined.");
+			}
+			else if (graph.ContainsKey((b, a))) {
+				throw new InvalidOperationException($"A relationship between {b} and {a} already exists.");
+			}
 			AddRelation(a, b, relationship);
 			AddRelation(b, a, relationship);
 		}
@@ -58,6 +81,7 @@ namespace Spite
 		/// <param name="a">The team sending the relationship.</param>
 		/// <param name="b">The receiving team.</param>
 		/// <param name="relationship">The new relationship.</param>
+		/// <exception cref="KeyNotFoundException">Thrown if a relationship between a and b isn't found.</exception>
 		public void ChangeRelationship(ITeam a, ITeam b, Relationship relationship)
 		{
 			var key = (a, b);
@@ -77,20 +101,24 @@ namespace Spite
 		/// <param name="b">The receiving team.</param>
 		/// <param name="relationship">The new relationship.</param>
 		/// <param name="old">The old relationship.</param>
+		/// <exception cref="KeyNotFoundException">Thrown if the relationship between a and b isn't found.</exception>
 		public void ChangeRelationship(ITeam a, ITeam b, Relationship relationship, out Relationship old)
 		{
 			var key = (a, b);
+			if (!graph.ContainsKey(key)) throw new KeyNotFoundException($"Could not find relationship between {a} and {b}");
 			old = graph[key];
 			graph[key] = relationship;
 		}
+        #endregion Relationship adding/changing
 
-		/// <summary>
-		/// Gets the relationship between two teams.
-		/// </summary>
-		/// <param name="from">The team to get the relationship for.</param>
-		/// <param name="to">The team to check.</param>
-		/// <returns></returns>
-		public Relationship GetRelationship(ITeam from, ITeam to)
+        #region Relationship queries
+        /// <summary>
+        /// Gets the relationship between two teams.
+        /// </summary>
+        /// <param name="from">The team to get the relationship for.</param>
+        /// <param name="to">The team to check.</param>
+        /// <returns>The relationship between the teams. If the relationship doesn't exist, returns <see cref="Relationship.Unknown"/>.</returns>
+        public Relationship GetRelationship(ITeam from, ITeam to)
 		{
 			var key = (from, to);
 			return graph.ContainsKey(key) ? graph[key] : Relationship.Unknown;
@@ -132,5 +160,6 @@ namespace Spite
 			}
 			return teamsWithRelationship;
 		}
-	}
+        #endregion Relationship queries
+    }
 }

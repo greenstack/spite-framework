@@ -142,13 +142,23 @@ namespace SpiteBattleship
 
         public TeamStanding DetermineStanding(IArena context)
         {
-            if (!this.AreAnyEntitiesAlive())
+            CurrentStanding = TeamStanding.Defeated;
+            foreach (var unit in Members)
             {
-                CurrentStanding = TeamStanding.Eliminated;
-                return CurrentStanding;
+                if (unit.IsAlive) {
+                    CurrentStanding = TeamStanding.Competing;
+                    break;
+                }
             }
-            var opponent = context.GetOpposingTeam(this);
-            CurrentStanding = opponent.AreAnyEntitiesAlive() ? TeamStanding.Competing : TeamStanding.Victorious;
+            if (CurrentStanding != TeamStanding.Defeated)
+            {
+                var opponent = context.GetOpposingTeam(this);
+                foreach (var unit in opponent.Members)
+                {
+                    if (unit.Status == TeammateStatus.Active) return CurrentStanding;
+                }
+                CurrentStanding = TeamStanding.Victorious;
+            }
             return CurrentStanding;
         }
 

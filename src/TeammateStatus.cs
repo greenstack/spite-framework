@@ -7,15 +7,11 @@ namespace Spite
 		/// <summary>
 		/// The teammate has been defeated in battle.
 		/// </summary>
-		Dead,
+		Defeated,
 		/// <summary>
 		/// The teammate is not an active participant in the battle.
 		/// </summary>
 		Inactive,
-		/// <summary>
-		/// The teammate is alive.
-		/// </summary>
-		Alive,
 		/// <summary>
 		/// The teammate is an active participant in battle.
 		/// </summary>

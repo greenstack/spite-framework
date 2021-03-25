@@ -14,19 +14,19 @@ namespace Spite.UnitTests
             MockTeam teamA = new();
             MockTeam teamB = new();
             AllianceGraph graph = new();
-            graph.AddRelation(teamA, teamB, AllianceGraph.Relationship.Allied);
+            graph.AddRelation(teamA, teamB, TeamRelationship.Allied);
             // Make sure that only teamA and teamB have the correct relationships
-            Assert.AreEqual(AllianceGraph.Relationship.Allied, graph.GetRelationship(teamA, teamB));
-            Assert.AreEqual(AllianceGraph.Relationship.Unknown, graph.GetRelationship(teamB, teamA));
+            Assert.AreEqual(TeamRelationship.Allied, graph.GetRelationship(teamA, teamB));
+            Assert.AreEqual(TeamRelationship.Unknown, graph.GetRelationship(teamB, teamA));
 
             // Make sure that we can't add a relationship between teams that already exists
-            Assert.Throws<InvalidOperationException>(() => graph.AddRelation(teamA, teamB, AllianceGraph.Relationship.Neutral));
+            Assert.Throws<InvalidOperationException>(() => graph.AddRelation(teamA, teamB, TeamRelationship.Neutral));
             // Make sure that trying to change a nonexistent relationship doesn't work
-            Assert.Throws<System.Collections.Generic.KeyNotFoundException>(() => graph.ChangeRelationship(teamB, teamA, AllianceGraph.Relationship.Allied));
+            Assert.Throws<System.Collections.Generic.KeyNotFoundException>(() => graph.ChangeRelationship(teamB, teamA, TeamRelationship.Allied));
 
             // Make sure that changing the relationship propagates correctly
-            graph.ChangeRelationship(teamA, teamB, AllianceGraph.Relationship.Neutral);
-            Assert.AreEqual(AllianceGraph.Relationship.Neutral, graph.GetRelationship(teamA, teamB));
+            graph.ChangeRelationship(teamA, teamB, TeamRelationship.Neutral);
+            Assert.AreEqual(TeamRelationship.Neutral, graph.GetRelationship(teamA, teamB));
         }
 
         /// <summary>
@@ -38,15 +38,15 @@ namespace Spite.UnitTests
             MockTeam teamA = new();
             MockTeam teamB = new();
             AllianceGraph graph = new();
-            graph.AddBidirectionalRelation(teamA, teamB, AllianceGraph.Relationship.Allied);
+            graph.AddBidirectionalRelation(teamA, teamB, TeamRelationship.Allied);
 
             // Let's make sure that the relationship goes both ways
-            Assert.AreEqual(AllianceGraph.Relationship.Allied, graph.GetRelationship(teamA, teamB));
-            Assert.AreEqual(AllianceGraph.Relationship.Allied, graph.GetRelationship(teamB, teamA));
+            Assert.AreEqual(TeamRelationship.Allied, graph.GetRelationship(teamA, teamB));
+            Assert.AreEqual(TeamRelationship.Allied, graph.GetRelationship(teamB, teamA));
 
             // Make sure we can't add the relationships
-            Assert.Throws<InvalidOperationException>(() => graph.AddRelation(teamA, teamB, AllianceGraph.Relationship.Allied));
-            Assert.Throws<InvalidOperationException>(() => graph.AddRelation(teamB, teamA, AllianceGraph.Relationship.Allied));
+            Assert.Throws<InvalidOperationException>(() => graph.AddRelation(teamA, teamB, TeamRelationship.Allied));
+            Assert.Throws<InvalidOperationException>(() => graph.AddRelation(teamB, teamA, TeamRelationship.Allied));
         }
 
         /// <summary>
@@ -58,13 +58,13 @@ namespace Spite.UnitTests
             MockTeam teamA = new();
             MockTeam teamB = new();
             AllianceGraph graph = new();
-            graph.AddBidirectionalRelation(teamA, teamB, AllianceGraph.Relationship.Opposing);
+            graph.AddBidirectionalRelation(teamA, teamB, TeamRelationship.Opposing);
             var opposingTeam = graph.GetOpposingTeam(teamA);
             Assert.AreEqual(teamB, opposingTeam);
-            graph.ChangeRelationship(teamA, teamB, AllianceGraph.Relationship.Neutral);
+            graph.ChangeRelationship(teamA, teamB, TeamRelationship.Neutral);
             Assert.Throws<InvalidOperationException>(()=>graph.GetOpposingTeam(teamA));
-            graph.ChangeRelationship(teamA, teamB, AllianceGraph.Relationship.Opposing);
-            graph.AddRelation(teamA, new MockTeam(), AllianceGraph.Relationship.Opposing);
+            graph.ChangeRelationship(teamA, teamB, TeamRelationship.Opposing);
+            graph.AddRelation(teamA, new MockTeam(), TeamRelationship.Opposing);
             Assert.Throws<InvalidOperationException>(() => graph.GetOpposingTeam(teamA));
         }
 
@@ -79,16 +79,16 @@ namespace Spite.UnitTests
             MockTeam teamC = new();
 
             var graph = new AllianceGraph();
-            graph.AddRelation(teamA, teamB, AllianceGraph.Relationship.Allied);
-            graph.AddRelation(teamA, teamC, AllianceGraph.Relationship.Neutral);
+            graph.AddRelation(teamA, teamB, TeamRelationship.Allied);
+            graph.AddRelation(teamA, teamC, TeamRelationship.Neutral);
 
             var relationships = graph.GetRelationships(teamA);
             foreach (var relationship in relationships)
             {
                 if (relationship.Key == teamB)
-                    Assert.AreEqual(AllianceGraph.Relationship.Allied, relationship.Value);
+                    Assert.AreEqual(TeamRelationship.Allied, relationship.Value);
                 if (relationship.Key == teamC)
-                    Assert.AreEqual(AllianceGraph.Relationship.Neutral, relationship.Value);
+                    Assert.AreEqual(TeamRelationship.Neutral, relationship.Value);
             }
         }
     }

@@ -101,7 +101,7 @@ namespace Spite
         /// <param name="teamB">The team that the relationship is directed to.</param>
         /// <param name="relationship">The relationship this team has.</param>
         /// <returns>The arena buildter to allow for chaining.</returns>
-        public ArenaBuilder<T> AddTeamRelationship(T teamA, T teamB, AllianceGraph.Relationship relationship)
+        public ArenaBuilder<T> AddTeamRelationship(T teamA, T teamB, TeamRelationship relationship)
         {
             if (!teams.Contains(teamA)) {
                 throw new InvalidOperationException($"{teamA} has not been added to this arena.");
@@ -120,7 +120,7 @@ namespace Spite
         /// <param name="teamB">The other team to set the relationship for.</param>
         /// <param name="relationship">The relationship the teams have.</param>
         /// <returns>The arena builder for chaining.</returns>
-        public ArenaBuilder<T> AddBidirectionalTeamRelationship(T teamA, T teamB, AllianceGraph.Relationship relationship)
+        public ArenaBuilder<T> AddBidirectionalTeamRelationship(T teamA, T teamB, TeamRelationship relationship)
         {
             if (!teams.Contains(teamA)) {
                 throw new InvalidOperationException($"{teamA} has not been added to this arena.");

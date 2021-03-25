@@ -9,30 +9,7 @@ namespace Spite
 	/// </summary>
 	public class AllianceGraph
 	{
-		/// <summary>
-		/// Enumerates the possible relationships between teams.
-		/// </summary>
-		public enum Relationship
-		{
-			/// <summary>
-			/// The team is allied with other.
-			/// </summary>
-			Allied,
-			/// <summary>
-			/// The team is neutral toward the other.
-			/// </summary>
-			Neutral,
-			/// <summary>
-			/// The team opposes the other.
-			/// </summary>
-			Opposing,
-			/// <summary>
-			/// The relationship between teams is unknown.
-			/// </summary>
-			Unknown,
-		}
-
-		private Dictionary<(ITeam, ITeam), Relationship> graph = new Dictionary<(ITeam, ITeam), Relationship>();
+		private Dictionary<(ITeam, ITeam), TeamRelationship> graph = new Dictionary<(ITeam, ITeam), TeamRelationship>();
 
         #region Relationship adding/changing
         /// <summary>
@@ -43,7 +20,7 @@ namespace Spite
         /// <param name="to">The direction this relationship is directed to.</param>
         /// <param name="relationship">The relationship type.</param>
         /// <exception cref="InvalidOperationException">Thrown if a relationship between "from" and "to" is already defined.</exception>
-        public void AddRelation(ITeam from, ITeam to, Relationship relationship)
+        public void AddRelation(ITeam from, ITeam to, TeamRelationship relationship)
 		{
 			var key = (from, to);
 			if (!graph.ContainsKey(key))
@@ -63,7 +40,7 @@ namespace Spite
 		/// <param name="b">The other team.</param>
 		/// <param name="relationship">The relationship the teams have.</param>
 		/// <exception cref="InvalidOperationException">Thrown if a relationship between a and b or b and a has already been defined.</exception>
-		public void AddBidirectionalRelation(ITeam a, ITeam b, Relationship relationship)
+		public void AddBidirectionalRelation(ITeam a, ITeam b, TeamRelationship relationship)
 		{
 			if (graph.ContainsKey((a, b)))
 			{
@@ -83,7 +60,7 @@ namespace Spite
 		/// <param name="b">The receiving team.</param>
 		/// <param name="relationship">The new relationship.</param>
 		/// <exception cref="KeyNotFoundException">Thrown if a relationship between a and b isn't found.</exception>
-		public void ChangeRelationship(ITeam a, ITeam b, Relationship relationship)
+		public void ChangeRelationship(ITeam a, ITeam b, TeamRelationship relationship)
 		{
 			var key = (a, b);
 			if (!graph.ContainsKey(key))
@@ -103,7 +80,7 @@ namespace Spite
 		/// <param name="relationship">The new relationship.</param>
 		/// <param name="old">The old relationship.</param>
 		/// <exception cref="KeyNotFoundException">Thrown if the relationship between a and b isn't found.</exception>
-		public void ChangeRelationship(ITeam a, ITeam b, Relationship relationship, out Relationship old)
+		public void ChangeRelationship(ITeam a, ITeam b, TeamRelationship relationship, out TeamRelationship old)
 		{
 			var key = (a, b);
 			if (!graph.ContainsKey(key)) throw new KeyNotFoundException($"Could not find relationship between {a} and {b}");
@@ -120,7 +97,7 @@ namespace Spite
 		/// <returns>The team opposing the given team.</returns>
 		public ITeam GetOpposingTeam(ITeam team)
         {
-			var opposingTeams = GetTeamsWithRelationship(team, Relationship.Opposing);
+			var opposingTeams = GetTeamsWithRelationship(team, TeamRelationship.Opposing);
 			// The idea is that we get THE opposing team.
 			if (opposingTeams.Count != 1)
             {
@@ -135,10 +112,10 @@ namespace Spite
         /// <param name="from">The team to get the relationship for.</param>
         /// <param name="to">The team to check.</param>
         /// <returns>The relationship between the teams. If the relationship doesn't exist, returns <see cref="Relationship.Unknown"/>.</returns>
-        public Relationship GetRelationship(ITeam from, ITeam to)
+        public TeamRelationship GetRelationship(ITeam from, ITeam to)
 		{
 			var key = (from, to);
-			return graph.ContainsKey(key) ? graph[key] : Relationship.Unknown;
+			return graph.ContainsKey(key) ? graph[key] : TeamRelationship.Unknown;
 		}
 
 		/// <summary>
@@ -146,11 +123,11 @@ namespace Spite
 		/// </summary>
 		/// <param name="team">The team to get the relationships for.</param>
 		/// <returns>A list of each team and the relationship they have with the input team.</returns>
-		public Dictionary<ITeam, Relationship> GetRelationships(ITeam team) {
+		public Dictionary<ITeam, TeamRelationship> GetRelationships(ITeam team) {
 			var relations = from r in graph
 				where r.Key.Item1 == team
 				select r;
-			Dictionary<ITeam, Relationship> relationships = new Dictionary<ITeam, Relationship>(relations.Count());
+			Dictionary<ITeam, TeamRelationship> relationships = new Dictionary<ITeam, TeamRelationship>(relations.Count());
 			foreach (var relationship in relations)
 			{
 				relationships.Add(relationship.Key.Item2, relationship.Value);
@@ -164,7 +141,7 @@ namespace Spite
 		/// <param name="team">The team to get.</param>
 		/// <param name="relationship">The relationship to query for.</param>
 		/// <returns>The teams with the given relationship to the specified team.</returns>
-		public List<ITeam> GetTeamsWithRelationship(ITeam team, Relationship relationship)
+		public List<ITeam> GetTeamsWithRelationship(ITeam team, TeamRelationship relationship)
 		{
 			var relations = from r in graph
 				where r.Key.Item1 == team &&

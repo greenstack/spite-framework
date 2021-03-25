@@ -1,5 +1,15 @@
 # Alpha 0.2.0 (Work in Progress)
 ## API Changes
+
+### Alliance Graphs
+Alliance Graphs are data structures that are designed to simplify tracking
+relationships between teams. These relationships are directed, meaning that
+even though `TeamA` has the `Opposing` relationship with `TeamB`, it doesn't
+necessarily mean that `TeamB` has the `Opposing` relationship with `TeamA`.
+The `AllianceGraph` class implements the new `IAllianceTracker` interface,
+which allows for other implementations. Using those implementations with the
+Arena Builder and default Arena class are not currently supported.
+
 ### Arenas
  - Made methods for getting teams templated to move the onus of casting teams to a specific type to the API instead of the developer. A non-generic version is still available.
 

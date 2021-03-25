@@ -95,6 +95,25 @@ namespace Spite
         }
 
         /// <summary>
+        /// Adds a relationship directed from team a to team b.
+        /// </summary>
+        /// <param name="teamA">The team where the relationship originates from.</param>
+        /// <param name="teamB">The team that the relationship is directed to.</param>
+        /// <param name="relationship">The relationship this team has.</param>
+        /// <returns>The arena buildter to allow for chaining.</returns>
+        public ArenaBuilder<T> AddTeamRelationship(T teamA, T teamB, AllianceGraph.Relationship relationship)
+        {
+            if (!teams.Contains(teamA)) {
+                throw new InvalidOperationException($"{teamA} has not been added to this arena.");
+            }
+            if (!teams.Contains(teamB)) {
+                throw new InvalidOperationException($"{teamB} has not been added to this arena.");
+            }
+            allianceGraph.AddRelation(teamA, teamB, relationship);
+            return this;
+        }
+
+        /// <summary>
         /// Adds a bidrectional relationship between two teams. Both teams must have been added already to the builder.
         /// </summary>
         /// <param name="teamA">One of the teams to set the relationship for.</param>

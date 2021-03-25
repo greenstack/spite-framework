@@ -72,17 +72,25 @@ namespace Spite
         }
 
         /// <summary>
-        /// Gets the teams opposing the given team, all cast to the specific type.
+        /// Gets the teams that receive the specified relationship from the given team.
         /// </summary>
-        /// <typeparam name="T">The specific type of team.</typeparam>
-        /// <param name="opposing">The team to find opponents for.</param>
-        /// <returns>All teams opposing the provided team.</returns>
-        [Obsolete("Use AllianceGraph.GetAllTeamsWithRelationship instead.")]
-        public IEnumerable<T> GetTeamsOpposing<T>(T opposing) where T : ITeam
+        /// <param name="from">The team from which the relationship originates.</param>
+        /// <param name="relationship">The relationship the team creates.</param>
+        /// <returns>All the teams with the specified relationship.</returns>
+        public List<ITeam> GetTeamsWithRelationship(ITeam from, TeamRelationship relationship) {
+            return AllianceGraph.GetTeamsWithRelationship(from, relationship);
+        }
+
+        /// <summary>
+        /// Gets the teams that the given team has the specified relationship towards.
+        /// </summary>
+        /// <param name="from">The team that has the relationship.</param>
+        /// <param name="relationship">The relationship that the team has for the others.</param>
+        /// <typeparam name="T">The type of team to get.</typeparam>
+        /// <returns>An enumerable with the teams that the given team has the relationship with.</returns>
+        public List<T> GetTeamsWithRelationship<T>(T from, TeamRelationship relationship) where T : ITeam
         {
-            return from side in Teams
-                   where side.Equals(opposing)
-                   select (T)side;
+            return GetTeamsWithRelationship(from, relationship).Cast<T>().ToList();
         }
 
         /// <summary>
@@ -94,17 +102,6 @@ namespace Spite
             {
                 team.DetermineStanding(this);
             }
-        }
-
-        /// <summary>
-        /// Gets all the teams
-        /// </summary>
-        /// <param name="team"></param>
-        /// <returns></returns>
-        [System.Obsolete("Use AllianceGraph.GetTeamsWithRelationship instead.")]
-        public IEnumerable<ITeam> GetTeamsOpposing(ITeam team)
-        {
-            return GetTeamsOpposing<ITeam>(team);
         }
 
         /// <inheritdoc/>

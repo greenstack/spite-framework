@@ -32,20 +32,7 @@ namespace Spite
         /// </summary>
         IList<ITeam> Teams { get; }
 
-        /// <summary>
-        /// Finds the teams opposing the given team.
-        /// </summary>
-        /// <param name="team">The team to find opponents for.</param>
-        /// <returns>A list of teams exluding opposing and that aren't allied with T.</returns>
-        IEnumerable<ITeam> GetTeamsOpposing(ITeam team);
-
-        /// <summary>
-        /// Finds the teams opposing the given team, all cast to T.
-        /// </summary>
-        /// <typeparam name="T">The type of team to cast the result to.</typeparam>
-        /// <param name="team">The team to find opponents for.</param>
-        /// <returns>The teams opposing the provided team, cast to T.</returns>
-        IEnumerable<T> GetTeamsOpposing<T>(T team) where T : ITeam;
+        List<ITeam> GetTeamsWithRelationship(ITeam from, TeamRelationship relationship);
 
         /// <summary>
         /// Starts the battle.

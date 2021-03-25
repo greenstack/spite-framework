@@ -77,7 +77,7 @@ namespace Spite
         /// <param name="from">The team from which the relationship originates.</param>
         /// <param name="relationship">The relationship the team creates.</param>
         /// <returns>All the teams with the specified relationship.</returns>
-        public List<ITeam> GetTeamsWithRelationship(ITeam from, TeamRelationship relationship) {
+        public IList<ITeam> GetTeamsWithRelationship(ITeam from, TeamRelationship relationship) {
             return AllianceGraph.GetTeamsWithRelationship(from, relationship);
         }
 
@@ -88,7 +88,7 @@ namespace Spite
         /// <param name="relationship">The relationship that the team has for the others.</param>
         /// <typeparam name="T">The type of team to get.</typeparam>
         /// <returns>An enumerable with the teams that the given team has the relationship with.</returns>
-        public List<T> GetTeamsWithRelationship<T>(T from, TeamRelationship relationship) where T : ITeam
+        public IList<T> GetTeamsWithRelationship<T>(T from, TeamRelationship relationship) where T : ITeam
         {
             return GetTeamsWithRelationship(from, relationship).Cast<T>().ToList();
         }

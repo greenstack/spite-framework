@@ -32,7 +32,7 @@ namespace Spite
         /// </summary>
         IList<ITeam> Teams { get; }
 
-        List<ITeam> GetTeamsWithRelationship(ITeam from, TeamRelationship relationship);
+        IList<ITeam> GetTeamsWithRelationship(ITeam from, TeamRelationship relationship);
 
         /// <summary>
         /// Starts the battle.

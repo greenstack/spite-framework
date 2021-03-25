@@ -7,18 +7,18 @@ namespace Spite
 	/// <summary>
 	/// Contains information regarding the relationships between teams.
 	/// </summary>
-	public class AllianceGraph
+	public class AllianceGraph : IRelationshipTracker
 	{
 		private Dictionary<(ITeam, ITeam), TeamRelationship> graph = new Dictionary<(ITeam, ITeam), TeamRelationship>();
 
         #region Relationship adding/changing
         /// <summary>
-        /// Adds a relationship from the "from" team to the "to" team. This relationship is unidirectional.
+        /// Adds a relationship directed from the "from" team to the "to" team. This relationship is unidirectional.
 		/// To add a bidirectional relationship, use <see cref="AddBidirectionalRelation(ITeam, ITeam, Relationship)"/>.
         /// </summary>
-        /// <param name="from">The direction this relationship originates from.</param>
-        /// <param name="to">The direction this relationship is directed to.</param>
-        /// <param name="relationship">The relationship type.</param>
+        /// <param name="from">The team this relationship originates from.</param>
+        /// <param name="to">The team this relationship is directed to.</param>
+        /// <param name="relationship">The relationship the first team has with the other.</param>
         /// <exception cref="InvalidOperationException">Thrown if a relationship between "from" and "to" is already defined.</exception>
         public void AddRelation(ITeam from, ITeam to, TeamRelationship relationship)
 		{
@@ -141,7 +141,7 @@ namespace Spite
 		/// <param name="team">The team to get.</param>
 		/// <param name="relationship">The relationship to query for.</param>
 		/// <returns>The teams with the given relationship to the specified team.</returns>
-		public List<ITeam> GetTeamsWithRelationship(ITeam team, TeamRelationship relationship)
+		public IList<ITeam> GetTeamsWithRelationship(ITeam team, TeamRelationship relationship)
 		{
 			var relations = from r in graph
 				where r.Key.Item1 == team &&

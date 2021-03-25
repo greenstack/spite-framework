@@ -7,7 +7,7 @@ namespace Spite
 	/// <summary>
 	/// Contains information regarding the relationships between teams.
 	/// </summary>
-	public class AllianceGraph : IRelationshipTracker
+	public class AllianceGraph : IAllianceTracker
 	{
 		private Dictionary<(ITeam, ITeam), TeamRelationship> graph = new Dictionary<(ITeam, ITeam), TeamRelationship>();
 

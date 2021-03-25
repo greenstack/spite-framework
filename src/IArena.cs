@@ -23,6 +23,11 @@ namespace Spite
         ITurnManager TurnManager { get; }
 
         /// <summary>
+        /// The graph that defines the relationships between the teams in this arena.
+        /// </summary>
+        AllianceGraph AllianceGraph { get; }
+
+        /// <summary>
         /// All the teams that are fighting in this arena.
         /// </summary>
         IList<ITeam> Teams { get; }

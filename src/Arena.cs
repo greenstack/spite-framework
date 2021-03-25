@@ -32,13 +32,19 @@ namespace Spite
         /// </summary>
         public string ArenaName { get; }
 
+        public AllianceGraph AllianceGraph { get; internal set; }
+
         /// <summary>
         /// Creates an arena with the specified number of teams fighting in it.
         /// </summary>
         /// <param name="numberOfTeams">The number of teams fighting in the arena.</param>
         /// <param name="turnManager">The object that manages the turns in this arena.</param>
+        /// <exception cref="ArgumentNullException">Thrown when turnManager is null.</param>
         public Arena(uint numberOfTeams, ITurnManager turnManager)
         {
+            if (turnManager == null) {
+                throw new ArgumentNullException(nameof(turnManager));
+            }
             teams = new ITeam[numberOfTeams];
             TurnManager = turnManager;
         }
@@ -49,11 +55,10 @@ namespace Spite
         /// <param name="name">The name of the arena.</param>
         /// <param name="numberOfTeams">The number of teams fighting in the arena.</param>
         /// <param name="turnManager">The object that manages the turns in this arena.</param>
-        public Arena(string name, uint numberOfTeams, ITurnManager turnManager)
+        public Arena(string name, uint numberOfTeams, ITurnManager turnManager) :
+            this(numberOfTeams, turnManager)
         {
             ArenaName = name;
-            teams = new ITeam[numberOfTeams];
-            TurnManager = turnManager;
         }
 
         /// <summary>
@@ -72,6 +77,7 @@ namespace Spite
         /// <typeparam name="T">The specific type of team.</typeparam>
         /// <param name="opposing">The team to find opponents for.</param>
         /// <returns>All teams opposing the provided team.</returns>
+        [Obsolete("Use AllianceGraph.GetAllTeamsWithRelationship instead.")]
         public IEnumerable<T> GetTeamsOpposing<T>(T opposing) where T : ITeam
         {
             return from side in Teams
@@ -79,6 +85,9 @@ namespace Spite
                    select (T)side;
         }
 
+        /// <summary>
+        /// Causes each team to update its standing.
+        /// </summary>
         public void UpdateTeamStandings()
         {
             foreach (var team in teams)
@@ -87,6 +96,12 @@ namespace Spite
             }
         }
 
+        /// <summary>
+        /// Gets all the teams
+        /// </summary>
+        /// <param name="team"></param>
+        /// <returns></returns>
+        [System.Obsolete("Use AllianceGraph.GetTeamsWithRelationship instead.")]
         public IEnumerable<ITeam> GetTeamsOpposing(ITeam team)
         {
             return GetTeamsOpposing<ITeam>(team);
@@ -107,6 +122,9 @@ namespace Spite
             return success;
         }
 
+        /// <summary>
+        /// Starts the battle.
+        /// </summary>
         public void StartBattle()
         {
             TurnManager.Start();

@@ -33,8 +33,22 @@ Arena Builder and default Arena class are not currently supported.
 ### `Turns` Namespace
 `TurnScheme`, `ITurnPhase`, and `ITurnManager` have all been moved to the `Spite.Turns` namespace.
 
+### `enum TurnScheme` -> `enum TurnSchemeTypes`
+- Renamed the enum to TurnSchemeTypes.
+- Renamed each of the enum values.
+  - `Team` -> `DiscreteTeam`
+  - `Entity` -> `DiscreteTeammate`
+  - `VonNeumannTeam` -> `SimultaneousTeam`
+  - `VonNeumannEntity` -> `SimultaneousTeammate`
+  - Adding the word `Discrete` helps clarify what those enum values should mean.
+    Also, by changing `VonNeumann` to `Simultaneous`, I believe that the new name
+    is easier to understand. Finally, changing `Entity` to `Teammate` reflects
+    the other changes made across the framework.
+
 ### Removals
 - Removed `ITappable` and `ITappableEntity`. They didn't seem too useful.
+- Removed `Spite.Queries.TeamQueries`. All the queries relied on other removed 
+  features.
 
 ## Other Changes
 - Updated assembly name to "Spite Framework". Default namespace is still Spite.

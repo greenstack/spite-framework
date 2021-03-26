@@ -30,6 +30,9 @@ Arena Builder and default Arena class are not currently supported.
 - Changed `TeamBuilder` class declaration to `TeamBuilder<TTeam, TEntity> where TTeam : ITeam<TEntity> where TEntity : IEntity`. This addresses issue #2 and the addition of the generic `ITeam`.
 - Changed `ITeam.Entities` to `ITeam.Members`.
 
+### `Turns` Namespace
+`TurnScheme`, `ITurnPhase`, and `ITurnManager` have all been moved to the `Spite.Turns` namespace.
+
 ### Removals
 - Removed `ITappable` and `ITappableEntity`. They didn't seem too useful.
 

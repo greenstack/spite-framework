@@ -3,7 +3,7 @@
     /// <summary>
     /// Helps an Arena evaluate the order that turns are taken in.
     /// </summary>
-    public enum TurnScheme
+    public enum TurnSchemeTypes
     {
         /// <summary>
         /// Turns are assigned to teams.
@@ -20,7 +20,7 @@
         /// Examples: Octopath Traveler, any game where entities act, sorted by
         /// something like an entity's speed.
         /// </summary>
-        DiscreteEntity = 0x1,
+        DiscreteTeammate = 0x1,
         /// <summary>
         /// Sides decide what each entity on their team will do at the same time.
         /// 
@@ -32,6 +32,6 @@
         /// 
         /// Examples: I dunno
         /// </summary>
-        SimultaneousEntity = 0x3
+        SimultaneousTeammate = 0x3
     }
 }

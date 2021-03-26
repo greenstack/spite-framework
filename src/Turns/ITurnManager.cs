@@ -1,4 +1,4 @@
-﻿namespace Spite
+﻿namespace Spite.Turns
 {
     /// <summary>
     /// Manages the turns in an arena.

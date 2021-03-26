@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Spite.Turns;
 
 namespace Spite
 {

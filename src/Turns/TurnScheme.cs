@@ -1,4 +1,4 @@
-﻿namespace Spite
+﻿namespace Spite.Turns
 {
     /// <summary>
     /// Helps an Arena evaluate the order that turns are taken in.

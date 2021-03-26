@@ -1,4 +1,4 @@
-﻿namespace Spite
+﻿namespace Spite.Turns
 {
     /// <summary>
     /// Represents a phase in a turn. These should be managed by the turn

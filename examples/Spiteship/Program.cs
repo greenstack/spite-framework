@@ -1,8 +1,6 @@
 ﻿using Spite;
 using Spite.Queries;
 using System;
-using System.Threading;
-
 
 namespace SpiteBattleship
 {

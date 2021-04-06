@@ -24,14 +24,20 @@ namespace Spite.Interaction
             this.action = action;
         }
 
-        public abstract IReaction Execute();
-
         /// <summary>
         /// Executes the command.
         /// </summary>
+        /// <returns>The reaction data.</returns>
+        public abstract IReaction Execute();
+
+        /// <summary>
+        /// Executes the command and casts the result to the expected reaction type.
+        /// </summary>
         /// <typeparam name="T">The expected type of reaction data.</typeparam>
         /// <returns>The reaction data.</returns>
-        public abstract TReactionType Execute<TReactionType>() where TReactionType : IReaction;
+        public TReactionType Execute<TReactionType>() 
+            where TReactionType : IReaction
+            => (TReactionType)Execute();
 
         /// <summary>
         /// Checks if the command is valid.

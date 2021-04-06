@@ -1,4 +1,6 @@
-﻿namespace Spite.Turns
+﻿using Spite.Interaction;
+
+namespace Spite.Turns
 {
     /// <summary>
     /// Manages the turns in an arena.
@@ -18,6 +20,7 @@
         /// <summary>
         /// Should be called once the battle starts.
         /// </summary>
+        [System.Obsolete("Why is this needed? Turn phases and states can manage this instead.")]
         void Start();
 
         /// <summary>
@@ -32,6 +35,13 @@
         /// </summary>
         /// <param name="command">The command to check.</param>
         /// <returns>True if the command can be executed by its owner, otherwise, false.</returns>
+        [System.Obsolete("Use AcceptCommand with the CAR model instead.")]
         bool CanBeExecuted<TContext>(ICommand<TContext> command);
+
+        /// <summary>
+        /// Tries to execute the command.
+        /// </summary>
+        /// <returns>All of the reactions that arise as a result of the command or null if the command is invalid or cannot be executed.</returns>
+        IReaction[] AcceptCommand(CommandBase command);
     }
 }

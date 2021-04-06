@@ -1,4 +1,6 @@
-﻿namespace Spite.Turns
+﻿using Spite.Interaction;
+
+namespace Spite.Turns
 {
     /// <summary>
     /// Represents a phase in a turn. These should be managed by the turn
@@ -13,8 +15,16 @@
         void ChangePhase(ITurnManager manager);
 
         /// <summary>
+        /// Can the command be executed during this phase?
+        /// </summary>
+        /// <param name="command">The command that wants to be executed.</param>
+        /// <returns>True if the command is allowed to be executed.</returns>
+        bool IsCommandExecutableThisPhase(CommandBase command);
+
+        /// <summary>
         /// Triggered when a phase changes.
         /// </summary>
+        [System.Obsolete("The Turn Manager's OnPhaseChanged event should be used instead.")]
         event ChangePhase OnPhaseChanged;
     }
 

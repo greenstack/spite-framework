@@ -8,7 +8,17 @@ namespace Spite.Turns
     /// </summary>
     public abstract class TurnManagerBase : ITurnManager
     {
-        public ITurnPhase CurrentPhase => throw new System.NotImplementedException();
+        private ITurnPhase currentPhase;
+
+        public virtual ITurnPhase CurrentPhase {
+            get => currentPhase;
+            set {
+                if (value != currentPhase) {
+                    OnPhaseChanged?.Invoke(currentPhase, value, this);
+                    currentPhase = value;
+                }
+            }
+        }
 
         public event ChangePhase OnPhaseChanged;
 

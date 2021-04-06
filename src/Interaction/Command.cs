@@ -3,7 +3,7 @@ namespace Spite.Interaction
     /// <summary>
     /// A basic command being issued to an ally.
     /// </summary>
-    public abstract class Command
+    public abstract class CommandBase
     {
         /// <summary>
         /// The teammate using the action.
@@ -19,17 +19,19 @@ namespace Spite.Interaction
         /// Constructs the basic command.
         /// </summary>
         /// <param name="action">The action being performed by this command</param>
-        public Command(ITeammate user, ISpiteAction action)
+        public CommandBase(ITeammate user, ISpiteAction action)
         {
             this.action = action;
         }
+
+        public abstract IReaction Execute();
 
         /// <summary>
         /// Executes the command.
         /// </summary>
         /// <typeparam name="T">The expected type of reaction data.</typeparam>
         /// <returns>The reaction data.</returns>
-        public abstract IReaction<T> Execute<T>() where T : struct;
+        public abstract TReactionType Execute<TReactionType>() where TReactionType : IReaction;
 
         /// <summary>
         /// Checks if the command is valid.

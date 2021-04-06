@@ -50,6 +50,9 @@ namespace Spite
         /// </summary>
         /// <param name="command">The command to be executed.</param>
         /// <returns>True if the command is successful when executed. See <see cref="ICommand.Execute"/>.</returns>
+        [System.Obsolete("This command is obsolete. Use the upcoming CAR model.")]
         bool ReceiveAndExecuteCommand<TContext>(ICommand<TContext> command);
+
+        Interaction.IReaction[] ReceiveAndExecuteCommand(Interaction.CommandBase command);
     }
 }

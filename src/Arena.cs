@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System;
 using Spite.Turns;
+using Spite.Interaction;
 
 namespace Spite
 {
@@ -106,6 +107,7 @@ namespace Spite
         }
 
         /// <inheritdoc/>
+        [System.Obsolete("Moving to CAR model")]
         public bool ReceiveAndExecuteCommand<TContext>(ICommand<TContext> command)
         {
             if (command == null)
@@ -125,8 +127,13 @@ namespace Spite
         /// </summary>
         public void StartBattle()
         {
-            TurnManager.Start();
+            //TurnManager.Start();
             OnBattleBegin?.Invoke(this);
+        }
+
+        public IReaction[] ReceiveAndExecuteCommand(CommandBase command)
+        {
+            return TurnManager.AcceptCommand(command);
         }
 
         /// <summary>

@@ -4,6 +4,7 @@
     /// Provides an interface for delivering commands.
     /// </summary>
     /// <typeparam name="TContext">The type of object that the command will operate on.</typeparam>
+    [System.Obsolete("Moving over to the CAR model. Use Spite.Interaction.Command instead.")]
     public interface ICommand<TContext>
     {
         /// <summary>

@@ -4,6 +4,7 @@
     /// Provides some basic common functionality for commands.
     /// </summary>
     /// <typeparam name="TContext">The type of object this command will operate on.</typeparam>
+    [System.Obsolete("Use the CAR model in Interaction instead")]
     public abstract class Command<TContext> : ICommand<TContext>
     {
         /// <inheritdoc/>

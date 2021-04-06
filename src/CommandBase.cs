@@ -3,6 +3,7 @@
     /// <summary>
     /// Provides a basic structure and implementation for commands.
     /// </summary>
+    [System.Obsolete("This command base is obsolete. Use Spite.Interactable.CommandBase instead.")]
     public abstract class CommandBase<TContext> : ICommand<TContext>
     {
         public IActor Owner { get; }

@@ -77,7 +77,7 @@ namespace Spite.Turns
         {
             return result.FollowUpAction != null &&
                     (
-                        !result.ActionSuccessful ||
+                        !result.ActionSuccessful &&
                         ExecuteFollowUpsIfActionFailed
                     );
         }

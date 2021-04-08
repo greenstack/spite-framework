@@ -38,21 +38,19 @@ namespace Spite
         /// <summary>
         /// Starts the battle.
         /// </summary>
+        [System.Obsolete("I believe that ReceiveAndExecuteCommand should be able to accomplish the same thing.")]
         void StartBattle();
 
         /// <summary>
         /// Updates all teams' standings.
         /// </summary>
         void UpdateTeamStandings();
-
+        
         /// <summary>
-        /// Receives the command for execution.
+        /// Accepts the command and tries to execute it.
         /// </summary>
         /// <param name="command">The command to be executed.</param>
-        /// <returns>True if the command is successful when executed. See <see cref="ICommand.Execute"/>.</returns>
-        [System.Obsolete("This command is obsolete. Use the upcoming CAR model.")]
-        bool ReceiveAndExecuteCommand<TContext>(ICommand<TContext> command);
-
+        /// <returns>The list of reactions that occurred.</returns>
         Interaction.IReaction[] ReceiveAndExecuteCommand(Interaction.CommandBase command);
     }
 }

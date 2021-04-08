@@ -106,22 +106,6 @@ namespace Spite
             }
         }
 
-        /// <inheritdoc/>
-        [System.Obsolete("Moving to CAR model")]
-        public bool ReceiveAndExecuteCommand<TContext>(ICommand<TContext> command)
-        {
-            if (command == null)
-            {
-                throw new ArgumentNullException(nameof(command));
-            }
-            bool success = TurnManager.CanBeExecuted(command) && command.Execute();
-            if (command.ShouldUpdateTeamStandings)
-            {
-                UpdateTeamStandings();
-            }
-            return success;
-        }
-
         /// <summary>
         /// Starts the battle.
         /// </summary>

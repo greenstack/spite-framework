@@ -70,10 +70,8 @@ namespace Spite.Turns
         private bool ShouldExecuteFollowUp(IReaction result)
         {
             return result.FollowUpAction != null &&
-                    (
-                        !result.ActionSuccessful &&
-                        ExecuteFollowUpsIfActionFailed
-                    );
+                    !result.ActionSuccessful &&
+                    ExecuteFollowUpsIfActionFailed;
         }
     }
 }

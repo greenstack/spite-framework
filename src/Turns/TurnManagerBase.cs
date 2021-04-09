@@ -62,12 +62,6 @@ namespace Spite.Turns
             throw new System.NotImplementedException();
         }
 
-        [System.Obsolete("Use CAR model instead")]
-        public bool CanBeExecuted<TContext>(ICommand<TContext> command)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public void Start()
         {
             throw new System.NotImplementedException();

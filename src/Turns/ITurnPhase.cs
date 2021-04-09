@@ -9,7 +9,7 @@ namespace Spite.Turns
     public interface ITurnPhase
     {
         /// <summary>
-        /// Changes the phase. Should invoke the <see cref="OnPhaseChanged"/> event.
+        /// Changes the phase.
         /// </summary>
         /// <param name="manager">The turn manager this phase belongs to.</param>
         void ChangePhase(ITurnManager manager);

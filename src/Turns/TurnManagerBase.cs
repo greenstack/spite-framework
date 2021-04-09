@@ -10,6 +10,9 @@ namespace Spite.Turns
     {
         private ITurnPhase currentPhase;
 
+        /// <summary>
+        /// The current phase in the turn.
+        /// </summary>
         public virtual ITurnPhase CurrentPhase {
             get => currentPhase;
             set {
@@ -20,8 +23,15 @@ namespace Spite.Turns
             }
         }
 
+        /// <summary>
+        /// Invoked when the turn manager's current phase is changed.
+        /// </summary>
         public event ChangePhase OnPhaseChanged;
 
+        /// <summary>
+        /// If set to true, the <see cref="IReaction.FollowUpAction" /> property of
+        /// any reaction received will be executed even if the base action failed.
+        /// </summary>
         public readonly bool ExecuteFollowUpsIfActionFailed;
 
         /// <summary>
@@ -57,16 +67,27 @@ namespace Spite.Turns
             }
         }
 
-        public bool CanAct(IActor actor)
-        {
-            throw new System.NotImplementedException();
-        }
+        /// <summary>
+        /// Checks if the given actor can perform an action.
+        /// </summary>
+        /// <param name="actor">The actor that wants to act.</param>
+        /// <returns>True if the actor can act right now; otherwise, false.</returns>
+        public abstract bool CanAct(IActor actor);
 
+        /// <summary>
+        /// DEPRECATED. Should be allowed to do things.
+        /// </summary>
+        [System.Obsolete("This can (and should) be done through the CAR model.")]
         public void Start()
         {
             throw new System.NotImplementedException();
         }
 
+        /// <summary>
+        /// Checks if a follow-up action provided by a result should be executed.
+        /// </summary>
+        /// <param name="result">The resulting attack.</param>
+        /// <returns>True if the action stored in <see cref="IReaction.FollowUpAction" /> should be executed.</returns>
         private bool ShouldExecuteFollowUp(IReaction result)
         {
             return result.FollowUpAction != null &&

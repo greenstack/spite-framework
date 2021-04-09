@@ -25,7 +25,8 @@ These are the core classes/interfaces that make this possible:
 ## Getting Started
 To get started with Spite, you'll need to have a good understanding of Arenas, Turn Managers, and Teams. Entities are very barebones, and mostly implementation specific. This section shows how to get started with these elements, to help set you up for a basic turn-based game system.
 
-Examples can also be found in the [examples](examples) directory.
+A battleship example can also be found in the [examples](examples) directory.
+(These will someday be moved into a specialized "examples" repository.)
  
 ### Arenas
 Arenas are the highest level unit of control in the framework. They manage the teams and turns of a battle.
@@ -57,3 +58,9 @@ foreach (var team in battleDefinition.Teams) {
 }
 ```
 This flexibility allows developers to create some interface for designers to create unique and varied battles. Designers can create a battle scenario with a tool, saving it to some format; developers read in this format and pass it to the `ArenaBuilder`. This can greatly assist in iterating quickly, without having to recode various components.
+
+### Turn Management
+WIP
+
+### Interactions
+WIP

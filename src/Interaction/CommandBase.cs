@@ -18,6 +18,7 @@ namespace Spite.Interaction
         /// <summary>
         /// Constructs the basic command.
         /// </summary>
+        /// <param name="user">The user responsible for this command.</param>
         /// <param name="action">The action being performed by this command</param>
         public CommandBase(ITeammate user, ISpiteAction action)
         {
@@ -33,7 +34,7 @@ namespace Spite.Interaction
         /// <summary>
         /// Executes the command and casts the result to the expected reaction type.
         /// </summary>
-        /// <typeparam name="T">The expected type of reaction data.</typeparam>
+        /// <typeparam name="TReactionType">The expected type of reaction data.</typeparam>
         /// <returns>The reaction data.</returns>
         public TReactionType Execute<TReactionType>() 
             where TReactionType : IReaction

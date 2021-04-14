@@ -42,6 +42,7 @@ with the Spite Framework.
 ### TurnManager
 - Removed the `CanBeExecuted<TConext>` method. The `AcceptCommand` can accomplish
 the same thing.
+- Removed the `CanAct(IActor)` method.
 
 ### `enum TurnScheme` -> `enum TurnSchemeTypes`
 - Renamed the enum to TurnSchemeTypes.

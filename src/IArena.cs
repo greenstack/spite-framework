@@ -14,6 +14,11 @@ namespace Spite
         int TeamCount { get; }
 
         /// <summary>
+        /// Has this battle ended?
+        /// </summary>
+        bool IsBattleOver { get; }
+
+        /// <summary>
         /// The name of this arena.
         /// </summary>
         string ArenaName { get; }

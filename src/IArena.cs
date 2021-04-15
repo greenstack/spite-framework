@@ -33,7 +33,13 @@ namespace Spite
         /// </summary>
         IList<ITeam> Teams { get; }
 
-        IList<ITeam> GetTeamsWithRelationship(ITeam from, TeamRelationship relationship);
+        /// <summary>
+        /// Retrieves the teams receiving the relationship the sending team has with them.
+        /// </summary>
+        /// <param name="sending">The team sending the relationship.</param>
+        /// <param name="relationship">The relationship sent from the sender</param>
+        /// <returns>A list of teams that the sending team has the relationship with.</returns>
+        IList<ITeam> GetTeamsWithRelationship(ITeam sending, TeamRelationship relationship);
 
         /// <summary>
         /// Starts the battle.

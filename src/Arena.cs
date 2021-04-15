@@ -34,6 +34,9 @@ namespace Spite
         /// </summary>
         public string ArenaName { get; }
 
+        /// <summary>
+        /// The alliance graph defining relationships between teams.
+        /// </summary>
         public AllianceGraph AllianceGraph { get; internal set; }
 
         /// <summary>

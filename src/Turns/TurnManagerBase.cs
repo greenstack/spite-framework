@@ -68,12 +68,15 @@ namespace Spite.Turns
         }
 
         /// <summary>
-        /// Checks if the given actor can perform an action.
+        /// Checks if the given command can be executed.
         /// </summary>
-        /// <param name="actor">The actor that wants to act.</param>
-        /// <returns>True if the actor can act right now; otherwise, false.</returns>
-        public abstract bool CanAct(IActor actor);
-
+        /// <param name="command">TRUE if this command can be executed.</param>
+        /// <returns>TRUE if the command can currently be executed.</returns>
+        public virtual bool IsCommandExecutable(CommandBase command)
+        {
+            return CurrentPhase.IsCommandExecutableThisPhase(command);
+        }
+        
         /// <summary>
         /// DEPRECATED. Should be allowed to do things.
         /// </summary>

@@ -49,6 +49,10 @@ namespace Spite.Turns
         /// <returns>All of the reactions that arise as a result of the command or null if the command is invalid or cannot be executed.</returns>
         public IReaction[] AcceptCommand(CommandBase command)
         {
+            if (command == null)
+			{
+                throw new System.ArgumentNullException(nameof(command));
+			}
             List<IReaction> reactions = new List<IReaction>();
             if (CurrentPhase.IsCommandExecutableThisPhase(command) && command.IsValid()) {
                 var result = command.Execute();

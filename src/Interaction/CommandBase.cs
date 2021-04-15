@@ -13,7 +13,7 @@ namespace Spite.Interaction
         /// <summary>
         /// The action to be taken by this command.
         /// </summary>
-        protected readonly ISpiteAction action;
+        internal readonly ISpiteAction action;
 
         /// <summary>
         /// Constructs the basic command.
@@ -29,7 +29,7 @@ namespace Spite.Interaction
         /// Executes the command.
         /// </summary>
         /// <returns>The reaction data.</returns>
-        public abstract IReaction Execute();
+        public virtual IReaction Execute() => action.UseAndGetReaction();
 
         /// <summary>
         /// Executes the command and casts the result to the expected reaction type.

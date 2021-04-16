@@ -32,14 +32,16 @@ namespace Spite.Turns
         /// If set to true, the <see cref="IReaction.FollowUpAction" /> property of
         /// any reaction received will be executed even if the base action failed.
         /// </summary>
-        public readonly bool ExecuteFollowUpsIfActionFailed;
+        public bool ExecuteFollowUpsIfActionFailed { get; }
 
         /// <summary>
         /// Creates a basic TurnManager.
         /// </summary>
+        /// <param name="initialPhase">The starting phase.</param>
         /// <param name="executeFollowUpsIfActionFailed">If a reaction has a follow-up, should it be executed even if the action failed?</param>
-        public TurnManagerBase(bool executeFollowUpsIfActionFailed)
+        public TurnManagerBase(ITurnPhase initialPhase, bool executeFollowUpsIfActionFailed)
         {
+            currentPhase = initialPhase;
             ExecuteFollowUpsIfActionFailed = executeFollowUpsIfActionFailed;
         }
 
@@ -64,7 +66,14 @@ namespace Spite.Turns
                     reactions.Add(result);
                 }
 
-                return reactions.ToArray();
+                IReaction[] finalResult = reactions.ToArray();
+
+                if (CurrentPhase.ShouldAdvancePhase(finalResult))
+				{
+                    CurrentPhase = CurrentPhase.GetNextPhase();
+				}
+
+                return finalResult;
             }
             else {
                 return null;

@@ -3,7 +3,7 @@
     /// <summary>
     /// Helps an Arena evaluate the order that turns are taken in.
     /// </summary>
-    public enum TurnSchemeTypes
+    public enum TurnSchemeType
     {
         /// <summary>
         /// Turns are assigned to teams.

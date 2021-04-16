@@ -37,7 +37,7 @@ namespace Spite
         /// <summary>
         /// The alliance graph for the coming arena.
         /// </summary>
-        private AllianceGraph allianceGraph = new AllianceGraph();
+        private readonly AllianceGraph allianceGraph = new AllianceGraph();
 
         /// <summary>
         /// Creates an instance of an Arena Builder.

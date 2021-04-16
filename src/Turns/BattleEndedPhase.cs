@@ -2,23 +2,30 @@
 
 namespace Spite.Turns
 {
-    /// <summary>
-    /// Represents a battle that has ended. This is the canonical "end of
-    /// battle" phase, but it can be extended to suit your needs.
-    /// </summary>
-    class BattleEndedPhase : ITurnPhase
-    {
-        public event ChangePhase OnPhaseChanged;
+	/// <summary>
+	/// Represents a battle that has ended. This is the canonical "end of
+	/// battle" phase, but it can be extended to suit your needs.
+	/// </summary>
+	public class BattleEndedPhase : ITurnPhase
+	{
+		/// <summary>
+		/// Gets the next phase.
+		/// </summary>
+		/// <returns>This phase, since this is the last phase and there is no next phase.</returns>
+		public ITurnPhase GetNextPhase() => this;
 
-        public void ChangePhase(ITurnManager manager)
-        {
-            // Do nothing. The battle is over; there is nothing to do.
-        }
+		/// <summary>
+		/// Is the command executable this phase? In this case, the ansewr is always no.
+		/// </summary>
+		/// <param name="command">The command that might be executable.</param>
+		/// <returns>False, since the Battle Ended Phase is the canonical end phase.</returns>
+		public bool IsCommandExecutableThisPhase(CommandBase command) => false;
 
-        public bool IsCommandExecutableThisPhase(CommandBase command)
-        {
-            // No commands can be executed once the battle is over.
-            return false;
-        }
-    }
+		/// <summary>
+		/// Asks if the next phase should be obtained.
+		/// </summary>
+		/// <param name="results">The results of the most recent command.</param>
+		/// <returns>False, since there is no next phase.</returns>
+		public bool ShouldAdvancePhase(IReaction[] results) => false;
+	}
 }

@@ -10,6 +10,11 @@ namespace Spite.Interaction
 	public interface ISpiteCommand
 	{
 		/// <summary>
+		/// The object responsible for executing the command.
+		/// </summary>
+		object Executor { get; }
+
+		/// <summary>
 		/// Executes the command.
 		/// </summary>
 		/// <returns>The reaction data.</returns>
@@ -28,17 +33,5 @@ namespace Spite.Interaction
 		/// </summary>
 		/// <returns>True if the command and the action are valid.</returns>
 		bool IsValid();
-
-		/// <summary>
-		/// Retrieves this command as a team executed command.
-		/// </summary>
-		/// <returns>This command as a team executed command, or null if it isn't one.</returns>
-		ITeamExecutedCommand AsTeamExecutedCommand();
-
-		/// <summary>
-		/// Retrieves this command as a teammate executed command.
-		/// </summary>
-		/// <returns>This command as a teammate executed command, or null if it isn't one.</returns>
-		ITeammateExecutedCommand AsTeammateExecutedCommand();
 	}
 }

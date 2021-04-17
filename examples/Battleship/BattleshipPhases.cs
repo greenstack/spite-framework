@@ -1,59 +1,85 @@
 ﻿using System;
+using Spite;
 using Spite.Interaction;
 using Spite.Turns;
 
 namespace Battleship
 {
-    /// <summary>
-    /// The player's phase.
-    /// </summary>
-    class PlayerPhase : ITurnPhase
-    {
-        private readonly BattleshipTeam playerTeam;
+	/// <summary>
+	/// The player's phase.
+	/// </summary>
+	class PlayerPhase : ITurnPhase
+	{
+		public BattleshipTeam PlayerTeam { get; }
 
-        private readonly BattleshipTeam enemyTeam;
+		private readonly BattleshipTeam enemyTeam;
 
-        public PlayerPhase(BattleshipTeam playerTeam, BattleshipTeam enemyTeam)
-        {
-            this.playerTeam = playerTeam;
-            this.enemyTeam = enemyTeam;
-        }
+		public PlayerPhase(BattleshipTeam playerTeam, BattleshipTeam enemyTeam)
+		{
+			PlayerTeam = playerTeam;
+			this.enemyTeam = enemyTeam;
+		}
 
-        public event ChangePhase OnPhaseChanged;
+		public ITurnPhase GetNextPhase()
+		{
+			if (enemyTeam.CurrentStanding == TeamStanding.Defeated)
+			{
+				return new BattleEndedPhase();
+			}
+			else if (PlayerTeam.CurrentStanding == TeamStanding.Defeated)
+			{
+				// TODO: Distinguish victors and losers
+				return new BattleEndedPhase();
+			}
+			else
+			{
+				return new EnemyPhase(enemyTeam, PlayerTeam);
+			}
+		}
 
-        public void ChangePhase(ITurnManager manager)
-        {
-            throw new NotImplementedException();
-        }
+		public bool IsCommandExecutableThisPhase(CommandBase command)
+		{
+			return command.Executor.Equals(PlayerTeam);
+		}
 
-        public bool IsCommandExecutableThisPhase(CommandBase command)
-        {
-            throw new NotImplementedException();
-        }
-    }
+		public bool ShouldAdvancePhase(IReaction[] results)
+		{
+			return results[0].ActionSuccessful;
+		}
+	}
 
-    class EnemyPhase : ITurnPhase
-    {
-        private readonly BattleshipTeam enemyTeam;
+	class EnemyPhase : ITurnPhase
+	{
+		public BattleshipTeam EnemyTeam { get; }
 
-        private readonly BattleshipTeam playerTeam;
+		private readonly BattleshipTeam playerTeam;
 
-        public EnemyPhase(BattleshipTeam enemyTeam, BattleshipTeam playerTeam)
-        {
-            this.enemyTeam = enemyTeam;
-            this.playerTeam = playerTeam;
-        }
+		public EnemyPhase(BattleshipTeam enemyTeam, BattleshipTeam playerTeam)
+		{
+			EnemyTeam = enemyTeam;
+			this.playerTeam = playerTeam;
+		}
 
-        public event ChangePhase OnPhaseChanged;
+		public ITurnPhase GetNextPhase()
+		{
+			if (playerTeam.CurrentStanding == TeamStanding.Defeated)
+			{
+				return new BattleEndedPhase();
+			}
+			else
+			{
+				return new PlayerPhase(playerTeam, EnemyTeam);
+			}
+		}
 
-        public void ChangePhase(ITurnManager manager)
-        {
-            throw new NotImplementedException();
-        }
+		public bool IsCommandExecutableThisPhase(CommandBase command)
+		{
+			return command.Executor.Equals(EnemyTeam);
+		}
 
-        public bool IsCommandExecutableThisPhase(CommandBase command)
-        {
-            
-        }
-    }
+		public bool ShouldAdvancePhase(IReaction[] results)
+		{
+			return results[0].ActionSuccessful;
+		}
+	}
 }

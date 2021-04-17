@@ -4,7 +4,8 @@ namespace Battleship
 {
 	class BattleshipTurnManager : TurnManagerBase
 	{
-		public BattleshipTurnManager() : base(false)
+		public BattleshipTurnManager(PlayerBattleshipTeam playerTeam, EnemyBattleshipTeam enemyTeam) 
+			: base(new PlayerPhase(playerTeam, enemyTeam), false)
 		{
 		}
 	}

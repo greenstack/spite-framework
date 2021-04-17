@@ -5,15 +5,19 @@ namespace Battleship
 {
     class ForfeitCommand : CommandBase
     {
-        public ForfeitCommand(ITeam forfeitingTeam)
-            : base(null, new ForfeitAction(forfeitingTeam))
-        {
-        }
+        public ITeam ForfeitingTeam { get; }
 
-        public override IReaction Execute()
+        public ForfeitCommand(ITeam forfeitingTeam)
+            : base(new ForfeitAction(forfeitingTeam), forfeitingTeam)
         {
-            // Why isn't this the default in the command base?
-            return action.UseAndGetReaction();
+            ForfeitingTeam = forfeitingTeam;
         }
     }
+
+    class GuessCommand : CommandBase
+	{
+        public GuessCommand(BattleshipTeam attackingTeam, BattleshipTeam defendingTeam)
+            : base(null, attackingTeam)
+        { }
+	}
 }

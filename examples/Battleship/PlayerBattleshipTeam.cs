@@ -11,7 +11,7 @@ namespace Battleship
             {
                 Console.WriteLine("Enter a coordinate to launch an attack at. Q to quit. (Currently the only supported item)");
                 string input = Console.ReadLine();
-                if (input.ToLower() == "Q")
+                if (input.ToLower() == "q")
                 {
                     return new ForfeitCommand(this);
                 }

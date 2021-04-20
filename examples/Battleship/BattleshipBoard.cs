@@ -56,16 +56,16 @@ namespace Battleship
 		public string ToString(BattleshipTeam viewpoint)
 		{
 			StringBuilder sb = new StringBuilder();
-			for (int i = 0; i < BOARD_SIZE; ++i)
+			for (int y = 0; y < BOARD_SIZE; ++y)
 			{
-				for (int j = 0; j < BOARD_SIZE; ++j)
+				for (int x = 0; x < BOARD_SIZE; ++x)
 				{
 					// TODO: figure out difference between hits, misses, etc.
-					Segment s = board[i, j];
+					Segment s = board[x, y];
 					if (s == null)
 					{
 						s = new Segment(null);
-						board[i, j] = s;
+						board[y, x] = s;
 					}
 					if (s.Owner == null)
 					{

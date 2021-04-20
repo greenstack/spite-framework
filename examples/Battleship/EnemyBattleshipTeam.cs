@@ -9,7 +9,7 @@ namespace Battleship
 
 		public override CommandBase GetCommand()
 		{
-			var command = new GuessCommand(this, Opponent, index / BattleshipBoard.BOARD_SIZE, index % BattleshipBoard.BOARD_SIZE);
+			var command = new GuessCommand(this, Opponent, index % BattleshipBoard.BOARD_SIZE, index / BattleshipBoard.BOARD_SIZE);
 			index++;
 			return command;
 		}

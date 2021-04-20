@@ -16,8 +16,8 @@ namespace Battleship
 
     class GuessCommand : CommandBase
 	{
-        public GuessCommand(BattleshipTeam attackingTeam, BattleshipTeam defendingTeam)
-            : base(null, attackingTeam)
+        public GuessCommand(BattleshipTeam attackingTeam, BattleshipTeam defendingTeam, int x, int y)
+            : base(new AttackAction(attackingTeam, defendingTeam.Board, x, y), attackingTeam)
         { }
 	}
 }

@@ -35,12 +35,15 @@ namespace Battleship
 
 		public readonly BattleshipBoard board;
 
+		public BattleshipTeam attacker;
+
 		private readonly int xCoord;
 
 		private readonly int yCoord;
 
-		public AttackAction(BattleshipBoard board, int x, int y)
+		public AttackAction(BattleshipTeam attacker, BattleshipBoard board, int x, int y)
 		{
+			this.attacker = attacker;
 			this.board = board;
 			xCoord = x;
 			yCoord = y;
@@ -48,12 +51,13 @@ namespace Battleship
 
 		public bool IsValid()
 		{
-			return BattleshipBoard.IsOnBoard(xCoord, yCoord);
+			return BattleshipBoard.IsOnBoard(xCoord, yCoord) && !board.IsLocationHit(xCoord, yCoord);
 		}
 
 		public IReaction UseAndGetReaction()
 		{
-			throw new NotImplementedException();
+			Ship hitEnemy = board.Attack(xCoord, yCoord);
+			return new AttackReaction(attacker, hitEnemy);
 		}
 	}
 }

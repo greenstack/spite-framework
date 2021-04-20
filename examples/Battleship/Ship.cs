@@ -3,14 +3,14 @@ using Spite;
 
 namespace Battleship
 {
-    struct Segment
+    class Segment
     {
         public bool IsHit;
-        readonly Ship owner;
+        public Ship Owner { get; }
 
         public Segment(Ship owner)
         {
-            this.owner = owner;
+            Owner = owner;
             IsHit = false;
         }
     }

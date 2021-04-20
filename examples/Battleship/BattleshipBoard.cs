@@ -1,20 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Battleship
 {
 	class BattleshipBoard
 	{
-		const int BOARD_SIZE = 10;
+		public const int BOARD_SIZE = 10;
 		readonly Segment[,] board = new Segment[BOARD_SIZE, BOARD_SIZE];
+		readonly BattleshipTeam team;
 
 		public BattleshipBoard(BattleshipTeam team)
 		{
 			Random r = new Random(0);
-
+			this.team = team;
 			// TODO: Randomize placement of ships and their rotation
 			foreach (var ship in team.Members)
 			{
@@ -55,7 +53,7 @@ namespace Battleship
 				&& (0 <= y && y < BOARD_SIZE);
 		}
 
-		public override string ToString()
+		public string ToString(BattleshipTeam viewpoint)
 		{
 			StringBuilder sb = new StringBuilder();
 			for (int i = 0; i < BOARD_SIZE; ++i)
@@ -66,26 +64,64 @@ namespace Battleship
 					Segment s = board[i, j];
 					if (s == null)
 					{
-						sb.Append('w');
+						s = new Segment(null);
+						board[i, j] = s;
 					}
-					else if (s.IsHit)
+					if (s.Owner == null)
 					{
-						sb.Append('O');
+						if (!s.IsHit)
+						{
+							sb.Append('w');
+						}
+						else
+						{
+							sb.Append('X');
+						}
 					}
 					else
 					{
-						sb.Append('X');
+						if (s.IsHit)
+						{
+							sb.Append('O');
+						}
+						else if (team == viewpoint)
+						{
+							sb.Append('v');
+						}
+						else
+						{
+							sb.Append('w');
+						}
 					}
 				}
+				sb.Append('\n');
 			}
 			return sb.ToString();
 		}
-		public void Attack(int x, int y)
+		
+		public bool IsLocationHit(int x, int y)
 		{
 			if (!IsOnBoard(x, y))
 				throw new ArgumentOutOfRangeException($"x ({x}) or y ({y}) is out of range (min 0, max {BOARD_SIZE})");
 
-			
+			return board[x, y].IsHit;
+		}
+		
+		public Ship Attack(int x, int y)
+		{
+			if (!IsOnBoard(x, y))
+				throw new ArgumentOutOfRangeException($"x ({x}) or y ({y}) is out of range (min 0, max {BOARD_SIZE})");
+
+			if (board[x, y].IsHit == true)
+			{
+				throw new InvalidOperationException($"Cannot hit a place that has already been attacked ({x}, {y})");
+			}
+			else
+			{
+				board[x, y].IsHit = true;
+			}
+
+			return board[x, y].Owner;
 		}
 	}
 

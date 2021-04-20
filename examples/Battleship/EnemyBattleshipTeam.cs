@@ -5,9 +5,18 @@ namespace Battleship
 {
 	class EnemyBattleshipTeam : BattleshipTeam
 	{
+		int index = 0;
+
 		public override CommandBase GetCommand()
 		{
-			throw new NotImplementedException();
+			var command = new GuessCommand(this, Opponent, index / BattleshipBoard.BOARD_SIZE, index % BattleshipBoard.BOARD_SIZE);
+			index++;
+			return command;
+		}
+
+		public override string ToString()
+		{
+			return "Enemy";
 		}
 	}
 }

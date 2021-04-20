@@ -14,13 +14,22 @@ namespace Battleship
         private List<Ship> ships;
         public ICollection<Ship> Members => ships;
 
+        internal BattleshipBoard Board { get; private set; }
+
         public int ManagedEntityCount => Members.Count;
+
+        public BattleshipTeam Opponent { get; internal set; }
 
         public void AddEntity(Ship entity)
         {
             entity.Team = this;
             Members.Add(entity);
         }
+
+        public void PrepareBoard()
+		{
+            Board = new BattleshipBoard(this);
+		}
 
         /// <summary>
         /// Gets this player's command. I don't like this, but this might be

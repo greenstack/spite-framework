@@ -77,6 +77,7 @@ namespace Battleship
                 .AddEntity(new Ship("Battleship", BattleshipSize))
                 .AddEntity(new Ship("Patrol Boat", PatrolBoatSize))
                 .Finish();
+            playerTeam.PrepareBoard();
             currentTeam = playerTeam;
 
             EnemyBattleshipTeam enemyTeam = new TeamBuilder<EnemyBattleshipTeam, Ship>()
@@ -86,6 +87,12 @@ namespace Battleship
                 .AddEntity(new Ship("Battleship", BattleshipSize))
                 .AddEntity(new Ship("Patrol Boat", PatrolBoatSize))
                 .Finish();
+            enemyTeam.PrepareBoard();
+
+            // I guess alliance graphs aren't really all that useful for 2-sided games.
+            // More for games with multiple sides and complex relationships
+            playerTeam.Opponent = enemyTeam;
+            enemyTeam.Opponent = playerTeam;
 
             BattleshipTurnManager turnManager = new BattleshipTurnManager(playerTeam, enemyTeam);
 

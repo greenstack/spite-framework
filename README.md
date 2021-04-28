@@ -1,5 +1,6 @@
 # Spite Framework
-![.NET Core](https://github.com/greenstack/spite-framework/workflows/.NET%20Core/badge.svg)
+![.NET](https://github.com/greenstack/spite-framework/workflows/.NET/badge.svg)
+[![Spite on fuget.org](https://www.fuget.org/packages/Spite/badge.svg)](https://www.fuget.org/packages/Spite)
 
 The Spite Framework is a C# library meant to simplify designing and
 implementing turn-based gameplay. The hope is that through the Spite Framework,
@@ -23,12 +24,17 @@ These are the core classes/interfaces that make this possible:
  - **ITeammate**: The smallest unit provided by the framework. The interface is very open ended to allow for a large number of applications.
 
 ### Installing and Building
-Currently, the best way to integrate Spite into your code is to clone the repository and run `dotnet build` from the `src` directory. You can copy the resulting library and XML documentation to your project.
+How you integrate Spite to your project will depend on the type of project you're building.
+* If you're using Visual Studio/dotnet, you have two options:
+    1. Add a reference to the [NuGet package](https://www.nuget.org/packages/Spite/#).
+    2. Clone the repo [as a git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules) then [add a reference to Spite](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-add-reference).
+* If you're using Unity:
+    1. Clone the repo [as a git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules) then [add a reference to Spite](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-add-reference).
 
-Hopefully, Spite will eventually be available as a NuGet package.
+If you clone Spite into your project, you can set your branch to be whichever version of the framework you like. For the most up-to-date version, use the active `-dev` branch.
 
 ## Getting Started
-To get started with Spite, you'll need to have a good understanding of Arenas, Turn Managers, and Teams. Entities are very barebones, and mostly implementation specific. This section shows how to get started with these elements, to help set you up for a basic turn-based game system.
+To get started with Spite, you'll need to have a good understanding of Arenas, Turn Managers, and Teams. Teammates are very barebones, and mostly implementation specific. This section shows how to get started with these elements, to help set you up for a basic turn-based game system.
 
 A battleship example can also be found in the [examples](examples) directory.
 (These will someday be moved into a specialized "examples" repository.)

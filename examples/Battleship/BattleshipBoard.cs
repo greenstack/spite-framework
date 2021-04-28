@@ -45,6 +45,9 @@ namespace Battleship
 					rootY += offset.Item2;
 				}
 			}
+			for (int i = 0; i < BOARD_SIZE; ++i)
+				for (int j = 0; j < BOARD_SIZE; ++j)
+					if (board[i, j] == null) board[i, j] = new Segment(null);
 		}
 
 		public static bool IsOnBoard(int x, int y)
@@ -62,11 +65,7 @@ namespace Battleship
 				{
 					// TODO: figure out difference between hits, misses, etc.
 					Segment s = board[x, y];
-					if (s == null)
-					{
-						s = new Segment(null);
-						board[y, x] = s;
-					}
+
 					if (s.Owner == null)
 					{
 						if (!s.IsHit)

@@ -34,14 +34,23 @@ namespace Spite
         /// </summary>
         public string ArenaName { get; }
 
+        /// <summary>
+        /// The alliance graph defining relationships between teams.
+        /// </summary>
         public AllianceGraph AllianceGraph { get; internal set; }
+
+        /// <summary>
+        /// Has this battle ended? This is determined by if the current phase
+        /// is an instance of BattleEndedPhase.
+        /// </summary>
+        public virtual bool IsBattleOver => TurnManager.CurrentPhase is BattleEndedPhase;
 
         /// <summary>
         /// Creates an arena with the specified number of teams fighting in it.
         /// </summary>
         /// <param name="numberOfTeams">The number of teams fighting in the arena.</param>
         /// <param name="turnManager">The object that manages the turns in this arena.</param>
-        /// <exception cref="ArgumentNullException">Thrown when turnManager is null.</param>
+        /// <exception cref="ArgumentNullException">Thrown when turnManager is null.</exception>
         public Arena(uint numberOfTeams, ITurnManager turnManager)
         {
             if (turnManager == null) {
@@ -106,22 +115,6 @@ namespace Spite
             }
         }
 
-        /// <inheritdoc/>
-        [System.Obsolete("Moving to CAR model")]
-        public bool ReceiveAndExecuteCommand<TContext>(ICommand<TContext> command)
-        {
-            if (command == null)
-            {
-                throw new ArgumentNullException(nameof(command));
-            }
-            bool success = TurnManager.CanBeExecuted(command) && command.Execute();
-            if (command.ShouldUpdateTeamStandings)
-            {
-                UpdateTeamStandings();
-            }
-            return success;
-        }
-
         /// <summary>
         /// Starts the battle.
         /// </summary>
@@ -131,6 +124,7 @@ namespace Spite
             OnBattleBegin?.Invoke(this);
         }
 
+        /// <inheritdoc/>
         public IReaction[] ReceiveAndExecuteCommand(CommandBase command)
         {
             return TurnManager.AcceptCommand(command);

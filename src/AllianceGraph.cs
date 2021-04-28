@@ -14,7 +14,7 @@ namespace Spite
         #region Relationship adding/changing
         /// <summary>
         /// Adds a relationship directed from the "from" team to the "to" team. This relationship is unidirectional.
-		/// To add a bidirectional relationship, use <see cref="AddBidirectionalRelation(ITeam, ITeam, Relationship)"/>.
+		/// To add a bidirectional relationship, use <see cref="AddBidirectionalRelation(ITeam, ITeam, TeamRelationship)"/>
         /// </summary>
         /// <param name="from">The team this relationship originates from.</param>
         /// <param name="to">The team this relationship is directed to.</param>
@@ -111,7 +111,7 @@ namespace Spite
         /// </summary>
         /// <param name="from">The team to get the relationship for.</param>
         /// <param name="to">The team to check.</param>
-        /// <returns>The relationship between the teams. If the relationship doesn't exist, returns <see cref="Relationship.Unknown"/>.</returns>
+        /// <returns>The relationship between the teams. If the relationship doesn't exist, returns <see cref="TeamRelationship.Unknown"/>.</returns>
         public TeamRelationship GetRelationship(ITeam from, ITeam to)
 		{
 			var key = (from, to);

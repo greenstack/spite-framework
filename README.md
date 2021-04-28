@@ -21,13 +21,21 @@ These are the core classes/interfaces that make this possible:
  - **ITurnManager**: Helps keep track of turns and the phases in the game through `ITurnPhase` interface implementations.
  - **ITeam**: Keeps track of the team members and its current standing in the battle. A `TeamBuilder` class (implemented generically) can help build teams to place in arenas.
  - **ITeammate**: The smallest unit provided by the framework. The interface is very open ended to allow for a large number of applications.
- 
+
+### Installing and Building
+Currently, the best way to integrate Spite into your code is to clone the repository and run `dotnet build` from the `src` directory. You can copy the resulting library and XML documentation to your project.
+
+Hopefully, Spite will eventually be available as a NuGet package.
+
 ## Getting Started
 To get started with Spite, you'll need to have a good understanding of Arenas, Turn Managers, and Teams. Entities are very barebones, and mostly implementation specific. This section shows how to get started with these elements, to help set you up for a basic turn-based game system.
 
-Examples can also be found in the [examples](examples) directory.
+A battleship example can also be found in the [examples](examples) directory.
+(These will someday be moved into a specialized "examples" repository.)
  
 ### Arenas
+**DISCLAIMER:** This section is still a work in progress (and very out of date). Looking at the example code and the source code itself is probably the best way to understand what's going on here.
+
 Arenas are the highest level unit of control in the framework. They manage the teams and turns of a battle.
  
 You can build Arenas with the ArenaBuilder:
@@ -57,3 +65,14 @@ foreach (var team in battleDefinition.Teams) {
 }
 ```
 This flexibility allows developers to create some interface for designers to create unique and varied battles. Designers can create a battle scenario with a tool, saving it to some format; developers read in this format and pass it to the `ArenaBuilder`. This can greatly assist in iterating quickly, without having to recode various components.
+
+### Turn Management
+**DISCLAIMER:** This section is still a work in progress. Looking at the example code and the source code itself is probably the best way to understand what's going on here.
+
+### Interactions
+**DISCLAIMER:** This section is still a work in progress. Looking at the example code and the source code itself is probably the best way to understand what's going on here.
+
+Commands typically wrap actions. Commands are separate from Actions because
+Actions are designed to be executed regardless of phase. You can think of
+Commands as the actions that a player takes and Actions as the result of a
+Command or another action (through the reaction type).

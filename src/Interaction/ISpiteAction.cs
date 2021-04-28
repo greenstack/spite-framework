@@ -16,6 +16,10 @@ namespace Spite.Interaction
         /// <returns>True if the action is valid and can be executed.</returns>
         bool IsValid();
 
+        /// <summary>
+        /// Performs the action and gets the corresponding result.
+        /// </summary>
+        /// <returns>The result of the action.</returns>
         IReaction UseAndGetReaction();
     }
 }

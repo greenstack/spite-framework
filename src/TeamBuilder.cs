@@ -12,7 +12,6 @@ namespace Spite
         /// <summary>
         /// Starts building the team with a fresh instance of the specified team type.
         /// </summary>
-        /// <typeparam name="TTeam">The type of team to create.</typeparam>
         /// <returns>The team builder for chaining.</returns>
         public TeamBuilder<TTeam, TEntity> Start()
         {

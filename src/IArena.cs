@@ -14,6 +14,11 @@ namespace Spite
         int TeamCount { get; }
 
         /// <summary>
+        /// Has this battle ended?
+        /// </summary>
+        bool IsBattleOver { get; }
+
+        /// <summary>
         /// The name of this arena.
         /// </summary>
         string ArenaName { get; }
@@ -33,26 +38,30 @@ namespace Spite
         /// </summary>
         IList<ITeam> Teams { get; }
 
-        IList<ITeam> GetTeamsWithRelationship(ITeam from, TeamRelationship relationship);
+        /// <summary>
+        /// Retrieves the teams receiving the relationship the sending team has with them.
+        /// </summary>
+        /// <param name="sending">The team sending the relationship.</param>
+        /// <param name="relationship">The relationship sent from the sender</param>
+        /// <returns>A list of teams that the sending team has the relationship with.</returns>
+        IList<ITeam> GetTeamsWithRelationship(ITeam sending, TeamRelationship relationship);
 
         /// <summary>
         /// Starts the battle.
         /// </summary>
+        [System.Obsolete("I believe that ReceiveAndExecuteCommand should be able to accomplish the same thing.")]
         void StartBattle();
 
         /// <summary>
         /// Updates all teams' standings.
         /// </summary>
         void UpdateTeamStandings();
-
+        
         /// <summary>
-        /// Receives the command for execution.
+        /// Accepts the command and tries to execute it.
         /// </summary>
         /// <param name="command">The command to be executed.</param>
-        /// <returns>True if the command is successful when executed. See <see cref="ICommand.Execute"/>.</returns>
-        [System.Obsolete("This command is obsolete. Use the upcoming CAR model.")]
-        bool ReceiveAndExecuteCommand<TContext>(ICommand<TContext> command);
-
+        /// <returns>The list of reactions that occurred.</returns>
         Interaction.IReaction[] ReceiveAndExecuteCommand(Interaction.CommandBase command);
     }
 }

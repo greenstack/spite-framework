@@ -1,3 +1,4 @@
+#if !UNITY_EDITOR
 using NUnit.Framework;
 using System;
 
@@ -11,9 +12,9 @@ namespace Spite.UnitTests
         [Test]
         public void TestUnidirectionalRelationships()
         {
-            MockTeam teamA = new();
-            MockTeam teamB = new();
-            AllianceGraph graph = new();
+            MockTeam teamA = new MockTeam();
+            MockTeam teamB = new MockTeam();
+            AllianceGraph graph = new AllianceGraph();
             graph.AddRelation(teamA, teamB, TeamRelationship.Allied);
             // Make sure that only teamA and teamB have the correct relationships
             Assert.AreEqual(TeamRelationship.Allied, graph.GetRelationship(teamA, teamB));
@@ -35,9 +36,9 @@ namespace Spite.UnitTests
         [Test]
         public void TestAddBidirectionalRelation()
         {
-            MockTeam teamA = new();
-            MockTeam teamB = new();
-            AllianceGraph graph = new();
+            MockTeam teamA = new MockTeam();
+            MockTeam teamB = new MockTeam();
+            AllianceGraph graph = new AllianceGraph();
             graph.AddBidirectionalRelation(teamA, teamB, TeamRelationship.Allied);
 
             // Let's make sure that the relationship goes both ways
@@ -55,9 +56,9 @@ namespace Spite.UnitTests
         [Test]
         public void TestGetOpposingTeam()
         {
-            MockTeam teamA = new();
-            MockTeam teamB = new();
-            AllianceGraph graph = new();
+            MockTeam teamA = new MockTeam();
+            MockTeam teamB = new MockTeam();
+            AllianceGraph graph = new AllianceGraph();
             graph.AddBidirectionalRelation(teamA, teamB, TeamRelationship.Opposing);
             var opposingTeam = graph.GetOpposingTeam(teamA);
             Assert.AreEqual(teamB, opposingTeam);
@@ -74,9 +75,9 @@ namespace Spite.UnitTests
         [Test]
         public void TestGetRelationships()
         {
-            MockTeam teamA = new();
-            MockTeam teamB = new();
-            MockTeam teamC = new();
+            MockTeam teamA = new MockTeam();
+            MockTeam teamB = new MockTeam();
+            MockTeam teamC = new MockTeam();
 
             var graph = new AllianceGraph();
             graph.AddRelation(teamA, teamB, TeamRelationship.Allied);
@@ -93,3 +94,4 @@ namespace Spite.UnitTests
         }
     }
 }
+#endif

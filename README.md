@@ -36,8 +36,7 @@ If you clone Spite into your project, you can set your branch to be whichever ve
 ## Getting Started
 To get started with Spite, you'll need to have a good understanding of Arenas, Turn Managers, and Teams. Teammates are very barebones, and mostly implementation specific. This section shows how to get started with these elements, to help set you up for a basic turn-based game system.
 
-A battleship example can also be found in the [examples](examples) directory.
-(These will someday be moved into a specialized "examples" repository.)
+Examples can be found in the [Spite Framework Examples](https://github.com/greenstack/spite-framework-examples) repository.
  
 ### Arenas
 **DISCLAIMER:** This section is still a work in progress (and very out of date). Looking at the example code and the source code itself is probably the best way to understand what's going on here.

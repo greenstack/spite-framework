@@ -12,10 +12,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "spite-tests", "tests\spite-tests.csproj", "{7D75F2F2-CF76-4C20-88EF-A3206E4E1425}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{C4813812-E14A-4C5A-93F6-BAB77F46380D}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Battleship", "examples\Battleship\Battleship.csproj", "{8D9050CB-4500-4D1D-BD08-C5EB0FDA1093}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,9 +33,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{8D9050CB-4500-4D1D-BD08-C5EB0FDA1093} = {C4813812-E14A-4C5A-93F6-BAB77F46380D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F5F9221E-0B61-41CB-8B81-EF1767408279}

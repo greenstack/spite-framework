@@ -9,7 +9,7 @@
     <FileVersion>0.3</FileVersion>
     <NeutralLanguage>en-US</NeutralLanguage>
     <Copyright>2020</Copyright>
-    <PackageLicenseFile>../LICENSE</PackageLicenseFile>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Version>0.2.0</Version>
     <Authors>Greenstack</Authors>
     <RepositoryType>Git</RepositoryType>
@@ -45,6 +45,10 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="../LICENSE" Pack="true" PackagePath="" />
   </ItemGroup>
 
 </Project>

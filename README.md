@@ -1,5 +1,6 @@
 # Spite Framework
 ![.NET](https://github.com/greenstack/spite-framework/workflows/.NET/badge.svg)
+[![Spite on fuget.org](https://www.fuget.org/packages/Spite/badge.svg)](https://www.fuget.org/packages/Spite)
 
 The Spite Framework is a C# library meant to simplify designing and
 implementing turn-based gameplay. The hope is that through the Spite Framework,

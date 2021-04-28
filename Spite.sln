@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.29926.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Spite", "src\Spite.csproj", "{2BAF6FFD-F7C9-4090-A003-AA52B458B353}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpiteBattleship", "examples\Spiteship\SpiteBattleship.csproj", "{F9160EEF-D786-49A0-935F-FF500465967A}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B3224381-87D3-42F4-B7AB-5037275EE14C}"
 	ProjectSection(SolutionItems) = preProject
 		CHANGELOG.md = CHANGELOG.md
@@ -28,10 +26,6 @@ Global
 		{2BAF6FFD-F7C9-4090-A003-AA52B458B353}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BAF6FFD-F7C9-4090-A003-AA52B458B353}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BAF6FFD-F7C9-4090-A003-AA52B458B353}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F9160EEF-D786-49A0-935F-FF500465967A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F9160EEF-D786-49A0-935F-FF500465967A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F9160EEF-D786-49A0-935F-FF500465967A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F9160EEF-D786-49A0-935F-FF500465967A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7D75F2F2-CF76-4C20-88EF-A3206E4E1425}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{7D75F2F2-CF76-4C20-88EF-A3206E4E1425}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7D75F2F2-CF76-4C20-88EF-A3206E4E1425}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -45,7 +39,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{F9160EEF-D786-49A0-935F-FF500465967A} = {C4813812-E14A-4C5A-93F6-BAB77F46380D}
 		{8D9050CB-4500-4D1D-BD08-C5EB0FDA1093} = {C4813812-E14A-4C5A-93F6-BAB77F46380D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

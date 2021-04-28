@@ -12,11 +12,11 @@ namespace Spite
 		/// relationship is unidirectional. To add a bidirectional 
 		/// relationship, use <see cref="AddBidirectionalRelation"/>.
 		/// </summary>
-		/// <param name="from">The team this relationship is directed from.</param>
-		/// <param name="to">The team this relationship is directed to.</param>
+		/// <param name="giving">The team this relationship is directed from.</param>
+		/// <param name="receiving">The team this relationship is directed to.</param>
 		/// <param name="relationship">The relationship the first team has with the other.</param>
 		/// <exception cref="System.InvalidOperationException">Thrown if a relationship between "from" and "to" is already defined.</exception>
-		void AddRelation(ITeam from, ITeam to, TeamRelationship relationship);
+		void AddRelation(ITeam giving, ITeam receiving, TeamRelationship relationship);
 
 		/// <summary>
 		/// Adds a relationship between both teams.
@@ -54,10 +54,10 @@ namespace Spite
 		/// <summary>
 		/// Gets the relationship the from team has with the to team.
 		/// </summary>
-		/// <param name="from">The team directing the relationship.</param>
-		/// <param name="to">The team receiving the relationship.</param>
+		/// <param name="giving">The team directing the relationship.</param>
+		/// <param name="receiving">The team receiving the relationship.</param>
 		/// <returns>The relationship the team has with the other.</returns>
-		TeamRelationship GetRelationship(ITeam from, ITeam to);
+		TeamRelationship GetRelationship(ITeam giving, ITeam receiving);
 
 		/// <summary>
 		/// Gets the relationships the team has with other teams (if they've been defined.)

@@ -4,9 +4,6 @@ namespace Spite.UnitTests.Mocks.Turns
 {
     class MockTurnManager : TurnManagerBase
     {
-        public MockTurnManager(bool executeFollowUpsIfActionFailed) : base(executeFollowUpsIfActionFailed)
-        {
-            CurrentPhase = new AlwaysExecutableTurnPhase();
-        }
+        public MockTurnManager(bool executeFollowUpsIfActionFailed) : base(new AlwaysExecutableTurnPhase(), executeFollowUpsIfActionFailed) {}
     }
 }

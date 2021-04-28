@@ -4,31 +4,11 @@ namespace Spite
 {
     /// <summary>
     /// Represents a team of entities in a battle.
+    /// 
+    /// This shouldn't be used - use the generic ITeam instead.
     /// </summary>
     public interface ITeam
     {
-        /// <summary>
-        /// The entities on this team.
-        /// </summary>
-        ICollection<IEntity> Entities { get; }
-        
-        /// <summary>
-        /// The number of entities managed by this Team.
-        /// </summary>
-        int ManagedEntityCount { get; }
-
-        /// <summary>
-        /// Adds the entity onto the team.
-        /// </summary>
-        /// <param name="entity">The entity pertaining to the team.</param>
-        void AddEntity(IEntity entity);
-
-        /// <summary>
-        /// Sets the number of entities slots on this team.
-        /// </summary>
-        /// <param name="entityCount">The number of entity slots to initialize.</param>
-        void InitializeEntityCount(uint entityCount);
-
         /// <summary>
         /// The current standing of the team.
         /// </summary>
@@ -46,5 +26,34 @@ namespace Spite
         /// </summary>
         /// <param name="standing">The standing to give to the team.</param>
         void ForceStanding(TeamStanding standing);
+    }
+
+    /// <summary>
+    /// A generic version of the team that allows for direct access to specific entity types.
+    /// </summary>
+    /// <typeparam name="T">The entity type this team revolves around.</typeparam>
+    public interface ITeam<T> : ITeam where T : ITeammate
+    {
+        /// <summary>
+        /// The entities managed by this team.
+        /// </summary>
+        ICollection<T> Members { get; }
+
+        /// <summary>
+        /// Adds an entity to the team.
+        /// </summary>
+        /// <param name="entity">The entity being added.</param>
+        void AddEntity(T entity);
+
+        /// <summary>
+        /// The number of entities managed by this Team.
+        /// </summary>
+        int ManagedEntityCount { get; }
+
+        /// <summary>
+        /// Sets the number of entities slots on this team.
+        /// </summary>
+        /// <param name="entityCount">The number of entity slots to initialize.</param>
+        void InitializeEntityCount(uint entityCount);
     }
 }

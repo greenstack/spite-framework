@@ -1,22 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
+using Spite.Turns;
 
 namespace Spite
 {
     /// <summary>
     /// Provides methods useful for building and populating an arena.
     /// </summary>
-    public class ArenaBuilder
+    public class ArenaBuilder<T> where T : ITeam
     {
-        private uint sideCount = 0;
+        /// <summary>
+        /// The number of teams the arena should support.
+        /// </summary>
+        private uint teamCount = 0;
 
+        /// <summary>
+        /// The name of the arena.
+        /// </summary>
         private string arenaName;
 
+        /// <summary>
+        /// The teams added to the arena.
+        /// </summary>
         private int teamsAdded = 0;
 
+        /// <summary>
+        /// The manager that will help track the flow of turns in this arena.
+        /// </summary>
         private ITurnManager turnManager = null;
 
-        private List<ITeam> teams = new List<ITeam>();
+        /// <summary>
+        /// The teams added in this builder.
+        /// </summary>
+        private readonly List<T> teams = new List<T>();
+
+        /// <summary>
+        /// The alliance graph for the coming arena.
+        /// </summary>
+        private readonly AllianceGraph allianceGraph = new AllianceGraph();
 
         /// <summary>
         /// Creates an instance of an Arena Builder.
@@ -26,13 +47,13 @@ namespace Spite
         }
 
         /// <summary>
-        /// Sets the number of sides fighting in the arena.
+        /// Sets the number of teams fighting in the arena.
         /// </summary>
-        /// <param name="sideCount">The number of sides that will be fighting in the arena.</param>
+        /// <param name="teamCount">The number of teams that will be fighting in the arena.</param>
         /// <returns>this</returns>
-        public ArenaBuilder SetSideCount(uint sideCount)
+        public ArenaBuilder<T> SetTeamCount(uint teamCount)
         {
-            this.sideCount = sideCount;
+            this.teamCount = teamCount;
             return this;
         }
 
@@ -41,7 +62,7 @@ namespace Spite
         /// </summary>
         /// <param name="name">Sets the name of this arena.</param>
         /// <returns>this</returns>
-        public ArenaBuilder SetArenaName(string name)
+        public ArenaBuilder<T> SetArenaName(string name)
         {
             arenaName = name;
             return this;
@@ -52,7 +73,7 @@ namespace Spite
         /// </summary>
         /// <param name="manager">The scheme for determining the granularity and order of turns.</param>
         /// <returns>The ArenaBuilder for chaining.</returns>
-        public ArenaBuilder SetTurnManager(ITurnManager manager)
+        public ArenaBuilder<T> SetTurnManager(ITurnManager manager)
         {
             turnManager = manager;
             return this;
@@ -62,15 +83,53 @@ namespace Spite
         /// Adds a team to this arena.
         /// </summary>
         /// <param name="team">The team to add to the arena.</param>
-        /// <returns>The team to add to the arena.</returns>
-        public ArenaBuilder AddTeam(ITeam team)
+        /// <returns>The arena builder for chaining.</returns>
+        public ArenaBuilder<T> AddTeam(T team)
         {
-            if (teamsAdded >= sideCount)
+            if (teamsAdded >= teamCount)
             {
                 throw new InvalidOperationException();
             }
             teams.Add(team);
             ++teamsAdded;
+            return this;
+        }
+
+        /// <summary>
+        /// Adds a relationship directed from team a to team b.
+        /// </summary>
+        /// <param name="teamA">The team where the relationship originates from.</param>
+        /// <param name="teamB">The team that the relationship is directed to.</param>
+        /// <param name="relationship">The relationship this team has.</param>
+        /// <returns>The arena buildter to allow for chaining.</returns>
+        public ArenaBuilder<T> AddTeamRelationship(T teamA, T teamB, TeamRelationship relationship)
+        {
+            if (!teams.Contains(teamA)) {
+                throw new InvalidOperationException($"{teamA} has not been added to this arena.");
+            }
+            if (!teams.Contains(teamB)) {
+                throw new InvalidOperationException($"{teamB} has not been added to this arena.");
+            }
+            allianceGraph.AddRelation(teamA, teamB, relationship);
+            return this;
+        }
+
+        /// <summary>
+        /// Adds a bidrectional relationship between two teams. Both teams must have been added already to the builder.
+        /// </summary>
+        /// <param name="teamA">One of the teams to set the relationship for.</param>
+        /// <param name="teamB">The other team to set the relationship for.</param>
+        /// <param name="relationship">The relationship the teams have.</param>
+        /// <returns>The arena builder for chaining.</returns>
+        public ArenaBuilder<T> AddBidirectionalTeamRelationship(T teamA, T teamB, TeamRelationship relationship)
+        {
+            if (!teams.Contains(teamA)) {
+                throw new InvalidOperationException($"{teamA} has not been added to this arena.");
+            }
+            if (!teams.Contains(teamB)) {
+                throw new InvalidOperationException($"{teamB} has not been added to this arena.");
+            }
+            allianceGraph.AddBidirectionalRelation(teamA, teamB, relationship);
             return this;
         }
 
@@ -85,12 +144,15 @@ namespace Spite
                 throw new InvalidOperationException("A turn manager has not been set.");
             }
             var arena = arenaName == null ?
-                new Arena(sideCount, turnManager) :
-                new Arena(arenaName, sideCount, turnManager);
+                new Arena(teamCount, turnManager) :
+                new Arena(arenaName, teamCount, turnManager)
+                {
+                    AllianceGraph = allianceGraph,
+                };
 
             for (int i = 0; i < teamsAdded; ++i)
             {
-                arena.sides[i] = teams[i];
+                arena.teams[i] = teams[i];
             }
 
             return arena;

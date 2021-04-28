@@ -1,21 +1,23 @@
-﻿using Spite.Actions;
-using System;
+﻿using System.Linq;
 using System.Collections.Generic;
+using System;
+using Spite.Turns;
+using Spite.Interaction;
 
 namespace Spite
 {
     /// <summary>
-    /// Manages a group of sides in a battle.
+    /// Manages a group of teams in a battle.
     /// </summary>
     public class Arena : IArena
     {
         /// <summary>
-        /// All the teams/sides that are fighting in this arena.
+        /// All the teams that are fighting in this arena.
         /// </summary>
-        readonly internal ITeam[] sides;
+        readonly internal ITeam[] teams;
 
         /// <inheritdoc/>
-        public IList<ITeam> Sides => sides;
+        public IList<ITeam> Teams => teams;
 
         /// <summary>
         /// Gets the turn manager.
@@ -23,14 +25,9 @@ namespace Spite
         public ITurnManager TurnManager { get; }
 
         /// <summary>
-        /// The controller that is currently acting.
+        /// The number of teams managed by this arena.
         /// </summary>
-        public ITurnController CurrentController { get => TurnManager.CurrentController; }
-
-        /// <summary>
-        /// The number of sides managed by this arena.
-        /// </summary>
-        public int SideCount => sides.Length;
+        public int TeamCount => teams.Length;
 
         /// <summary>
         /// The name of this arena.
@@ -38,27 +35,41 @@ namespace Spite
         public string ArenaName { get; }
 
         /// <summary>
-        /// Creates an arena with the specified number of sides fighting in it.
+        /// The alliance graph defining relationships between teams.
         /// </summary>
-        /// <param name="numberOfSides">The number of sides fighting in the arena.</param>
+        public AllianceGraph AllianceGraph { get; internal set; }
+
+        /// <summary>
+        /// Has this battle ended? This is determined by if the current phase
+        /// is an instance of BattleEndedPhase.
+        /// </summary>
+        public virtual bool IsBattleOver => TurnManager.CurrentPhase is BattleEndedPhase;
+
+        /// <summary>
+        /// Creates an arena with the specified number of teams fighting in it.
+        /// </summary>
+        /// <param name="numberOfTeams">The number of teams fighting in the arena.</param>
         /// <param name="turnManager">The object that manages the turns in this arena.</param>
-        public Arena(uint numberOfSides, ITurnManager turnManager)
+        /// <exception cref="ArgumentNullException">Thrown when turnManager is null.</exception>
+        public Arena(uint numberOfTeams, ITurnManager turnManager)
         {
-            sides = new ITeam[numberOfSides];
+            if (turnManager == null) {
+                throw new ArgumentNullException(nameof(turnManager));
+            }
+            teams = new ITeam[numberOfTeams];
             TurnManager = turnManager;
         }
 
         /// <summary>
-        /// Creates a named arena with the specified number of sides fighting in it.
+        /// Creates a named arena with the specified number of teams fighting in it.
         /// </summary>
         /// <param name="name">The name of the arena.</param>
-        /// <param name="numberOfSides">The number of sides fighting in the arena.</param>
+        /// <param name="numberOfTeams">The number of teams fighting in the arena.</param>
         /// <param name="turnManager">The object that manages the turns in this arena.</param>
-        public Arena(string name, uint numberOfSides, ITurnManager turnManager)
+        public Arena(string name, uint numberOfTeams, ITurnManager turnManager) :
+            this(numberOfTeams, turnManager)
         {
             ArenaName = name;
-            sides = new ITeam[numberOfSides];
-            TurnManager = turnManager;
         }
 
         /// <summary>
@@ -68,21 +79,55 @@ namespace Spite
         /// <returns>The team at the specified index</returns>
         public ITeam GetTeam(uint index)
         {
-            return sides[index];
+            return teams[index];
         }
 
         /// <summary>
-        /// Begins the battle.
+        /// Gets the teams that receive the specified relationship from the given team.
         /// </summary>
-        public void DoBattle()
+        /// <param name="from">The team from which the relationship originates.</param>
+        /// <param name="relationship">The relationship the team creates.</param>
+        /// <returns>All the teams with the specified relationship.</returns>
+        public IList<ITeam> GetTeamsWithRelationship(ITeam from, TeamRelationship relationship) {
+            return AllianceGraph.GetTeamsWithRelationship(from, relationship);
+        }
+
+        /// <summary>
+        /// Gets the teams that the given team has the specified relationship towards.
+        /// </summary>
+        /// <param name="from">The team that has the relationship.</param>
+        /// <param name="relationship">The relationship that the team has for the others.</param>
+        /// <typeparam name="T">The type of team to get.</typeparam>
+        /// <returns>An enumerable with the teams that the given team has the relationship with.</returns>
+        public IList<T> GetTeamsWithRelationship<T>(T from, TeamRelationship relationship) where T : ITeam
         {
-            OnBattleBegin?.Invoke(this);
-            bool battleOver;
-            // Enter the battle/game loop
-            do
+            return GetTeamsWithRelationship(from, relationship).Cast<T>().ToList();
+        }
+
+        /// <summary>
+        /// Causes each team to update its standing.
+        /// </summary>
+        public void UpdateTeamStandings()
+        {
+            foreach (var team in teams)
             {
-                battleOver = TurnManager.DoTurn(this);
-            } while (!battleOver);
+                team.DetermineStanding(this);
+            }
+        }
+
+        /// <summary>
+        /// Starts the battle.
+        /// </summary>
+        public void StartBattle()
+        {
+            //TurnManager.Start();
+            OnBattleBegin?.Invoke(this);
+        }
+
+        /// <inheritdoc/>
+        public IReaction[] ReceiveAndExecuteCommand(CommandBase command)
+        {
+            return TurnManager.AcceptCommand(command);
         }
 
         /// <summary>

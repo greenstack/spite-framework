@@ -1,4 +1,7 @@
-# Alpha 0.2.0 (Work in Progress)
+# Alpha 0.2.1
+This update only changes the Spite.csproj file to allow NuGet to properly link to the repository.
+
+# Alpha 0.2.0
 ## Major Additions and Changes
 ### Alliance Graphs
 Alliance Graphs are data structures that are designed to simplify tracking

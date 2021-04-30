@@ -1,6 +1,9 @@
 # Alpha 0.2.1
 This update only changes the Spite.csproj file to allow NuGet to properly link to the repository.
 
+Because these changes are only related to publishing on NuGet, using the 0.2.0-alpha branch or tag
+is functionally equivalent.
+
 # Alpha 0.2.0
 ## Major Additions and Changes
 ### Alliance Graphs

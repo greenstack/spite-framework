@@ -5,18 +5,18 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageProjectUrl>https://github.com/greenstack/spite-framework</PackageProjectUrl>
     <RepositoryUrl>https://github.com/greenstack/spite-framework.git</RepositoryUrl>
-    <AssemblyVersion>0.2.0</AssemblyVersion>
-    <FileVersion>0.3</FileVersion>
+    <AssemblyVersion>0.2.1</AssemblyVersion>
+    <FileVersion>0.4</FileVersion>
     <NeutralLanguage>en-US</NeutralLanguage>
     <Copyright>2020-2021</Copyright>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <Version>0.2.0</Version>
+    <Version>0.2.1</Version>
     <Authors>Greenstack</Authors>
     <RepositoryType>Git</RepositoryType>
     <AssemblyName>Spite</AssemblyName>
     <PackageId>Spite</PackageId>
     <Company>Greenstack</Company>
-    <Title>Spite 0.2.0-alpha</Title>
+    <Title>Spite 0.2.1-alpha</Title>
     <Description>Spite is a framework to allow developers to quickly integrate and implement turn-based systems in games.</Description>
     <ReleaseNotes>Please see the CHANGELOG in the repository for release notes.</ReleaseNotes>
     <PackageTags>game;gamedev;.net core</PackageTags>

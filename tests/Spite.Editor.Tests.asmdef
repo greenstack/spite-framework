@@ -1,0 +1,13 @@
+{
+	"name": "GreenstackJ.Spite.Editor.Tests",
+	"references": [
+		"GreenstackJ.Spite"
+	],
+	"optionalUnityReferences": [
+		"TestAssemblies"
+	],
+	"includePlatforms": [
+		"Editor"
+	],
+	"excludePlatforms": []
+}

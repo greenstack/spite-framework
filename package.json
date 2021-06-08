@@ -1,0 +1,17 @@
+{
+	"name": "com.greenstackj.spite",
+	"version": "0.3.0-dev",
+	"description": "Helps simplify the development/integration of turn-based systems in games.",
+	"displayName": "Spite",
+	"unity": "2021.1",
+	"author": {
+		"name": "GreenstackJ",
+		"url": "http://greenstackj.com"
+	},
+	"changelogUrl": "https://github.com/greenstack/spite-framework/blob/0.3.0-dev/CHANGELOG.md",
+	"keywords": [
+		"spite",
+		"turn-based",
+		"rpg"
+	]
+}

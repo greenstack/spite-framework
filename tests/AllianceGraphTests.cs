@@ -1,4 +1,3 @@
-#if !UNITY_EDITOR
 using NUnit.Framework;
 using System;
 
@@ -94,4 +93,3 @@ namespace Spite.UnitTests
         }
     }
 }
-#endif

@@ -3,7 +3,7 @@
 	"version": "0.3.0-dev",
 	"description": "Helps simplify the development/integration of turn-based systems in games.",
 	"displayName": "Spite",
-	"unity": "2021.1",
+	"unity": "2019.4",
 	"author": {
 		"name": "GreenstackJ",
 		"url": "http://greenstackj.com"

@@ -16,22 +16,31 @@ board games. To do this, Spite is centered on a few core design pillars:
  - Be compatible with as many C# game engines and frameworks as possible while
  also being as portable as possible.
 
+## Installation
+How you integrate Spite to your project will depend on what technology you're using.
+
+If you clone Spite into your project, you can set your branch to be whichever version of the framework you like. For the most up-to-date version, use the active `-dev` branch.
+
+### Visual Studio/Dotnet
+If you're using Visual Studio/dotnet, you have two options:
+1. Add a reference to the [NuGet package](https://www.nuget.org/packages/Spite/#).
+2. Clone the repo [as a git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules) then [add a reference to Spite](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-add-reference).
+
+### Using Unity
+In order to use Spite with Unity, you'll need to include it as a [package](https://docs.unity3d.com/Manual/PackagesList.html). You'll have three options to do this.
+1. [Through a local folder](https://docs.unity3d.com/Manual/upm-ui-local.html). You can do this by cloning the repo [as a git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules) in the `Packages` folder of your Unity project.
+2. [Through a local tarball file](https://docs.unity3d.com/Manual/upm-ui-tarball.html)
+3. [Through a git URL](https://docs.unity3d.com/Manual/upm-ui-giturl.html).
+
+If you don't intend to use Unity's Package manager (which is the recommended route),
+you can also [build the Spite DLL](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-build) and include it into your project.
+
 ## Overview
 These are the core classes/interfaces that make this possible:
  - **Arena**: This keeps track of all the teams and the team manager to keep battles organized effectively. An `ArenaBuilder` is provided to build an Arena.
  - **ITurnManager**: Helps keep track of turns and the phases in the game through `ITurnPhase` interface implementations.
  - **ITeam**: Keeps track of the team members and its current standing in the battle. A `TeamBuilder` class (implemented generically) can help build teams to place in arenas.
  - **ITeammate**: The smallest unit provided by the framework. The interface is very open ended to allow for a large number of applications.
-
-### Installing and Building
-How you integrate Spite to your project will depend on the type of project you're building.
-* If you're using Visual Studio/dotnet, you have two options:
-    1. Add a reference to the [NuGet package](https://www.nuget.org/packages/Spite/#).
-    2. Clone the repo [as a git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules) then [add a reference to Spite](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-add-reference).
-* If you're using Unity:
-    1. Clone the repo [as a git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules) then [add a reference to Spite](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-add-reference).
-
-If you clone Spite into your project, you can set your branch to be whichever version of the framework you like. For the most up-to-date version, use the active `-dev` branch.
 
 ## Getting Started
 To get started with Spite, you'll need to have a good understanding of Arenas, Turn Managers, and Teams. Teammates are very barebones, and mostly implementation specific. This section shows how to get started with these elements, to help set you up for a basic turn-based game system.

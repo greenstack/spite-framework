@@ -1,3 +1,9 @@
+# 0.3.0-Alpha
+## Unity Integration
+Spite can now be added to the `Packages` folder of a Unity project and used
+by Unity scripts. See the project's `README.md` for more info on how to install
+Spite in Unity.
+
 # Alpha 0.2.1
 This update only changes the Spite.csproj file to allow NuGet to properly link to the repository.
 

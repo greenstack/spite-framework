@@ -1,3 +1,5 @@
+using System;
+
 namespace Spite.Stats
 {
 	/// <summary>
@@ -11,16 +13,17 @@ namespace Spite.Stats
 		object GetCurrentValue();
 	}
 
-	public interface IStat<TNumberType> : IStat
+	/// <summary>
+	/// Provides a generic interface for stats.
+	/// </summary>
+	/// <typeparam name="TNumberType">The type of stat.</typeparam>
+	public interface IStat<TNumberType> where TNumberType :
+		IComparable<TNumberType>,
+		IEquatable<TNumberType>
 	{
 		/// <summary>
 		/// The current value of the stat.
 		/// </summary>
 		TNumberType CurrentValue { get; }
-
-		/// <summary>
-		/// The base value of the stat.
-		/// </summary>
-		TNumberType BaseValue { get; }
 	}
 }

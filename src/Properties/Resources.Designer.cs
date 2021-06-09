@@ -70,6 +70,15 @@ namespace Spite.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Teams list cannot be null or empty..
+        /// </summary>
+        internal static string EmptyOrNullTeamListExceptionMessage {
+            get {
+                return ResourceManager.GetString("EmptyOrNullTeamListExceptionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The current turn scheme is invalid..
         /// </summary>
         internal static string InvalidTurnScheme {

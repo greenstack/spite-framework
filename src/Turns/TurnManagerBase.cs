@@ -15,7 +15,7 @@ namespace Spite.Turns
         /// </summary>
         public virtual ITurnPhase CurrentPhase {
             get => currentPhase;
-            set {
+            private set {
                 if (value != currentPhase) {
                     OnPhaseChanged?.Invoke(currentPhase, value, this);
                     currentPhase = value;
@@ -70,7 +70,7 @@ namespace Spite.Turns
 
                 if (CurrentPhase.ShouldAdvancePhase(finalResult))
 				{
-                    CurrentPhase = CurrentPhase.GetNextPhase();
+                    CurrentPhase = GetNextPhase();
 				}
 
                 return finalResult;
@@ -79,6 +79,15 @@ namespace Spite.Turns
                 return null;
             }
         }
+
+        /// <summary>
+        /// Retrieves the next phase based on the current phase (default behavior).
+        /// </summary>
+        /// <returns>The next phase.</returns>
+        protected virtual ITurnPhase GetNextPhase()
+		{
+            return CurrentPhase.GetNextPhase();
+		}
 
         /// <summary>
         /// Checks if the given command can be executed.

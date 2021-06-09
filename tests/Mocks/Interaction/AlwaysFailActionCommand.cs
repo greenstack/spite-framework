@@ -4,7 +4,7 @@ namespace Spite.UnitTests.Mocks.Interaction
 {
     public class AlwaysFailActionCommand : CommandBase
     {
-        public AlwaysFailActionCommand(ITeammate user, ISpiteAction action) 
+        public AlwaysFailActionCommand(ICommandExecutor user, ISpiteAction action) 
             : base(action, user)
         {
         }

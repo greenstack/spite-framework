@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Spite.Interaction
+﻿namespace Spite.Interaction
 {
 	/// <summary>
 	/// Provides an interface for Spite commands.
@@ -12,7 +8,7 @@ namespace Spite.Interaction
 		/// <summary>
 		/// The object responsible for executing the command.
 		/// </summary>
-		object Executor { get; }
+		ICommandExecutor Executor { get; }
 
 		/// <summary>
 		/// Executes the command.

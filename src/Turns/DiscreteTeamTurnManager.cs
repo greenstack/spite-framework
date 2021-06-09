@@ -6,15 +6,15 @@ namespace Spite.Turns
 	/// Represents a turn manager that allows units on a team to act as long as that team
 	/// is active.
 	/// </summary>
-	public class DiscreteTeamTurnManager :
-		TurnManagerBase
+	public class DiscreteTeamTurnManager<T> : TurnManagerBase
+		where T : ITeam<ITappableTeammate>
 	{
 		/// <summary>
 		/// The current team node.
 		/// </summary>
-		LinkedListNode<ITeam<ITappableTeammate>> currentTeamNode;
+		LinkedListNode<T> currentTeamNode;
 
-		readonly LinkedList<ITeam<ITappableTeammate>> teamsList;
+		readonly LinkedList<T> teamsList;
 
 		/// <summary>
 		/// Gets the team with the current priority.
@@ -26,14 +26,14 @@ namespace Spite.Turns
 		/// </summary>
 		/// <param name="teams">The teams that can participate in this battle. Priority will be given in the order given by this list.</param>
 		/// <param name="executeFollowUpsIfActionFailed">If a reaction has a follow-up, should it be executed even if the action failed? (Defaults to true)</param>
-		public DiscreteTeamTurnManager(IList<ITeam<ITappableTeammate>> teams, bool executeFollowUpsIfActionFailed = true) :
+		public DiscreteTeamTurnManager(IList<T> teams, bool executeFollowUpsIfActionFailed = true) :
 			base(new TeamPhase(GetFirstTeam(teams)), executeFollowUpsIfActionFailed)
 		{
-			teamsList = new LinkedList<ITeam<ITappableTeammate>>(teams);
+			teamsList = new LinkedList<T>(teams);
 			currentTeamNode = teamsList.First;
 		}
 
-		private static ITeam<ITappableTeammate> GetFirstTeam(IList<ITeam<ITappableTeammate>> teams)
+		private static T GetFirstTeam(IList<T> teams)
 		{
 			if (teams is null || teams.Count == 0)
 			{

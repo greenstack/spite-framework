@@ -95,7 +95,7 @@ namespace Spite
 
             var correctedType = teams.Cast<ITappableTeammateTeam>();
 
-            turnManager = new DiscreteTeamTurnManager<ITappableTeammateTeam>(correctedType.ToList());
+            turnManager = new DiscreteTeamTurnManager(correctedType.ToList());
 		}
 
         /// <summary>

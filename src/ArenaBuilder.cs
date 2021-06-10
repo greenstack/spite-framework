@@ -13,7 +13,7 @@ namespace Spite
         /// <summary>
         /// The number of teams the arena should support.
         /// </summary>
-        private uint teamCount = 0;
+        private int teamCount = -1;
 
         /// <summary>
         /// The name of the arena.
@@ -52,7 +52,7 @@ namespace Spite
         /// </summary>
         /// <param name="teamCount">The number of teams that will be fighting in the arena.</param>
         /// <returns>this</returns>
-        public ArenaBuilder<T> SetTeamCount(uint teamCount)
+        public ArenaBuilder<T> SetTeamCount(int teamCount)
         {
             this.teamCount = teamCount;
             return this;
@@ -116,9 +116,9 @@ namespace Spite
         /// <returns>The arena builder for chaining.</returns>
         public ArenaBuilder<T> AddTeam(T team)
         {
-            if (teamsAdded >= teamCount)
+            if (teamCount > 0 && teamsAdded >= teamCount)
             {
-                throw new InvalidOperationException();
+                throw new InvalidOperationException($"This arena builder only supports {teamCount} teams");
             }
             teams.Add(team);
             ++teamsAdded;
@@ -173,13 +173,15 @@ namespace Spite
             {
                 throw new InvalidOperationException("A turn manager has not been set.");
             }
+            int totalTeams = teamCount > 0 ? teamCount : teamsAdded;
             var arena = arenaName == null ?
-                new Arena(teamCount, turnManager) :
-                new Arena(arenaName, teamCount, turnManager)
+                new Arena(totalTeams, turnManager) :
+                new Arena(arenaName, totalTeams, turnManager)
                 {
                     AllianceGraph = allianceGraph,
                 };
-
+            // Since Arena.teams is readonly we have to do it this way.
+            // Might want to look into another way
             for (int i = 0; i < teamsAdded; ++i)
             {
                 arena.teams[i] = teams[i];

@@ -1,8 +1,29 @@
-# 0.3.0-Alpha
+# 0.3.0-alpha
 ## Unity Integration
+(See Issue #12)
+
 Spite can now be added to the `Packages` folder of a Unity project and used
 by Unity scripts. See the project's `README.md` for more info on how to install
 Spite in Unity.
+
+## Discrete Team Turn Manager (DTTM)
+(See Issue #20)
+
+Spite now supports Discrete Team Turn Managers. By default, this turn manager
+will allow a player to perform actions until each unit is tapped. The Arena
+Builder has been modified to allow developers to choose this method without
+having to configure the DTTM themselves - it will build it for you. This is done
+through the Arena Builder's `SetTurnScheme` method passing `DiscreteTeam` as the
+value.
+
+## General Changes
+ - Re-introduced the `ITappableTeammate` interface.
+ - Added `ITappableTeammateTeam` interface. Extends `ITeam` with `ITappableTeammate` as the entity type. A generic version of the interface is also available and requires the team's entity to implement `ITappableTeammate`.
+ - Added `TeamPhase` turn phase class.
+ - Added `ICommandExecutor`.
+ - Changed `ISpiteCommand.Executor` type from `object` to `ICommandExecutor`.
+ - Added protected virtual method `TurnManagerBase.GetNextPhase` to let concrete Turn Managers (such as the DTTM) determine what the next phase for that.
+ - Fixed the default namespace for unit tests (was `spite-framework`, is now `Spite.UnitTests`).
 
 # Alpha 0.2.1
 This update only changes the Spite.csproj file to allow NuGet to properly link to the repository.

@@ -93,9 +93,9 @@ namespace Spite
                 throw new InvalidOperationException($"Cannot use discrete team turn scheme - {typeof(T)} does not contain ITappableTeammates");
 			}
 
-            var correctedType = teams.Cast<ITeam<ITappableTeammate>>();
+            var correctedType = teams.Cast<ITappableTeammateTeam>();
 
-            turnManager = new DiscreteTeamTurnManager<ITeam<ITappableTeammate>>(correctedType.ToList());
+            turnManager = new DiscreteTeamTurnManager<ITappableTeammateTeam>(correctedType.ToList());
 		}
 
         /// <summary>

@@ -6,8 +6,9 @@ namespace Spite.Turns
 	/// Represents a turn manager that allows units on a team to act as long as that team
 	/// is active.
 	/// </summary>
+	/// <typeparam name="T">The type of team that is used. Must use tappable teammates.</typeparam>
 	public class DiscreteTeamTurnManager<T> : TurnManagerBase
-		where T : ITeam<ITappableTeammate>
+		where T : ITappableTeammateTeam
 	{
 		/// <summary>
 		/// The current team node.
@@ -19,10 +20,13 @@ namespace Spite.Turns
 		/// <summary>
 		/// Gets the team with the current priority.
 		/// </summary>
-		public ITeam<ITappableTeammate> CurrentTeam => currentTeamNode.Value;
+		public T CurrentTeam => currentTeamNode.Value;
 
 		/// <summary>
 		/// Creates a discrete team turn manager.
+		/// TODO: Look into a parameter for "auto advance to next phase when all are tapped" or "go to next phase on command".
+		/// This should probably be a public modifiable member to handle certain scenarios where skills can be used outside of the
+		/// normal context.
 		/// </summary>
 		/// <param name="teams">The teams that can participate in this battle. Priority will be given in the order given by this list.</param>
 		/// <param name="executeFollowUpsIfActionFailed">If a reaction has a follow-up, should it be executed even if the action failed? (Defaults to true)</param>

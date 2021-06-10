@@ -24,6 +24,7 @@ value.
  - Changed `ISpiteCommand.Executor` type from `object` to `ICommandExecutor`.
  - Added protected virtual method `TurnManagerBase.GetNextPhase` to let concrete Turn Managers (such as the DTTM) determine what the next phase for that.
  - Fixed the default namespace for unit tests (was `spite-framework`, is now `Spite.UnitTests`).
+ - Added a command, action, and reaction to allow all teammates`ITappableTeammateTeams` to be tapped through a single command.
 
 # Alpha 0.2.1
 This update only changes the Spite.csproj file to allow NuGet to properly link to the repository.

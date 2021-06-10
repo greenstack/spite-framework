@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Spite.Turns;
 
 namespace Spite
@@ -69,7 +70,36 @@ namespace Spite
         }
 
         /// <summary>
-        /// Sets the turn manager that this arena will use.
+        /// Configures the turn scheme to be of the desired type. This sets the turn manager.
+        /// </summary>
+        /// <param name="turnScheme">The turn scheme to use.</param>
+        /// <returns>The Arena Builder for chaining.</returns>
+        public ArenaBuilder<T> SetTurnScheme(TurnSchemeType turnScheme)
+		{
+            switch (turnScheme)
+			{
+                case TurnSchemeType.DiscreteTeam:
+                    SetUpDiscreteTeamTurnManager();
+                    break;
+                default:
+                    throw new NotImplementedException($"The default turn manager for scheme {turnScheme} has not yet been implemented");
+			}
+            return this;
+		}
+
+        private void SetUpDiscreteTeamTurnManager()
+		{
+            if (!typeof(ITeam<ITappableTeammate>).IsAssignableFrom(typeof(T))) {
+                throw new InvalidOperationException($"Cannot use discrete team turn scheme - {typeof(T)} does not contain ITappableTeammates");
+			}
+
+            var correctedType = teams.Cast<ITappableTeammateTeam>();
+
+            turnManager = new DiscreteTeamTurnManager(correctedType.ToList());
+		}
+
+        /// <summary>
+        /// Sets the turn manager that this arena will use. Cannot be used with SetTurnScheme.
         /// </summary>
         /// <param name="manager">The scheme for determining the granularity and order of turns.</param>
         /// <returns>The ArenaBuilder for chaining.</returns>

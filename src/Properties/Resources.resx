@@ -120,6 +120,9 @@
   <data name="ArenaNotStarted" xml:space="preserve">
     <value>The arena hasn't been made yet - try calling SetNumberOfSides first.</value>
   </data>
+  <data name="EmptyOrNullTeamListExceptionMessage" xml:space="preserve">
+    <value>Teams list cannot be null or empty.</value>
+  </data>
   <data name="InvalidTurnScheme" xml:space="preserve">
     <value>The current turn scheme is invalid.</value>
   </data>

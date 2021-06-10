@@ -12,13 +12,13 @@ namespace Spite.Turns
 		/// <summary>
 		/// The team that can act this phase.
 		/// </summary>
-		public ITeam<ITappableTeammate> CurrentTeam { get; }
+		public ITeamOfTappables CurrentTeam { get; }
 
 		/// <summary>
 		/// 
 		/// </summary>
 		/// <param name="currentTeam">The team that can act.</param>
-		public TeamPhase(ITeam<ITappableTeammate> currentTeam)
+		public TeamPhase(ITeamOfTappables currentTeam)
 		{
 			CurrentTeam = currentTeam;
 		}
@@ -51,7 +51,7 @@ namespace Spite.Turns
 		/// <returns>True if each unit on the team has been tapped. Otherwise, false.</returns>
 		public virtual bool ShouldAdvancePhase(IReaction[] results = null)
 		{
-			return CurrentTeam.Members.All(teammate => teammate.IsTapped);
+			return CurrentTeam.TappedUnitCount >= CurrentTeam.ManagedEntityCount;
 		}
 	}
 }

@@ -12,7 +12,7 @@
 		{
 			public ITeam ResponsibleTeam { get; }
 
-			public TapAllExecutor(ITappableTeammateTeam executor)
+			public TapAllExecutor(ITeamOfTappables executor)
 			{
 				ResponsibleTeam = executor;
 			}
@@ -22,7 +22,7 @@
 		/// Creates a command that will tap all units on the team. For use with DTTMs.
 		/// </summary>
 		/// <param name="teamToTap">The team that will have each unit tapped.</param>
-		public TapAllTeammatesCommand(ITappableTeammateTeam teamToTap) : base(
+		public TapAllTeammatesCommand(ITeamOfTappables teamToTap) : base(
 			new TapAllTeammatesAction(teamToTap),
 			teamToTap as ICommandExecutor ?? new TapAllExecutor(teamToTap))
 		{

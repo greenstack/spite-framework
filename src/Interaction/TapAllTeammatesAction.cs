@@ -8,13 +8,13 @@
 		/// <inheritdoc/>
 		public ITeammate User => null;
 
-		readonly ITappableTeammateTeam teamToTap;
+		readonly ITeamOfTappables teamToTap;
 
 		/// <summary>
 		/// Constructs a basic TapAllTeammatesAction.
 		/// </summary>
 		/// <param name="teamToTap">The team to tap.</param>
-		public TapAllTeammatesAction(ITappableTeammateTeam teamToTap)
+		public TapAllTeammatesAction(ITeamOfTappables teamToTap)
 		{
 			this.teamToTap = teamToTap;
 		}
@@ -34,10 +34,7 @@
 		/// <returns>A <see cref="TapAllReaction"/>.</returns>
 		public IReaction UseAndGetReaction()
 		{
-			foreach (var teammate in teamToTap.Members)
-			{
-				teammate.Tap();
-			}
+			teamToTap.TapAll();
 
 			return new TapAllReaction();
 		}

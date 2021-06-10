@@ -89,11 +89,11 @@ namespace Spite
 
         private void SetUpDiscreteTeamTurnManager()
 		{
-            if (!typeof(ITeam<ITappableTeammate>).IsAssignableFrom(typeof(T))) {
+            if (!typeof(ITeamOfTappables).IsAssignableFrom(typeof(T))) {
                 throw new InvalidOperationException($"Cannot use discrete team turn scheme - {typeof(T)} does not contain ITappableTeammates");
 			}
 
-            var correctedType = teams.Cast<ITappableTeammateTeam>();
+            var correctedType = teams.Cast<ITeamOfTappables>();
 
             turnManager = new DiscreteTeamTurnManager(correctedType.ToList());
 		}

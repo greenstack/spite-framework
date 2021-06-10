@@ -6,21 +6,21 @@ namespace Spite.Turns
 	/// Represents a turn manager that allows units on a team to act as long as that team
 	/// is active.
 	/// </summary>
-	/// <typeparam name="T">The type of team that is used. Must use tappable teammates.</typeparam>
-	public class DiscreteTeamTurnManager<T> : TurnManagerBase
-		where T : ITappableTeammateTeam
+	/// <typeparam name="TTeam">The type of team that is used. Must use tappable teammates.</typeparam>
+	public class DiscreteTeamTurnManager<TTeam> : TurnManagerBase
+		where TTeam : ITeamOfTappables
 	{
 		/// <summary>
 		/// The current team node.
 		/// </summary>
-		LinkedListNode<T> currentTeamNode;
+		LinkedListNode<TTeam> currentTeamNode;
 
-		readonly LinkedList<T> teamsList;
+		readonly LinkedList<TTeam> teamsList;
 
 		/// <summary>
 		/// Gets the team with the current priority.
 		/// </summary>
-		public T CurrentTeam => currentTeamNode.Value;
+		public TTeam CurrentTeam => currentTeamNode.Value;
 
 		/// <summary>
 		/// Creates a discrete team turn manager.
@@ -30,14 +30,14 @@ namespace Spite.Turns
 		/// </summary>
 		/// <param name="teams">The teams that can participate in this battle. Priority will be given in the order given by this list.</param>
 		/// <param name="executeFollowUpsIfActionFailed">If a reaction has a follow-up, should it be executed even if the action failed? (Defaults to true)</param>
-		public DiscreteTeamTurnManager(IList<T> teams, bool executeFollowUpsIfActionFailed = true) 
+		public DiscreteTeamTurnManager(IList<TTeam> teams, bool executeFollowUpsIfActionFailed = true) 
 			: base(new TeamPhase(GetFirstTeam(teams)), executeFollowUpsIfActionFailed)
 		{
-			teamsList = new LinkedList<T>(teams);
+			teamsList = new LinkedList<TTeam>(teams);
 			currentTeamNode = teamsList.First;
 		}
 
-		private static T GetFirstTeam(IList<T> teams)
+		private static ITeamOfTappables GetFirstTeam(IList<TTeam> teams)
 		{
 			if (teams is null || teams.Count == 0)
 			{
@@ -61,14 +61,14 @@ namespace Spite.Turns
 	/// <summary>
 	/// A discrete team turn manager that defaults to ITappableTeammateTeam as the team type.
 	/// </summary>
-	public class DiscreteTeamTurnManager : DiscreteTeamTurnManager<ITappableTeammateTeam>
+	public class DiscreteTeamTurnManager : DiscreteTeamTurnManager<ITeamOfTappables>
 	{
 		/// <summary>
 		/// Creates a default discrete team turn manager.
 		/// </summary>
-		/// <param name="teams"></param>
-		/// <param name="executeFollowUpsIfActionFailed"></param>
-		public DiscreteTeamTurnManager(IList<ITappableTeammateTeam> teams, bool executeFollowUpsIfActionFailed = true) : base(teams, executeFollowUpsIfActionFailed)
+		/// <param name="teams">The teams to be managed by the DTTM.</param>
+		/// <param name="executeFollowUpsIfActionFailed">Should follow-up actions defined in reactions happen if the action failed?</param>
+		public DiscreteTeamTurnManager(IList<ITeamOfTappables> teams, bool executeFollowUpsIfActionFailed = true) : base(teams, executeFollowUpsIfActionFailed)
 		{
 		}
 	}

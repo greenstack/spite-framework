@@ -18,13 +18,15 @@ value.
 
 ## General Changes
  - Re-introduced the `ITappableTeammate` interface.
- - Added `ITappableTeammateTeam` interface. Extends `ITeam` with `ITappableTeammate` as the entity type. A generic version of the interface is also available and requires the team's entity to implement `ITappableTeammate`.
+ - Added `ITeamOfTappables` interface. Extends `ITeam`. A generic version of the interface is also available and requires the team's entity to implement `ITappableTeammate`.
  - Added `TeamPhase` turn phase class.
  - Added `ICommandExecutor`.
  - Changed `ISpiteCommand.Executor` type from `object` to `ICommandExecutor`.
  - Added protected virtual method `TurnManagerBase.GetNextPhase` to let concrete Turn Managers (such as the DTTM) determine what the next phase for that.
  - Fixed the default namespace for unit tests (was `spite-framework`, is now `Spite.UnitTests`).
  - Added a command, action, and reaction to allow all teammates`ITappableTeammateTeams` to be tapped through a single command.
+ - Moved `ManagedEntityCount` from `ITeam<T>` to `ITeam`.
+ - Moved `InitializeEntityCount` from `ITeam<T>` to `ITeam.`
 
 # Alpha 0.2.1
 This update only changes the Spite.csproj file to allow NuGet to properly link to the repository.

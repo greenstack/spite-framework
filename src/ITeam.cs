@@ -26,6 +26,17 @@ namespace Spite
         /// </summary>
         /// <param name="standing">The standing to give to the team.</param>
         void ForceStanding(TeamStanding standing);
+
+        /// <summary>
+        /// The number of entities managed by this Team.
+        /// </summary>
+        int ManagedEntityCount { get; }
+
+        /// <summary>
+        /// Sets the number of entities slots on this team.
+        /// </summary>
+        /// <param name="entityCount">The number of entity slots to initialize.</param>
+        void InitializeEntityCount(uint entityCount);
     }
 
     /// <summary>
@@ -44,16 +55,5 @@ namespace Spite
         /// </summary>
         /// <param name="entity">The entity being added.</param>
         void AddEntity(T entity);
-
-        /// <summary>
-        /// The number of entities managed by this Team.
-        /// </summary>
-        int ManagedEntityCount { get; }
-
-        /// <summary>
-        /// Sets the number of entities slots on this team.
-        /// </summary>
-        /// <param name="entityCount">The number of entity slots to initialize.</param>
-        void InitializeEntityCount(uint entityCount);
     }
 }

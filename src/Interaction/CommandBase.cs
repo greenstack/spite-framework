@@ -11,7 +11,7 @@ namespace Spite.Interaction
         internal readonly ISpiteAction action;
 
         /// <inheritdoc/>
-		public object Executor { get; }
+		public ICommandExecutor Executor { get; }
 
 		/// <summary>
 		/// Constructs the basic command. It is recommended that base classes don't
@@ -20,7 +20,7 @@ namespace Spite.Interaction
 		/// </summary>
 		/// <param name="action">The action being performed by this command</param>
 		/// <param name="executor">The object executing the command.</param>
-		public CommandBase(ISpiteAction action, object executor)
+		public CommandBase(ISpiteAction action, ICommandExecutor executor)
         {
             this.action = action;
             Executor = executor;

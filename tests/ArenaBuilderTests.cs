@@ -1,5 +1,6 @@
 ﻿using Spite.Turns;
 using NUnit.Framework;
+using System.Collections;
 
 namespace Spite.UnitTests
 {
@@ -14,13 +15,13 @@ namespace Spite.UnitTests
 		[SetUp]
 		public void SetUp()
 		{
-			MockTeamArenaBuilder = new ArenaBuilder<MockTeam>();
 			TeamA = new MockTeam();
 			TeamB = new MockTeam();
-			MockTeamArenaBuilder.SetTeamCount(2);
-			MockTeamArenaBuilder.AddTeam(TeamA);
-			MockTeamArenaBuilder.AddTeam(TeamB);
-			MockTeamArenaBuilder.SetTurnScheme(TurnSchemeType.DiscreteTeam);
+			MockTeamArenaBuilder = new ArenaBuilder<MockTeam>()
+				.SetTeamCount(2)
+				.AddTeam(TeamA)
+				.AddTeam(TeamB)
+				.SetTurnScheme(TurnSchemeType.DiscreteTeam);
 		}
 
 		[Test]
@@ -29,6 +30,24 @@ namespace Spite.UnitTests
 			// Uses the arena builder created in the setup method
 			Arena a = MockTeamArenaBuilder.Finish();
 			Assert.AreEqual(2, a.TeamCount);
+			var teamC = new MockTeam();
+			Assert.Throws<System.InvalidOperationException>(() =>
+			{
+				MockTeamArenaBuilder.AddTeam(teamC);
+			});
+
+			var unlimitedTeamArenaBuilder = new ArenaBuilder<MockTeam>()
+				.AddTeam(TeamA)
+				.AddTeam(TeamB)
+				.AddTeam(teamC)
+				.SetTurnScheme(TurnSchemeType.DiscreteTeam);
+
+			a = unlimitedTeamArenaBuilder.Finish();
+			Assert.AreEqual(3, a.TeamCount);
+			var teams = (ICollection)a.Teams;
+			Assert.Contains(TeamA, teams);
+			Assert.Contains(TeamB, teams);
+			Assert.Contains(teamC, teams);
 		}
 
 		[Test]

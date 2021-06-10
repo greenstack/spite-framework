@@ -51,7 +51,7 @@ namespace Spite
         /// <param name="numberOfTeams">The number of teams fighting in the arena.</param>
         /// <param name="turnManager">The object that manages the turns in this arena.</param>
         /// <exception cref="ArgumentNullException">Thrown when turnManager is null.</exception>
-        public Arena(uint numberOfTeams, ITurnManager turnManager)
+        public Arena(int numberOfTeams, ITurnManager turnManager)
         {
             if (turnManager == null) {
                 throw new ArgumentNullException(nameof(turnManager));
@@ -66,7 +66,7 @@ namespace Spite
         /// <param name="name">The name of the arena.</param>
         /// <param name="numberOfTeams">The number of teams fighting in the arena.</param>
         /// <param name="turnManager">The object that manages the turns in this arena.</param>
-        public Arena(string name, uint numberOfTeams, ITurnManager turnManager) :
+        public Arena(string name, int numberOfTeams, ITurnManager turnManager) :
             this(numberOfTeams, turnManager)
         {
             ArenaName = name;

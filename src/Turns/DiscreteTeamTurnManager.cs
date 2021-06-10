@@ -30,8 +30,8 @@ namespace Spite.Turns
 		/// </summary>
 		/// <param name="teams">The teams that can participate in this battle. Priority will be given in the order given by this list.</param>
 		/// <param name="executeFollowUpsIfActionFailed">If a reaction has a follow-up, should it be executed even if the action failed? (Defaults to true)</param>
-		public DiscreteTeamTurnManager(IList<T> teams, bool executeFollowUpsIfActionFailed = true) :
-			base(new TeamPhase(GetFirstTeam(teams)), executeFollowUpsIfActionFailed)
+		public DiscreteTeamTurnManager(IList<T> teams, bool executeFollowUpsIfActionFailed = true) 
+			: base(new TeamPhase(GetFirstTeam(teams)), executeFollowUpsIfActionFailed)
 		{
 			teamsList = new LinkedList<T>(teams);
 			currentTeamNode = teamsList.First;
@@ -55,6 +55,21 @@ namespace Spite.Turns
 			// Go to the next team or cycle back
 			currentTeamNode = currentTeamNode.Next ?? teamsList.First;
 			return new TeamPhase(CurrentTeam);
+		}
+	}
+
+	/// <summary>
+	/// A discrete team turn manager that defaults to ITappableTeammateTeam as the team type.
+	/// </summary>
+	public class DiscreteTeamTurnManager : DiscreteTeamTurnManager<ITappableTeammateTeam>
+	{
+		/// <summary>
+		/// Creates a default discrete team turn manager.
+		/// </summary>
+		/// <param name="teams"></param>
+		/// <param name="executeFollowUpsIfActionFailed"></param>
+		public DiscreteTeamTurnManager(IList<ITappableTeammateTeam> teams, bool executeFollowUpsIfActionFailed = true) : base(teams, executeFollowUpsIfActionFailed)
+		{
 		}
 	}
 }

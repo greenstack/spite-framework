@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFrameworks>net5.0;net45</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageProjectUrl>https://github.com/greenstack/spite-framework</PackageProjectUrl>
     <RepositoryUrl>https://github.com/greenstack/spite-framework.git</RepositoryUrl>
@@ -38,6 +38,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <!--.NET Framework 4.5-sepecific project dependencies-->
+  <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
+    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -27,6 +27,7 @@ value.
  - Added a command, action, and reaction to allow all teammates`ITappableTeammateTeams` to be tapped through a single command.
  - Moved `ManagedEntityCount` from `ITeam<T>` to `ITeam`.
  - Moved `InitializeEntityCount` from `ITeam<T>` to `ITeam.`
+ - Added compatibility with .NET Framework 4.5+.
 
 # Alpha 0.2.1
 This update only changes the Spite.csproj file to allow NuGet to properly link to the repository.

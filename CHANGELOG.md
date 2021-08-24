@@ -31,6 +31,7 @@ value.
  - Moved `ManagedEntityCount` from `ITeam<T>` to `ITeam`.
  - Moved `InitializeEntityCount` from `ITeam<T>` to `ITeam.`
  - Set target version of C# to 7.3 (See [Issue #29](https://github.com/greenstack/spite-framework/issues/29))
+ - Added compatibility with .NET Framework 4.5+.
 
 # Alpha 0.2.1
 This update only changes the Spite.csproj file to allow NuGet to properly link to the repository.

@@ -2,9 +2,9 @@ name: .NET
 
 on:
   push:
-    branches: [ 0.2.0-alpha ]
+    branches: [ base ]
   pull_request:
-    branches: [ 0.2.0-alpha ]
+    branches: [ base ]
 
 jobs:
   build:

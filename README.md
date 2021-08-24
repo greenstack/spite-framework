@@ -1,5 +1,6 @@
 # Spite Framework
 [![.NET](https://github.com/greenstack/spite-framework/actions/workflows/dotnet.yml/badge.svg)](https://github.com/greenstack/spite-framework/actions/workflows/dotnet.yml)
+[![.NET Framework](https://github.com/greenstack/spite-framework/actions/workflows/NETFramework.yml/badge.svg)](https://github.com/greenstack/spite-framework/actions/workflows/NETFramework.yml)
 [![Spite on fuget.org](https://www.fuget.org/packages/Spite/badge.svg)](https://www.fuget.org/packages/Spite)
 
 The Spite Framework is a C# library meant to simplify designing and

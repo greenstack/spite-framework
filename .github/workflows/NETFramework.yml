@@ -1,0 +1,29 @@
+# Thanks to Tim Heuer and this post: https://www.timheuer.com/blog/building-net-framework-apps-using-github-actions/
+name: .NET Framework 4.5
+
+on:
+  push:
+    branches: [ 0.2.1-alpha, 0.3.0-dev, master ]
+  pull_request:
+    branches: [ 0.2.1-alpha, 0.3.0-dev, master ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Framework
+    
+    - name: Setup MSBuild Path
+      uses: warrenbuckley/Setup-MSBuild@v1
+
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.2
+
+    - name: Restore NuGet packages
+      run: nuget restore Spite.sln
+
+    - name: Build Spite
+      run: msbuild Spite.sln /p:Configuration=Release

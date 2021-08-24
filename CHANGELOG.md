@@ -1,13 +1,16 @@
 # 0.3.0-alpha
 ## Unity Integration
-(See Issue #12)
+(See [Issue #12](https://github.com/greenstack/spite-framework/issues/12))
 
 Spite can now be added to the `Packages` folder of a Unity project and used
 by Unity scripts. See the project's `README.md` for more info on how to install
 Spite in Unity.
 
+The minimum supported version of Unity is 2019. See [Issue #29](https://github.com/greenstack/spite-framework/issues/29)
+for more info.
+
 ## Discrete Team Turn Manager (DTTM)
-(See Issue #20)
+(See [Issue #20](https://github.com/greenstack/spite-framework/issues/20))
 
 Spite now supports Discrete Team Turn Managers. By default, this turn manager
 will allow a player to perform actions until each unit is tapped. The Arena
@@ -27,6 +30,7 @@ value.
  - Added a command, action, and reaction to allow all teammates`ITappableTeammateTeams` to be tapped through a single command.
  - Moved `ManagedEntityCount` from `ITeam<T>` to `ITeam`.
  - Moved `InitializeEntityCount` from `ITeam<T>` to `ITeam.`
+ - Set target version of C# to 7.3 (See [Issue #29](https://github.com/greenstack/spite-framework/issues/29))
  - Added compatibility with .NET Framework 4.5+.
 
 # Alpha 0.2.1

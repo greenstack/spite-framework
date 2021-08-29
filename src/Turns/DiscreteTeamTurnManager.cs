@@ -37,7 +37,7 @@ namespace Spite.Turns
 			currentTeamNode = teamsList.First;
 		}
 
-		private static ITeamOfTappables GetFirstTeam(IList<TTeam> teams)
+		private static TTeam GetFirstTeam(IList<TTeam> teams)
 		{
 			if (teams is null || teams.Count == 0)
 			{

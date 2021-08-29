@@ -8,30 +8,42 @@
         /// <summary>
         /// Turns are assigned to teams.
         /// 
-        /// Examples: Fire Emblem, Battleship.
+        /// Examples: Fire Emblem, Advance Wars.
         /// 
         /// For example, in Fire Emblem, a turn is given to a team until all units
         /// on that team have been tapped.
         /// </summary>
-        DiscreteTeam = 0x0,
+        DiscreteTeam,
+        /// <summary>
+        /// Turns are assigned to players (in Spite, they are also the team).
+        /// 
+        /// Examples: Battleship, Chess.
+        /// </summary>
+        DiscretePlayer,
         /// <summary>
         /// Turns are assigned to entities one-by-one.
         /// 
         /// Examples: Octopath Traveler, any game where entities act, sorted by
         /// something like an entity's speed.
         /// </summary>
-        DiscreteTeammate = 0x1,
+        DiscreteTeammate,
         /// <summary>
         /// Sides decide what each entity on their team will do at the same time.
         /// 
-        /// Examples: Pokemon, Rock Paper Scissors/Roshambo.
+        /// Examples: Pokemon.
         /// </summary>
-        SimultaneousTeam = 0x2,
+        SimultaneousTeam,
         /// <summary>
         /// Sides decide what one entity will do at the same time.
         /// 
         /// Examples: I dunno
         /// </summary>
-        SimultaneousTeammate = 0x3
+        SimultaneousTeammate,
+        /// <summary>
+        /// Players decide what they will do simultaneously.
+        /// 
+        /// Examples: Rock Paper Sciessors/Roshambo.
+        /// </summary>
+        SimultaneousPlayer,
     }
 }

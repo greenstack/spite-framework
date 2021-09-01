@@ -54,9 +54,11 @@ namespace Spite.Turns
 		/// <returns>The next active team in the list.</returns>
 		protected TTeam AdvanceToNextTeam()
 		{
-			do {
-				currentTeamNode =  currentTeamNode.Next ?? teamsList.First;
-			} while (CurrentTeam.CurrentStanding != TeamStanding.Competing);
+			// There aren't any more teams, so don't bother advancing.
+			if (teamsList.Count == 1)
+				return CurrentTeam;
+			// Players will need to verify whether or not the current team is acceptable.
+			currentTeamNode =  currentTeamNode.Next ?? teamsList.First;
 			return CurrentTeam;
 		}
 	}

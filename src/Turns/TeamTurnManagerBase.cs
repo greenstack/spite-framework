@@ -31,6 +31,9 @@ namespace Spite.Turns
 			currentTeamNode = teamsList.First;
 		}
 
+		/// <inheritdoc/>
+		protected abstract override ITurnPhase GetNextPhase();
+
 		/// <summary>
 		/// Gets the first team given in a list.
 		/// </summary>

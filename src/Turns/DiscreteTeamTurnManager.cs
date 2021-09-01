@@ -7,21 +7,9 @@ namespace Spite.Turns
 	/// is active.
 	/// </summary>
 	/// <typeparam name="TTeam">The type of team that is used. Must use tappable teammates.</typeparam>
-	public class DiscreteTeamTurnManager<TTeam> : TurnManagerBase
+	public class DiscreteTeamTurnManager<TTeam> : TeamTurnManagerBase<TTeam>
 		where TTeam : ITeamOfTappables
 	{
-		/// <summary>
-		/// The current team node.
-		/// </summary>
-		LinkedListNode<TTeam> currentTeamNode;
-
-		readonly LinkedList<TTeam> teamsList;
-
-		/// <summary>
-		/// Gets the team with the current priority.
-		/// </summary>
-		public TTeam CurrentTeam => currentTeamNode.Value;
-
 		/// <summary>
 		/// Creates a discrete team turn manager.
 		/// TODO: Look into a parameter for "auto advance to next phase when all are tapped" or "go to next phase on command".
@@ -31,19 +19,8 @@ namespace Spite.Turns
 		/// <param name="teams">The teams that can participate in this battle. Priority will be given in the order given by this list.</param>
 		/// <param name="executeFollowUpsIfActionFailed">If a reaction has a follow-up, should it be executed even if the action failed? (Defaults to true)</param>
 		public DiscreteTeamTurnManager(IList<TTeam> teams, bool executeFollowUpsIfActionFailed = true) 
-			: base(new TeamPhase(GetFirstTeam(teams)), executeFollowUpsIfActionFailed)
+			: base(teams, new TeamPhase(GetFirstTeam(teams)), executeFollowUpsIfActionFailed)
 		{
-			teamsList = new LinkedList<TTeam>(teams);
-			currentTeamNode = teamsList.First;
-		}
-
-		private static TTeam GetFirstTeam(IList<TTeam> teams)
-		{
-			if (teams is null || teams.Count == 0)
-			{
-				throw new System.ArgumentNullException(nameof(teams), Properties.Resources.EmptyOrNullTeamListExceptionMessage);
-			}
-			return teams[0];
 		}
 
 		/// <summary>
@@ -53,8 +30,7 @@ namespace Spite.Turns
 		protected override ITurnPhase GetNextPhase()
 		{
 			// Go to the next team or cycle back
-			currentTeamNode = currentTeamNode.Next ?? teamsList.First;
-			return new TeamPhase(CurrentTeam);
+			return new TeamPhase(AdvanceToNextTeam());
 		}
 	}
 

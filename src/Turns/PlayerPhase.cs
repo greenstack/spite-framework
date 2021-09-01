@@ -43,7 +43,7 @@ namespace Spite.Turns
 		/// <returns>Throws.</returns>
 		public ITurnPhase GetNextPhase()
 		{
-			throw new NotImplementedException();
+			throw new InvalidOperationException();
 		}
 
 		/// <summary>
@@ -60,10 +60,13 @@ namespace Spite.Turns
 		/// Tells us if we should advance our phase or not.
 		/// </summary>
 		/// <param name="results">The results of the recently taken action.</param>
-		/// <returns>True? Maybe? TODO: Look into this</returns>
+		/// <returns>True</returns>
 		public bool ShouldAdvancePhase(IReaction[] results)
 		{
-			throw new NotImplementedException();
+			// One of the ideas is that a player could execute a number of commands,
+			// but I'm not entirely sure that's the right course of action.
+			// TODO: Look into this
+			return true;
 		}
 	}
 }

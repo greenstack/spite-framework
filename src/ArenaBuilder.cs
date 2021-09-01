@@ -73,34 +73,25 @@ namespace Spite
         /// Configures the turn scheme to be of the desired type. This sets the turn manager.
         /// </summary>
         /// <param name="turnScheme">The turn scheme to use.</param>
+        /// <param name="executeFollowUpsIfActionFailed">Lets reactions from a command execute even if the original resulting action failed.</param>
         /// <returns>The Arena Builder for chaining.</returns>
-        public ArenaBuilder<T> SetTurnScheme(TurnSchemeType turnScheme)
+        public ArenaBuilder<T> SetTurnScheme(TurnSchemeType turnScheme, bool executeFollowUpsIfActionFailed = true)
 		{
             switch (turnScheme)
 			{
                 case TurnSchemeType.DiscreteTeam:
-                    SetUpDiscreteTeamTurnManager();
+                    SetUpDiscreteTeamTurnManager(executeFollowUpsIfActionFailed);
                     break;
                 case TurnSchemeType.DiscretePlayer:
-                    throw new InvalidOperationException($"Use {nameof(ArenaBuilder<T>.UseDiscretePlayerTurnScheme)} instead");
+                    SetUpDiscretePlayerTurnManager(executeFollowUpsIfActionFailed);
+                    break;
                 default:
                     throw new NotImplementedException($"The default turn manager for scheme {turnScheme} has not yet been implemented");
 			}
             return this;
 		}
 
-        /// <summary>
-        /// Tells the arena to use a discrete player turn scheme.
-        /// </summary>
-        /// <typeparam name="U">The type of the team being used.</typeparam>
-        /// <returns></returns>
-        public ArenaBuilder<T> UseDiscretePlayerTurnScheme<U>() where U : T, Interaction.ICommandExecutor
-        {
-            SetUpDiscretePlayerTurnManager<U>();
-            return this;
-        }
-
-        private void SetUpDiscreteTeamTurnManager()
+        private void SetUpDiscreteTeamTurnManager(bool executeFollowUpsIfActionFailed)
 		{
             if (!typeof(ITeamOfTappables).IsAssignableFrom(typeof(T))) {
                 throw new InvalidOperationException($"Cannot use discrete team turn scheme - {typeof(T)} does not contain ITappableTeammates");
@@ -108,18 +99,17 @@ namespace Spite
 
             var correctedType = teams.Cast<ITeamOfTappables>();
 
-            turnManager = new DiscreteTeamTurnManager(correctedType.ToList());
+            turnManager = new DiscreteTeamTurnManager(correctedType.ToList(), executeFollowUpsIfActionFailed);
 		}
 
-        private void SetUpDiscretePlayerTurnManager<U>() where U : T, Interaction.ICommandExecutor
+        private void SetUpDiscretePlayerTurnManager(bool executeFollowUpsIfActionFailed)
         {
-            if (!typeof(Interaction.ICommandExecutor).IsAssignableFrom(typeof(T))) {
-                throw new InvalidOperationException($"Cannot use discrete player team turn scheme - {typeof(T)} does not implement {typeof(Interaction.ICommandExecutor)}");
+            if (!typeof(Interaction.ICommandExecutor).IsAssignableFrom(typeof(T)))
+            {
+                throw new InvalidOperationException($"{typeof(T)} can't be used with the Discrete Team turn scheme - it doesn't implement {nameof(Interaction.ICommandExecutor)}");
             }
 
-            var players = teams.Cast<Interaction.ICommandExecutor>();
-
-            turnManager = new DiscretePlayerTurnManager<U>(players.ToList());
+            turnManager = new DiscretePlayerTurnManager<IPlayer>(teams.Cast<IPlayer>().ToList(), executeFollowUpsIfActionFailed);
         }
 
         /// <summary>

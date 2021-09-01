@@ -81,11 +81,24 @@ namespace Spite
                 case TurnSchemeType.DiscreteTeam:
                     SetUpDiscreteTeamTurnManager();
                     break;
+                case TurnSchemeType.DiscretePlayer:
+                    throw new InvalidOperationException($"Use {nameof(ArenaBuilder<T>.UseDiscretePlayerTurnScheme)} instead");
                 default:
                     throw new NotImplementedException($"The default turn manager for scheme {turnScheme} has not yet been implemented");
 			}
             return this;
 		}
+
+        /// <summary>
+        /// Tells the arena to use a discrete player turn scheme.
+        /// </summary>
+        /// <typeparam name="U">The type of the team being used.</typeparam>
+        /// <returns></returns>
+        public ArenaBuilder<T> UseDiscretePlayerTurnScheme<U>() where U : T, Interaction.ICommandExecutor
+        {
+            SetUpDiscretePlayerTurnManager<U>();
+            return this;
+        }
 
         private void SetUpDiscreteTeamTurnManager()
 		{
@@ -97,6 +110,17 @@ namespace Spite
 
             turnManager = new DiscreteTeamTurnManager(correctedType.ToList());
 		}
+
+        private void SetUpDiscretePlayerTurnManager<U>() where U : T, Interaction.ICommandExecutor
+        {
+            if (!typeof(Interaction.ICommandExecutor).IsAssignableFrom(typeof(T))) {
+                throw new InvalidOperationException($"Cannot use discrete player team turn scheme - {typeof(T)} does not implement {typeof(Interaction.ICommandExecutor)}");
+            }
+
+            var players = teams.Cast<Interaction.ICommandExecutor>();
+
+            turnManager = new DiscretePlayerTurnManager<U>(players.ToList());
+        }
 
         /// <summary>
         /// Sets the turn manager that this arena will use. Cannot be used with SetTurnScheme.

@@ -17,6 +17,12 @@
         /// <summary>
         /// Turns are assigned to players (in Spite, they are also the team).
         /// 
+        /// This default turn scheme should only be used when players can only
+        /// do one thing per turn and there aren't really that many phases in a
+        /// player's turn. For example, a game like Magic: The Gathering should
+        /// use a custom turn manager rather than this one, due to the nature of
+        /// the many phases, Magic's stack, and so forth.
+        /// 
         /// Examples: Battleship, Chess.
         /// </summary>
         DiscretePlayer,

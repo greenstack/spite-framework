@@ -17,13 +17,12 @@ namespace Spite.Turns
 		/// </summary>
 		public TTeam CurrentTeam => currentTeamNode.Value;
 
-	/// <summary>
-	/// Constructs a team turn manager base object.
-	/// </summary>
-	/// <param name="teams">The teams that will be managed in this combat.</param>
-	/// <param name="initialPhase"></param>
-	/// <param name="executeFollowUpsIfActionFailed"></param>
-	/// <returns></returns>
+		/// <summary>
+		/// Constructs a team turn manager base object.
+		/// </summary>
+		/// <param name="teams">The teams that will be managed in this combat.</param>
+		/// <param name="initialPhase">The starting phase of the battle.</param>
+		/// <param name="executeFollowUpsIfActionFailed">If an action failed but there are still follow-up actions and this is set to true, those follow-up actions will be executed.</param>
 		public TeamTurnManagerBase(IList<TTeam> teams, ITurnPhase initialPhase, bool executeFollowUpsIfActionFailed = true) :
 			base(initialPhase, executeFollowUpsIfActionFailed)
 		{
@@ -32,7 +31,18 @@ namespace Spite.Turns
 		}
 
 		/// <inheritdoc/>
-		protected abstract override ITurnPhase GetNextPhase();
+		protected sealed override ITurnPhase GetNextPhase()
+		{
+			if (IsBattleOver())
+				return new BattleEndedPhase();
+			return CreatePhaseForNextTeam();
+		}
+
+		/// <summary>
+		/// Creates the phase for the next team.
+		/// </summary>
+		/// <returns>The phase for the next team.</returns>
+		protected abstract ITurnPhase CreatePhaseForNextTeam();
 
 		/// <summary>
 		/// Gets the first team given in a list.

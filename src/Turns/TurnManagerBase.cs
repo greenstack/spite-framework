@@ -1,4 +1,5 @@
 using Spite.Interaction;
+using System;
 using System.Collections.Generic;
 
 namespace Spite.Turns
@@ -29,17 +30,20 @@ namespace Spite.Turns
         public event ChangePhase OnPhaseChanged;
 
         /// <summary>
-        /// If set to true, the <see cref="IReaction.FollowUpAction" /> property of
+        /// If set to true, the <see cref="IReaction.FollowUpAction"/> property of
         /// any reaction received will be executed even if the base action failed.
         /// </summary>
         public bool ExecuteFollowUpsIfActionFailed { get; }
 
-        /// <summary>
-        /// Creates a basic TurnManager.
-        /// </summary>
-        /// <param name="initialPhase">The starting phase.</param>
-        /// <param name="executeFollowUpsIfActionFailed">If a reaction has a follow-up, should it be executed even if the action failed?</param>
-        public TurnManagerBase(ITurnPhase initialPhase, bool executeFollowUpsIfActionFailed)
+        /// <inheritdoc/>
+		public Func<bool> IsBattleOver { get; set; }
+
+		/// <summary>
+		/// Creates a basic TurnManager.
+		/// </summary>
+		/// <param name="initialPhase">The starting phase.</param>
+		/// <param name="executeFollowUpsIfActionFailed">If a reaction has a follow-up, should it be executed even if the action failed?</param>
+		public TurnManagerBase(ITurnPhase initialPhase, bool executeFollowUpsIfActionFailed)
         {
             currentPhase = initialPhase;
             ExecuteFollowUpsIfActionFailed = executeFollowUpsIfActionFailed;
@@ -49,12 +53,14 @@ namespace Spite.Turns
         /// Tries to execute the command.
         /// </summary>
         /// <returns>All of the reactions that arise as a result of the command or null if the command is invalid or cannot be executed.</returns>
-        public IReaction[] AcceptCommand(CommandBase command)
+        public IReaction[] AcceptCommand(CommandBase command, IArena context)
         {
+            // Validate arguments
             if (command == null)
-			{
-                throw new System.ArgumentNullException(nameof(command));
-			}
+                throw new ArgumentNullException(nameof(command));
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+
             List<IReaction> reactions = new List<IReaction>();
             if (CurrentPhase.IsCommandExecutableThisPhase(command) && command.IsValid()) {
                 var result = command.Execute();
@@ -68,10 +74,14 @@ namespace Spite.Turns
 
                 IReaction[] finalResult = reactions.ToArray();
 
-                if (CurrentPhase.ShouldAdvancePhase(finalResult))
-				{
+                // Have the Arena update team standings here?
+                // The issue is, as soon as a battle-over condition
+                // has been met, we should jump on that.
+                context.UpdateTeamStandings();
+                if (IsBattleOver())
+                    CurrentPhase = new BattleEndedPhase();
+                else if (CurrentPhase.ShouldAdvancePhase(finalResult))
                     CurrentPhase = GetNextPhase();
-				}
 
                 return finalResult;
             }
@@ -86,6 +96,8 @@ namespace Spite.Turns
         /// <returns>The next phase.</returns>
         protected virtual ITurnPhase GetNextPhase()
 		{
+            if (IsBattleOver())
+                return new BattleEndedPhase();
             return CurrentPhase.GetNextPhase();
 		}
 

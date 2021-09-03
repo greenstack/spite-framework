@@ -127,7 +127,12 @@ namespace Spite
         /// <inheritdoc/>
         public IReaction[] ReceiveAndExecuteCommand(CommandBase command)
         {
-            return TurnManager.AcceptCommand(command);
+            // Current issue: Team status isn't updated dynamically.
+            // I can either require this through an event on the ITeammate
+            // interface or I can run the Arena's update team standing method
+            // from the TurnManager after executing all commands. Or teams can
+            // just make the property do that altogether.
+            return TurnManager.AcceptCommand(command, this);
         }
 
         /// <summary>

@@ -4,14 +4,15 @@ using System.Collections.Generic;
 namespace Spite.Turns
 {
 	/// <summary>
-	/// An internal-use only interface for player objects.
-	/// 
-	/// I have this marked as internal because I don't want devs to believe that
-	/// a player needs to implement this interface, since even though the player
-	/// issues the commands, the player is rarely the executor of those commands
-	/// (like in Pokemon, Fire Emblem, Final Fantasy, Earthbound, etc.)
+	/// TODO
 	/// </summary>
-	internal interface IPlayer : ITeam, ICommandExecutor { }
+	public interface ITeamExecutor : ITeam, ICommandExecutor { }
+
+	/// <summary>
+	/// TODO
+	/// </summary>
+	/// <typeparam name="TTeammate">The type of teammate held in the team.</typeparam>
+	public interface ITeamExecutor<TTeammate> : ITeamExecutor, ITeam<TTeammate> where TTeammate : ITeammate { }
 
 	/// <summary>
 	/// Represents a turn manager that allows players to make decisions for as long
@@ -30,8 +31,9 @@ namespace Spite.Turns
 		}
 
 		/// <inheritdoc/>
-		protected override ITurnPhase GetNextPhase()
+		protected override ITurnPhase CreatePhaseForNextTeam()
 		{
+			// Check if victory has occurred - probably through some kind of predicate
 			return new PlayerPhase<TPlayer>(AdvanceToNextTeam());
 		}
 	}

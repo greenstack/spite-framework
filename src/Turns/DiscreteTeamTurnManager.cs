@@ -27,7 +27,7 @@ namespace Spite.Turns
 		/// Retrieves the next phase.
 		/// </summary>
 		/// <returns>The phase with the next team.</returns>
-		protected override ITurnPhase GetNextPhase()
+		protected override ITurnPhase CreatePhaseForNextTeam()
 		{
 			// Go to the next team or cycle back
 			return new TeamPhase(AdvanceToNextTeam());

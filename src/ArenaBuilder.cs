@@ -218,7 +218,7 @@ namespace Spite
             }
             if (turnManager.IsBattleOver == null)
 			{
-                throw new InvalidOperationException($"A battle over predicate has not been set. Be sure to call {nameof(SetBattleOverCondition)}");
+                throw new InvalidOperationException(Resources.ARENA_BUILDER_NO_BATTLE_END_CONDITION_SET);
 			}
 
             int totalTeams = teamCount > 0 ? teamCount : teamsAdded;

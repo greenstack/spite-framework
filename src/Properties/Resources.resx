@@ -120,6 +120,9 @@
   <data name="ArenaNotStarted" xml:space="preserve">
     <value>The arena hasn't been made yet - try calling SetNumberOfSides first.</value>
   </data>
+  <data name="ARENA_BUILDER_NO_BATTLE_END_CONDITION_SET" xml:space="preserve">
+    <value>A battle over predicate has not been set. Be sure to call SetBattleOverCondition.</value>
+  </data>
   <data name="EmptyOrNullTeamListExceptionMessage" xml:space="preserve">
     <value>Teams list cannot be null or empty.</value>
   </data>

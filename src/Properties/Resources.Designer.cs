@@ -61,6 +61,15 @@ namespace Spite.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to A battle over predicate has not been set. Be sure to call SetBattleOverCondition..
+        /// </summary>
+        internal static string ARENA_BUILDER_NO_BATTLE_END_CONDITION_SET {
+            get {
+                return ResourceManager.GetString("ARENA_BUILDER_NO_BATTLE_END_CONDITION_SET", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The arena hasn&apos;t been made yet - try calling SetNumberOfSides first..
         /// </summary>
         internal static string ArenaNotStarted {

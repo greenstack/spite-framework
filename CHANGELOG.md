@@ -9,7 +9,16 @@ Spite in Unity.
 The minimum supported version of Unity is 2019. See [Issue #29](https://github.com/greenstack/spite-framework/issues/29)
 for more info.
 
-## Discrete Team Turn Manager (DTTM)
+## Turn Managers
+This update introduces a lot of changes to the turn managers, providing some
+default turn managers for the developer. More are on the way, but for now, these
+are the turn managers that are available.
+
+## ITurnManager
+Added the `IsBattleOver` property. It holds a `Func<bool>` that devs can set at
+Arena creation. It is used to determine if a battle has ended.
+
+### Discrete Team Turn Manager (DTTM)
 (See [Issue #20](https://github.com/greenstack/spite-framework/issues/20))
 
 Spite now supports Discrete Team Turn Managers. By default, this turn manager
@@ -18,6 +27,17 @@ Builder has been modified to allow developers to choose this method without
 having to configure the DTTM themselves - it will build it for you. This is done
 through the Arena Builder's `SetTurnScheme` method passing `DiscreteTeam` as the
 value.
+
+### Discrete Player Turn Manager (DPTM)
+(See [Issue #39](https://github.com/greenstack/spite-framework/issues/39))
+
+In addition to the DTTM, Spite provides a Discrete Player Turn Manager. The
+primary use case for this is games where players are the actors, not the
+teammates, as in chess and battleship (usually because only one action can be
+made in a turn and these teammates aren't really tappable in these scenarios).
+
+This default turn manager can be used through the Arena Builder's `SetTurnScheme`
+method passing in `DiscretePlayer` as the value.
 
 ## General Changes
  - Re-introduced the `ITappableTeammate` interface.

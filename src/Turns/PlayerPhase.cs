@@ -53,6 +53,10 @@ namespace Spite.Turns
 		/// <returns>True if the command's executor is the same as the current player.</returns>
 		public bool IsCommandExecutableThisPhase(CommandBase command)
 		{
+			if (command is null)
+			{
+				throw new ArgumentNullException(nameof(command));
+			}
 			return command.Executor == (ICommandExecutor)CurrentPlayer;
 		}
 

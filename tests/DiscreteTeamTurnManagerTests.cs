@@ -4,6 +4,7 @@ using Spite.Turns;
 using Spite.Interaction;
 using Spite.UnitTests.Mocks;
 using Spite.UnitTests.Mocks.Interaction;
+using Spite.UnitTests.Mocks.Turns;
 
 namespace Spite.UnitTests
 {
@@ -46,7 +47,14 @@ namespace Spite.UnitTests
             MockTappableTeammate mtt = new MockTappableTeammate(teamA);
             teamA.AddEntity(mtt);
             CommandBase command = new TapCommand(mtt, teamA);
-            turnManager.AcceptCommand(command);
+
+            var arena = new ArenaBuilder<MockTeam>()
+                .AddTeam(new MockTeam())
+                .SetTurnManager(turnManager)
+                .SetBattleOverCondition(() => false)
+                .Finish();
+
+            turnManager.AcceptCommand(command, arena);
 
             Assert.IsFalse(turnManager.IsCommandExecutable(command));
             Assert.AreEqual(teamB, turnManager.CurrentTeam);

@@ -21,7 +21,10 @@ namespace Spite.UnitTests
 				.SetTeamCount(2)
 				.AddTeam(TeamA)
 				.AddTeam(TeamB)
-				.SetTurnScheme(TurnSchemeType.DiscreteTeam);
+				.SetTurnScheme(TurnSchemeType.DiscreteTeam)
+				// TODO: If a test case requires this to be different,
+				// we should this in the individual test case.
+				.SetBattleOverCondition(() => false);
 		}
 
 		[Test]
@@ -40,7 +43,8 @@ namespace Spite.UnitTests
 				.AddTeam(TeamA)
 				.AddTeam(TeamB)
 				.AddTeam(teamC)
-				.SetTurnScheme(TurnSchemeType.DiscreteTeam);
+				.SetTurnScheme(TurnSchemeType.DiscreteTeam)
+				.SetBattleOverCondition(() => false);
 
 			a = unlimitedTeamArenaBuilder.Finish();
 			Assert.AreEqual(3, a.TeamCount);

@@ -28,6 +28,7 @@ namespace Spite.UnitTests
 				.AddTeam(teamA)
 				.AddTeam(teamB)
 				.SetTurnScheme(TurnSchemeType.DiscreteTeam)
+				.SetBattleOverCondition(() => false)
 				.Finish();
 		}
 

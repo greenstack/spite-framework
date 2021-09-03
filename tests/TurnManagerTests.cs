@@ -15,8 +15,15 @@ namespace Spite.UnitTests
         public void TestAcceptCommand(bool shouldExecuteFollowUps, int expectedFollowUpResultCount, System.Type actionType)
         {
             MockTurnManager mtm_true = new MockTurnManager(shouldExecuteFollowUps);
+            
+            var arena = new ArenaBuilder<MockTeam>()
+                .AddTeam(new MockTeam())
+                .SetTurnManager(mtm_true)
+                .SetBattleOverCondition(() => false)
+                .Finish();
+
             ISpiteAction action = (ISpiteAction)System.Activator.CreateInstance(actionType);
-            IReaction[] results = mtm_true.AcceptCommand(new AlwaysFailActionCommand(null, action));
+            IReaction[] results = mtm_true.AcceptCommand(new AlwaysFailActionCommand(null, action), arena);
             
             Assert.IsNotEmpty(results);
             Assert.AreEqual(results.Length, expectedFollowUpResultCount);

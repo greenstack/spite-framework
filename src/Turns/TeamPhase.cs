@@ -1,6 +1,5 @@
 ﻿using Spite.Interaction;
 using System;
-using System.Linq;
 
 namespace Spite.Turns
 {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Spite.Turns;
+using Spite.Properties;
 
 namespace Spite
 {
@@ -73,13 +74,17 @@ namespace Spite
         /// Configures the turn scheme to be of the desired type. This sets the turn manager.
         /// </summary>
         /// <param name="turnScheme">The turn scheme to use.</param>
+        /// <param name="executeFollowUpsIfActionFailed">Lets reactions from a command execute even if the original resulting action failed.</param>
         /// <returns>The Arena Builder for chaining.</returns>
-        public ArenaBuilder<T> SetTurnScheme(TurnSchemeType turnScheme)
+        public ArenaBuilder<T> SetTurnScheme(TurnSchemeType turnScheme, bool executeFollowUpsIfActionFailed = true)
 		{
             switch (turnScheme)
 			{
                 case TurnSchemeType.DiscreteTeam:
-                    SetUpDiscreteTeamTurnManager();
+                    SetUpDiscreteTeamTurnManager(executeFollowUpsIfActionFailed);
+                    break;
+                case TurnSchemeType.DiscretePlayer:
+                    SetUpDiscretePlayerTurnManager(executeFollowUpsIfActionFailed);
                     break;
                 default:
                     throw new NotImplementedException($"The default turn manager for scheme {turnScheme} has not yet been implemented");
@@ -87,7 +92,7 @@ namespace Spite
             return this;
 		}
 
-        private void SetUpDiscreteTeamTurnManager()
+        private void SetUpDiscreteTeamTurnManager(bool executeFollowUpsIfActionFailed)
 		{
             if (!typeof(ITeamOfTappables).IsAssignableFrom(typeof(T))) {
                 throw new InvalidOperationException($"Cannot use discrete team turn scheme - {typeof(T)} does not contain ITappableTeammates");
@@ -95,8 +100,18 @@ namespace Spite
 
             var correctedType = teams.Cast<ITeamOfTappables>();
 
-            turnManager = new DiscreteTeamTurnManager(correctedType.ToList());
+            turnManager = new DiscreteTeamTurnManager(correctedType.ToList(), executeFollowUpsIfActionFailed);
 		}
+
+        private void SetUpDiscretePlayerTurnManager(bool executeFollowUpsIfActionFailed)
+        {
+            if (!typeof(Interaction.ICommandExecutor).IsAssignableFrom(typeof(T)))
+            {
+                throw new InvalidOperationException($"{typeof(T)} can't be used with the Discrete Team turn scheme - it doesn't implement {nameof(Interaction.ICommandExecutor)}");
+            }
+
+            turnManager = new DiscretePlayerTurnManager<ITeamExecutor>(teams.Cast<ITeamExecutor>().ToList(), executeFollowUpsIfActionFailed);
+        }
 
         /// <summary>
         /// Sets the turn manager that this arena will use. Cannot be used with SetTurnScheme.
@@ -108,6 +123,34 @@ namespace Spite
             turnManager = manager;
             return this;
         }
+
+        /// <summary>
+        /// If a turn manager has been set, 
+        /// </summary>
+        /// <param name="listener">The method to invoke when the phase is changed.</param>
+        /// <exception cref="InvalidOperationException">Thrown if no team manager has been set.</exception>
+        /// <returns>The ArenaBuilder for chaining.</returns>
+        public ArenaBuilder<T> AddPhaseChangedDelegateToTurnManager(ChangePhase listener)
+		{
+            if (turnManager == null)
+                throw new InvalidOperationException(Resources.TURN_MANAGER_NOT_SET);
+            turnManager.OnPhaseChanged += listener;
+            return this;
+		}
+
+        /// <summary>
+        /// Sets the method for determining if battle is over or not. Should be used if using a
+        /// default turn manager.
+        /// </summary>
+        /// <param name="predicate">The function for determining if the battle is over.</param>
+        /// <returns>The ArenaBuilder for chaining.</returns>
+        public ArenaBuilder<T> SetBattleOverCondition(Func<bool> predicate)
+		{
+            if (turnManager == null)
+                throw new InvalidOperationException(Resources.TURN_MANAGER_NOT_SET);
+            turnManager.IsBattleOver = predicate;
+            return this;
+		}
 
         /// <summary>
         /// Adds a team to this arena.
@@ -171,15 +214,20 @@ namespace Spite
         {
             if (turnManager == null)
             {
-                throw new InvalidOperationException("A turn manager has not been set.");
+                throw new InvalidOperationException(Resources.TURN_MANAGER_NOT_SET);
             }
+            if (turnManager.IsBattleOver == null)
+			{
+                throw new InvalidOperationException($"A battle over predicate has not been set. Be sure to call {nameof(SetBattleOverCondition)}");
+			}
+
             int totalTeams = teamCount > 0 ? teamCount : teamsAdded;
             var arena = arenaName == null ?
                 new Arena(totalTeams, turnManager) :
-                new Arena(arenaName, totalTeams, turnManager)
-                {
-                    AllianceGraph = allianceGraph,
-                };
+                new Arena(arenaName, totalTeams, turnManager);
+
+            arena.AllianceGraph = allianceGraph;
+
             // Since Arena.teams is readonly we have to do it this way.
             // Might want to look into another way
             for (int i = 0; i < teamsAdded; ++i)

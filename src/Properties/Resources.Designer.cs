@@ -104,5 +104,14 @@ namespace Spite.Properties {
                 return ResourceManager.GetString("START_NOT_CALLED_ERROR_MESSAGE", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to A turn manager has not yet been set..
+        /// </summary>
+        internal static string TURN_MANAGER_NOT_SET {
+            get {
+                return ResourceManager.GetString("TURN_MANAGER_NOT_SET", resourceCulture);
+            }
+        }
     }
 }

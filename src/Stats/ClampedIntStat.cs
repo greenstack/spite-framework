@@ -5,7 +5,7 @@ namespace Spite.Stats
 	/// <summary>
 	/// A stat whose values are constrained to a certain value.
 	/// 
-	/// Can be useful for things like hit points or some expendable resource.
+	/// Can be useful for things like hit points or some other expendable resource.
 	/// </summary>
 	public class ClampedIntStat
 	{
@@ -18,7 +18,11 @@ namespace Spite.Stats
 			get => currentValue;
 			private set
 			{
+#if NET5_0_OR_GREATER
 				currentValue = Math.Clamp(value, MinValue, MaxValue);
+#else
+				currentValue = Math.Max(MinValue, Math.Min(value, MaxValue));
+#endif
 			}
 		}
 
@@ -51,7 +55,7 @@ namespace Spite.Stats
 		/// If amount is negative, it is as if IncreaseValue were called.
 		/// </summary>
 		/// <param name="amount">The amount to decrease the value by.</param>
-		public virtual ReduceValue(int amount)
+		public virtual void ReduceValue(int amount)
 		{
 			CurrentValue -= amount;
 		}
@@ -62,7 +66,7 @@ namespace Spite.Stats
 		/// If amount is negative, it is as if DecreaseValue were called.
 		/// </summary>
 		/// <param name="amount">The amount to increase the value by.</param>
-		public virtual IncreaseValue(int amount)
+		public virtual void IncreaseValue(int amount)
 		{
 			CurrentValue += amount;
 		}

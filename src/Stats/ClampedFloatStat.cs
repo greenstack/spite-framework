@@ -16,7 +16,11 @@ namespace Spite.Stats
 			get => currentValue;
 			private set
 			{
+#if NET5_0_OR_GREATER
 				currentValue = Math.Clamp(value, MinValue, MaxValue);
+#else
+				currentValue = Math.Max(MinValue, Math.Min(value, MaxValue));
+#endif
 			}
 		}
 
@@ -36,7 +40,7 @@ namespace Spite.Stats
 		/// <param name="startingValue">The value to initialize the stat to. Will be clamped to minValue or maxValue.</param>
 		/// <param name="minValue">The minimum possible value.</param>
 		/// <param name="maxValue">The maximum possible value.</param>
-		public ClampedIntStat(float startingValue, float minValue, float maxValue)
+		public ClampedFloatStat(float startingValue, float minValue, float maxValue)
 		{
 			MinValue = minValue;
 			MaxValue = maxValue;
@@ -49,7 +53,7 @@ namespace Spite.Stats
 		/// If amount is negative, it is as if IncreaseValue were called.
 		/// </summary>
 		/// <param name="amount">The amount to decrease the value by.</param>
-		public virtual ReduceValue(float amount)
+		public virtual void ReduceValue (float amount)
 		{
 			CurrentValue -= amount;
 		}
@@ -60,7 +64,7 @@ namespace Spite.Stats
 		/// If amount is negative, it is as if DecreaseValue were called.
 		/// </summary>
 		/// <param name="amount">The amount to increase the value by.</param>
-		public virtual IncreaseValue(float amount)
+		public virtual void IncreaseValue(float amount)
 		{
 			CurrentValue += amount;
 		}

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace Spite.Stats
@@ -41,18 +42,18 @@ namespace Spite.Stats
 		}
 
 		/// <inheritdoc/>
-		public virtual void ReceiveModifier(IIntStatModifier statMod)
+		public void ReceiveModifier(IIntStatModifier statMod)
 		{
-			modifiers.Add(statMod);
+			modifiers.Add(statMod ?? throw new ArgumentNullException(nameof(statMod)));
 
 			// TODO: Set the stat's current value
 			CurrentValue = statMod.ModifyStat(CurrentValue);
 		}
 
 		/// <inheritdoc/>
-		public virtual void RemoveModifier(IIntStatModifier statMod)
+		public void RemoveModifier(IIntStatModifier statMod)
 		{
-			modifiers.Remove(statMod);
+			modifiers.Remove(statMod ?? throw new ArgumentNullException(nameof(statMod)));
 			// TODO: Recalculate the stat's current value.
 			CurrentValue = statMod.UnmodifyStat(CurrentValue);
 		}

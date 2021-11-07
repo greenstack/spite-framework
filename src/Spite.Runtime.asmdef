@@ -7,5 +7,5 @@
 	"precompiledReferences": [],
 	"autoReferenced": true,
 	"defineConstraints": [],
-	"noEngineReferences": true
+	"noEngineReferences": false
 }

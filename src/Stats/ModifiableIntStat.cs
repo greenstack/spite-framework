@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
 
+#if UNITY_EDITOR
+using UnityEngine;
+#endif
+
 namespace Spite.Stats
 {
 	/// <summary>
@@ -11,10 +15,26 @@ namespace Spite.Stats
 	/// modifiers! If you really want to mix and match, you may want to
 	/// implement your own modifiable int stat.
 	/// </summary>
+	[Serializable]
 	public class ModifiableIntStat : IModifiableIntStat
 	{
 		List<IIntStatModifier> modifiers = new List<IIntStatModifier>();
 
+#if UNITY_EDITOR
+		[SerializeField]
+		private int baseValue;
+
+		/// <summary>
+		/// The stat's base value.
+		/// </summary>
+		public int BaseValue { get => baseValue; set => baseValue = value; }
+
+		[SerializeField]
+		private int currentValue;
+
+		/// <inheritdoc/>
+		public int CurrentValue { get => currentValue; set => currentValue = value; }
+#else
 		/// <summary>
 		/// The stat's base value.
 		/// </summary>
@@ -22,6 +42,7 @@ namespace Spite.Stats
 
 		/// <inheritdoc/>
 		public int CurrentValue { get; private set; }
+#endif
 
 		/// <summary>
 		/// Constructs a modifiable int stat instance.

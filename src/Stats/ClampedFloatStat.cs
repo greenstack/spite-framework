@@ -1,12 +1,20 @@
 using System;
 
+#if UNITY_EDITOR
+using UnityEngine;
+#endif
+
 namespace Spite.Stats
 {
 	/// <summary>
-	/// 
+	/// Represents a stat that uses a float value and is clamped to a particular range.
 	/// </summary>
-	public class ClampedFloatStat
+	[Serializable]
+	public class ClampedFloatStat : IClampedStat<float>
 	{
+#if UNITY_EDITOR
+		[SerializeField]
+#endif
 		private float currentValue;
 		/// <summary>
 		/// The current value of the stat.
@@ -24,6 +32,22 @@ namespace Spite.Stats
 			}
 		}
 
+#if UNITY_EDITOR
+		[SerializeField]
+		private float minValue;
+
+		/// <summary>
+		/// The stat's minimum possible value.
+		/// </summary>
+		public float MinValue { get => minValue; private set => minValue = value; }
+
+		[SerializeField]
+		private float maxValue;
+		/// <summary>
+		/// The stat's maximum possible value.
+		/// </summary>
+		public float MaxValue { get => maxValue; private set => maxValue = value; }
+#else
 		/// <summary>
 		/// The stat's minimum possible value.
 		/// </summary>
@@ -33,7 +57,7 @@ namespace Spite.Stats
 		/// The stat's maximum possible value.
 		/// </summary>
 		public float MaxValue { get; private set; }
-
+#endif
 		/// <summary>
 		/// Creates a basic clamped float stat.
 		/// </summary>

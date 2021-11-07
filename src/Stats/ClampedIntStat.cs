@@ -1,4 +1,8 @@
 using System;
+// Unity Engine only
+#if UNITY_EDITOR
+using UnityEngine;
+#endif
 
 namespace Spite.Stats
 {
@@ -7,8 +11,12 @@ namespace Spite.Stats
 	/// 
 	/// Can be useful for things like hit points or some other expendable resource.
 	/// </summary>
-	public class ClampedIntStat
+	[Serializable]
+	public class ClampedIntStat : IClampedStat<int>
 	{
+#if UNITY_EDITOR
+		[SerializeField]
+#endif
 		private int currentValue;
 		/// <summary>
 		/// The current value of the stat.
@@ -26,6 +34,7 @@ namespace Spite.Stats
 			}
 		}
 
+#if !UNITY_EDITOR
 		/// <summary>
 		/// The stat's minimum possible value.
 		/// </summary>
@@ -35,7 +44,21 @@ namespace Spite.Stats
 		/// The stat's maximum possible value.
 		/// </summary>
 		public int MaxValue { get; private set; }
+#else // Special case: Unity editor present
+		[SerializeField]
+		private int minValue;
+		/// <summary>
+		/// The stat's minimum possible value.
+		/// </summary>
+		public int MinValue { get => minValue; private set => minValue = value; }
 
+		[SerializeField]
+		private int maxValue;
+		/// <summary>
+		/// The stat's maximum possible value.
+		/// </summary>
+		public int MaxValue { get => maxValue; private set => maxValue = value; }
+#endif
 		/// <summary>
 		/// Creates a basic clamped int stat.
 		/// </summary>

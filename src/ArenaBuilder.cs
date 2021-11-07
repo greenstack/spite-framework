@@ -133,7 +133,13 @@ namespace Spite
         public ArenaBuilder<T> AddPhaseChangedDelegateToTurnManager(ChangePhase listener)
 		{
             if (turnManager == null)
-                throw new InvalidOperationException(Resources.TURN_MANAGER_NOT_SET);
+                throw new InvalidOperationException(
+#if !(UNITY_EDITOR || UNITY_STANDALONE)
+                    Resources.TURN_MANAGER_NOT_SET
+#else
+                    "A turn manager has not been set"
+#endif
+                    );
             turnManager.OnPhaseChanged += listener;
             return this;
 		}
@@ -147,7 +153,13 @@ namespace Spite
         public ArenaBuilder<T> SetBattleOverCondition(Func<bool> predicate)
 		{
             if (turnManager == null)
-                throw new InvalidOperationException(Resources.TURN_MANAGER_NOT_SET);
+                throw new InvalidOperationException(
+#if !(UNITY_EDITOR || UNITY_STANDALONE)
+                    Resources.TURN_MANAGER_NOT_SET
+#else
+                    "A turn manager has not yet been set."
+#endif
+                );
             turnManager.IsBattleOver = predicate;
             return this;
 		}
@@ -214,11 +226,23 @@ namespace Spite
         {
             if (turnManager == null)
             {
-                throw new InvalidOperationException(Resources.TURN_MANAGER_NOT_SET);
+                throw new InvalidOperationException(
+#if !(UNITY_EDITOR || UNITY_STANDALONE)
+                    Resources.TURN_MANAGER_NOT_SET
+#else
+                    "The turn manager has not been set for this arena"
+#endif
+                );
             }
             if (turnManager.IsBattleOver == null)
 			{
-                throw new InvalidOperationException(Resources.ARENA_BUILDER_NO_BATTLE_END_CONDITION_SET);
+                throw new InvalidOperationException(
+#if !(UNITY_EDITOR || UNITY_STANDALONE)
+                    Resources.ARENA_BUILDER_NO_BATTLE_END_CONDITION_SET
+#else
+                    "No battle end condition has been specified for the arena"
+#endif
+                );
 			}
 
             int totalTeams = teamCount > 0 ? teamCount : teamsAdded;

@@ -53,7 +53,13 @@ namespace Spite.Turns
 		{
 			if (teams is null || teams.Count == 0)
 			{
-				throw new System.ArgumentNullException(nameof(teams), Properties.Resources.EmptyOrNullTeamListExceptionMessage);
+				throw new System.ArgumentNullException(nameof(teams),
+#if !(UNITY_STANDALONE || UNITY_EDITOR)
+					Properties.Resources.EmptyOrNullTeamListExceptionMessage
+#else
+					"Teams cannot be empty or null"
+#endif
+				);
 			}
 			return teams[0];
 		}

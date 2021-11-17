@@ -5,6 +5,13 @@
 	/// </summary>
 	public class TapAllReaction : IReaction
 	{
+		public ISpiteAction CausingAction { get; set; }
+
+		public TapAllReaction(ISpiteAction causingAction)
+		{
+			CausingAction = causingAction;
+		}
+
 		/// <inheritdoc/>
 		public ISpiteAction FollowUpAction => null;
 

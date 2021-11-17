@@ -4,6 +4,8 @@ namespace Spite.UnitTests.Mocks.Interaction
 {
     public class MockReaction : IReaction<int>
     {
+        public ISpiteAction CausingAction { get; set; } = null;
+
         public ISpiteAction FollowUpAction {get; set;} = null;
 
         public bool ActionSuccessful { get; set; } = false;

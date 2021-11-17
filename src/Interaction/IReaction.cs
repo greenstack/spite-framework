@@ -6,6 +6,14 @@ namespace Spite.Interaction
     public interface IReaction
     {
         /// <summary>
+        /// The action that created this reaction.
+        /// 
+        /// NOTE: When we get C# 9 support available in Unity 2021.2, this set
+        /// property will be changed to an init property.
+        /// </summary>
+        ISpiteAction CausingAction { get; set; }
+
+        /// <summary>
         /// If this reaction causes another action to occur, this should be set.
         /// 
         /// Otherwise, it should be null.

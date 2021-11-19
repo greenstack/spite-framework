@@ -36,7 +36,7 @@
 		{
 			teamToTap.TapAll();
 
-			return new TapAllReaction();
+			return new TapAllReaction(this);
 		}
 	}
 }

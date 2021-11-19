@@ -8,8 +8,11 @@ namespace Spite.Interaction
         /// <summary>
         /// The action that created this reaction.
         /// 
-        /// NOTE: When we get C# 9 support available in Unity 2021.2, this set
-        /// property will be changed to an init property.
+        /// NOTE: When we get C# 8 support available in Unity 2021.2, this set
+        /// property will be changed to an internal set. This way, we will be
+        /// able to automatically populate this field without relying on the
+        /// developer having to do so on their own. Unfortunately, I don't
+        /// really see a way around this at present with C# 7.3 constraints.
         /// </summary>
         ISpiteAction CausingAction { get; set; }
 

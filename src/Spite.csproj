@@ -9,7 +9,7 @@
     <AssemblyVersion>0.4.0</AssemblyVersion>
     <FileVersion>0.6</FileVersion>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Copyright>2020-2021</Copyright>
+    <Copyright>2020-2022</Copyright>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>CHANGELOG.md</PackageReleaseNotes>

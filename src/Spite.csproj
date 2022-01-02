@@ -24,9 +24,9 @@
     <Description>Spite is a framework to allow developers to quickly integrate and implement turn-based systems in games.</Description>
     <ReleaseNotes>Please see the CHANGELOG in the repository for release notes.</ReleaseNotes>
     <PackageTags>game;gamedev;.net core</PackageTags>
-    <!--This ensures compatibility with Unity 2018.4 and later.-->
+    <!--This ensures compatibility with Unity 2021.2 and later.-->
     <!--Later C# support can be given once Unity supports all features of that version.-->
-    <LangVersion>7.3</LangVersion>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

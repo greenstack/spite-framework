@@ -1,3 +1,8 @@
+# 0.4.0-alpha
+## Language Updates
+With Unity 2021.2, Unity supports [all features of C# 8 and many C# 9 features.](https://docs.unity3d.com/2021.2/Documentation/Manual/CSharpCompiler.html) While we don't necessarily need all these C# 9.0 features that aren't
+supported, limiting the project to C# 8.0 features is the most surefire way to maintain Unity support.
+
 # 0.3.0-alpha
 ## Unity Integration
 (See [Issue #12](https://github.com/greenstack/spite-framework/issues/12))

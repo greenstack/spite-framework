@@ -15,6 +15,9 @@ managers now keep track of their turn numbers. The `TurnIncremented` event is
 fired when that number is incremented. Concrete turn managers need to do
 increment the `TurnNumber` field on their own.
 
+### Rudimentary Stat Types
+- Until Unity gets .NET 6 support, Spite provides some concrete int and float stats.
+
 # 0.3.0-alpha
 ## Unity Integration
 (See [Issue #12](https://github.com/greenstack/spite-framework/issues/12))

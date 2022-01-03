@@ -3,10 +3,28 @@
 namespace Spite.Turns
 {
     /// <summary>
+    /// Represents when the turn manager's turn number is incremented.
+    /// </summary>
+    /// <param name="sender">The turn manager that's been updated.</param>
+    /// <param name="turnNumber">The new turn number.</param>
+    public delegate void TurnIncremented(ITurnManager sender, int turnNumber);
+    
+    /// <summary>
     /// Manages the turns in an arena.
     /// </summary>
     public interface ITurnManager
     {
+
+        /// <summary>
+        /// Triggered when the turn is incremented.
+        /// </summary>
+        event TurnIncremented OnTurnIncremented;
+
+        /// <summary>
+        /// Provides the current turn number.
+        /// </summary>
+        int TurnNumber { get; }
+
         /// <summary>
         /// The current phase in the turn.
         /// </summary>

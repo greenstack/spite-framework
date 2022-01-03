@@ -4,6 +4,9 @@ With Unity 2021.2, Unity supports [all features of C# 8 and many C# 9 features.]
 supported, limiting the project to C# 8.0 features is the most surefire way to maintain Unity support.
 
 ## API Changes
+### `IReaction`
+- Reactions now contain a refernce to the action that created it.
+
 ### `ITeam`
 - Changed the `Members` type from `ICollection` to `ITeam`. This will make
 accessing individual teammates by a known index or iterating over each teammate

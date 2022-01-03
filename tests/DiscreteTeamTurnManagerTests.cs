@@ -41,6 +41,10 @@ namespace Spite.UnitTests
             Assert.IsTrue(turnManager.IsCommandExecutable(action));
 		}
 
+        /// <summary>
+        /// Makes sure that phases advance properly. Also ensures that turn numbers
+        /// increment properly.
+        /// </summary>
         [Test]
         public void TestAutoPhaseAdvancement()
 		{
@@ -54,10 +58,21 @@ namespace Spite.UnitTests
                 .SetBattleOverCondition(() => false)
                 .Finish();
 
+            int turnNumber = turnManager.TurnNumber;
+
             turnManager.AcceptCommand(command, arena);
 
             Assert.IsFalse(turnManager.IsCommandExecutable(command));
             Assert.AreEqual(teamB, turnManager.CurrentTeam);
+
+            command = new TapCommand(mtt, teamB);
+
+            turnManager.AcceptCommand(command, arena);
+
+            // Make sure that the team looped around and that the turn number incremented
+            // properly
+            Assert.AreEqual(teamA, turnManager.CurrentTeam);
+            Assert.AreEqual(turnNumber + 1, turnManager.TurnNumber);
 		}
     }
 }

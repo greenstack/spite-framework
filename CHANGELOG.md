@@ -9,6 +9,12 @@ supported, limiting the project to C# 8.0 features is the most surefire way to m
 accessing individual teammates by a known index or iterating over each teammate
 to find an index much simpler by removing the reliance on Linq.
 
+### `ITurnManager`
+- [Issue #48](https://github.com/greenstack/spite-framework/issues/48) Turn 
+managers now keep track of their turn numbers. The `TurnIncremented` event is
+fired when that number is incremented. Concrete turn managers need to do
+increment the `TurnNumber` field on their own.
+
 # 0.3.0-alpha
 ## Unity Integration
 (See [Issue #12](https://github.com/greenstack/spite-framework/issues/12))

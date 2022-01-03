@@ -28,15 +28,33 @@ namespace Spite.Turns
         /// Invoked when the turn manager's current phase is changed.
         /// </summary>
         public event ChangePhase OnPhaseChanged;
+        /// <inheritdoc/>
+        public event TurnIncremented OnTurnIncremented;
 
-        /// <summary>
-        /// If set to true, the <see cref="IReaction.FollowUpAction"/> property of
-        /// any reaction received will be executed even if the base action failed.
-        /// </summary>
-        public bool ExecuteFollowUpsIfActionFailed { get; }
+		/// <summary>
+		/// If set to true, the <see cref="IReaction.FollowUpAction"/> property of
+		/// any reaction received will be executed even if the base action failed.
+		/// </summary>
+		public bool ExecuteFollowUpsIfActionFailed { get; }
 
         /// <inheritdoc/>
 		public Func<bool> IsBattleOver { get; set; }
+
+        private int turnNumber;
+
+        /// <inheritdoc/>
+		public int TurnNumber 
+        { 
+            get => turnNumber;
+            protected set
+			{
+                int oldNumber = turnNumber;
+                turnNumber = value;
+                // Only fire the event if the new turn number is indeed greater than the old value.
+                if (oldNumber < turnNumber)
+                    OnTurnIncremented?.Invoke(this, value);
+			}
+        }
 
 		/// <summary>
 		/// Creates a basic TurnManager.

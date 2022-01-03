@@ -13,6 +13,13 @@ namespace Spite.Turns
 		readonly LinkedList<TTeam> teamsList;
 
 		/// <summary>
+		/// The first team that acts. When the next team is equal this team, the turn number will increment by one.
+		/// </summary>
+#pragma warning disable CA1051 // Do not declare visible instance fields
+		protected readonly TTeam FirstTeam;
+#pragma warning restore CA1051 // Do not declare visible instance fields
+
+		/// <summary>
 		/// Gets the team with the current priority.
 		/// </summary>
 		public TTeam CurrentTeam => currentTeamNode.Value;
@@ -28,6 +35,7 @@ namespace Spite.Turns
 		{
 			teamsList = new LinkedList<TTeam>(teams);
 			currentTeamNode = teamsList.First;
+			FirstTeam = GetFirstTeam(teams);
 		}
 
 		/// <inheritdoc/>
@@ -65,16 +73,25 @@ namespace Spite.Turns
 		}
 
 		/// <summary>
-		/// Advances to the next active team.
+		/// Advances to the next active team. If the next team is the same as the
+		/// first team, then 
 		/// </summary>
 		/// <returns>The next active team in the list.</returns>
 		protected TTeam AdvanceToNextTeam()
 		{
 			// There aren't any more teams, so don't bother advancing.
 			if (teamsList.Count == 1)
+			{
+				// Be sure to increment the turn number
+				TurnNumber++;
 				return CurrentTeam;
+			}
 			// Players will need to verify whether or not the current team is acceptable.
 			currentTeamNode =  currentTeamNode.Next ?? teamsList.First;
+			// If the current team is the same as the first team, then we've looped around
+			// and the turn number should increment.
+			if (CurrentTeam.Equals(FirstTeam))
+				TurnNumber++;
 			return CurrentTeam;
 		}
 	}

@@ -13,7 +13,7 @@ namespace Spite.UnitTests
         public TeamStanding CurrentStanding => TeamStanding.Inactive;
 
 		private readonly List<MockTappableTeammate> teammates = new List<MockTappableTeammate>();
-		public ICollection<MockTappableTeammate> Members => teammates;
+		public IList<MockTappableTeammate> Members => teammates;
 
 		public int ManagedEntityCount => teammates.Count;
 

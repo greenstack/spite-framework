@@ -29,6 +29,10 @@ namespace Spite.Turns
 		/// <returns>The phase with the next team.</returns>
 		protected override ITurnPhase CreatePhaseForNextTeam()
 		{
+			// Untap everyone to make sure that when priority comes back to them,
+			// they can act. This clearly isn't optimal, but for now, this should
+			// suffice.
+			CurrentTeam.UntapAll();
 			// Go to the next team or cycle back
 			return new TeamPhase(AdvanceToNextTeam());
 		}

@@ -48,7 +48,7 @@ namespace Spite
         /// <summary>
         /// The entities managed by this team.
         /// </summary>
-        ICollection<T> Members { get; }
+        IList<T> Members { get; }
 
         /// <summary>
         /// Adds an entity to the team.

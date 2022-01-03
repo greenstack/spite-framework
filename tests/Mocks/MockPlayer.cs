@@ -6,7 +6,7 @@ namespace Spite.UnitTests.Mocks
 	public class MockPlayer : ITeamExecutor<MockTeammate>
 	{
 		private readonly List<MockTeammate> teammates = new List<MockTeammate>();
-		public ICollection<MockTeammate> Members => teammates;
+		public IList<MockTeammate> Members => teammates;
 
 		public TeamStanding CurrentStanding {get; set;} = TeamStanding.Inactive;
 

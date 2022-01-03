@@ -5,8 +5,6 @@ namespace Spite.UnitTests.Mocks.Turns
 {
     public class AlwaysExecutableTurnPhase : ITurnPhase
     {
-        public event ChangePhase OnPhaseChanged;
-
         public void GetNextPhase(ITurnManager manager)
         {
             throw new System.NotImplementedException();

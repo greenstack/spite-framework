@@ -1,3 +1,15 @@
+# 0.5.0-alpha
+## Language/Framework Updates
+ - Removed support for .NET Framework 4.5
+ - Set target framework to .NET 6.0
+ - Set language version to 9.0 (Note that Unity [doesn't support all C# 9](https://docs.unity3d.com/2022.2/Documentation/Manual/CSharpCompiler.html)
+ features still.) [Godot 4.0](https://godotengine.org/article/dev-snapshot-godot-4-0-beta-1)
+ will support language features for C# 10 and supports all language features.
+
+## API Changes
+ - Removed all functionality except for Stats.
+   - See [this discussion](https://github.com/greenstack/spite-framework) for more details.
+
 # 0.4.0-alpha
 ## Language Updates
 With Unity 2021.2, Unity supports [all features of C# 8 and many C# 9 features.](https://docs.unity3d.com/2021.2/Documentation/Manual/CSharpCompiler.html) While we don't necessarily need all these C# 9.0 features that aren't

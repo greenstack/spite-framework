@@ -24,11 +24,7 @@ namespace Spite.Stats
 			get => currentValue;
 			private set
 			{
-#if NET5_0_OR_GREATER
 				currentValue = Math.Clamp(value, MinValue, MaxValue);
-#else
-				currentValue = Math.Max(MinValue, Math.Min(value, MaxValue));
-#endif
 			}
 		}
 

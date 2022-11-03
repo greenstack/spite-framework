@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net5.0;net45</TargetFrameworks>
+    <TargetFrameworks>net6.0</TargetFrameworks>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <PackageProjectUrl>https://github.com/greenstack/spite-framework</PackageProjectUrl>
     <RepositoryUrl>https://github.com/greenstack/spite-framework.git</RepositoryUrl>
-    <RepositoryBranch>0.3.0-dev</RepositoryBranch>
+    <RepositoryBranch>0.5.x-dev</RepositoryBranch>
     <AssemblyVersion>0.4.0</AssemblyVersion>
     <FileVersion>0.6</FileVersion>
     <NeutralLanguage>en-US</NeutralLanguage>
@@ -13,14 +13,14 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>CHANGELOG.md</PackageReleaseNotes>
-    <Version>0.4.0</Version>
+    <Version>0.5.0</Version>
     <Authors>Greenstack</Authors>
     <RepositoryType>Git</RepositoryType>
     <AssemblyName>Spite</AssemblyName>
     <PackageId>Spite</PackageId>
     <PackageVersionSuffix>dev</PackageVersionSuffix>
     <Company>Greenstack</Company>
-    <Title>Spite 0.3.0-alpha</Title>
+    <Title>Spite 0.5.0-alpha</Title>
     <Description>Spite is a framework to allow developers to quickly integrate and implement turn-based systems in games.</Description>
     <ReleaseNotes>Please see the CHANGELOG in the repository for release notes.</ReleaseNotes>
     <PackageTags>game;gamedev;.net core</PackageTags>
@@ -41,11 +41,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <!--.NET Framework 4.5-sepecific project dependencies-->
-  <ItemGroup Condition="$(TargetFramework.StartsWith('net4'))">
-    <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup>

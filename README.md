@@ -1,7 +1,6 @@
 # Spite Framework
 [![.NET](https://github.com/greenstack/spite-framework/actions/workflows/dotnet.yml/badge.svg)](https://github.com/greenstack/spite-framework/actions/workflows/dotnet.yml)
 [![.NET Framework](https://github.com/greenstack/spite-framework/actions/workflows/NETFramework.yml/badge.svg)](https://github.com/greenstack/spite-framework/actions/workflows/NETFramework.yml)
-[![Spite on fuget.org](https://www.fuget.org/packages/Spite/badge.svg)](https://www.fuget.org/packages/Spite)
 
 The Spite Framework is a C# library meant to simplify designing and
 implementing turn-based gameplay. The hope is that through the Spite Framework,
@@ -9,9 +8,6 @@ developers can quickly develop all  kinds of turn-based games, from RPGs to
 board games. To do this, Spite is centered on a few core design pillars:
  - Spite represents the model. The view and the controller are the game
  developer's responsibility.
- - The entry point for all Spite transactions are through an Arena, which acts
- as a [facade](https://en.wikipedia.org/wiki/Facade_pattern) to the underlying
- structure.
  - Developers should be able to access and mess with the underlying structure
  should they need to.
  - Be compatible with as many C# game engines and frameworks as possible while
@@ -25,14 +21,13 @@ How you integrate Spite to your project will depend on what technology you're us
 If you clone Spite into your project, you can set your branch to be whichever version of the framework you like. For the most up-to-date version, use the active `-dev` branch.
 
 ### Visual Studio/Dotnet
-If you're using Visual Studio/dotnet, you have two options:
-1. Add a reference to the [NuGet package](https://www.nuget.org/packages/Spite/#).
-2. Clone the repo [as a git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules) then [add a reference to Spite](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-add-reference).
+If you're using Visual Studio/dotnet, you will need to clone the repo [as a git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules)
+then [add a reference to Spite](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-add-reference).
 
 ### Using Unity
 In order to use Spite with Unity, you'll need to include it as a [package](https://docs.unity3d.com/Manual/PackagesList.html).
 
-The recommended method of including Spite is by by cloning the repo in the 
+The recommended method of including Spite is by by cloning the repo to the 
 `Packages` folder of your Unity project. If you're using git as your version
 control, you can do this by cloning it [as a git submodule](https://git-scm.com/book/en/v2/Git-Tools-Submodules).
 
